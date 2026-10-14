@@ -1,0 +1,2 @@
+# One trainer name per line. Lines starting with # are ignored.
+# Edit this file on GitHub (pencil icon) and commit; the site updates in about a minute.

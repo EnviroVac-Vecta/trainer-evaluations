@@ -1,0 +1,2049 @@
+{
+  "forms": [
+    {
+      "id": "operator-training",
+      "title": "Operator Training Skills Assessment",
+      "subtitle": "Vacuum Truck & Hydroblasting Operations",
+      "version": "v1.2026",
+      "source_file": "f1d61c25-Operator_Training_Skills_Assessment_v1.2026_EV_2.docx",
+      "footer_title": "Operator Training Skills Assessment",
+      "instructions": "Please rate the overall skill using 1-5 (1 Low and 5 High). Under the Needs column, indicate any sub-skill requiring additional development. Then provide comments.",
+      "header_fields": [
+        "Employee Name",
+        "Home Office",
+        "Training Date"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Safety Fundamentals",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "JHSA Review",
+            "PPE Selection and Use",
+            "SDS Knowledge",
+            "Grounding Requirements",
+            "Wheel Chock Usage",
+            "Spotter Responsibilities",
+            "Emergency Procedures",
+            "Incident Reporting"
+          ]
+        },
+        {
+          "title": "Equipment Familiarization",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Vacuum Truck Components",
+            "Hydroblaster Components",
+            "Equipment Limitations",
+            "Equipment Identification",
+            "Walk-Around Inspection"
+          ]
+        },
+        {
+          "title": "Pre-Trip Inspection",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Vehicle Inspection",
+            "Fluid Level Inspection",
+            "Safety Equipment Inspection",
+            "Vacuum Equipment Inspection",
+            "Hydroblaster Inspection",
+            "Deficiency Identification"
+          ]
+        },
+        {
+          "title": "Job Setup and Preparation",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Job Walkdown",
+            "Work Zone Setup",
+            "Equipment Positioning",
+            "Grounding Procedures",
+            "Water Supply Setup",
+            "Hose Layout and Management",
+            "Crew Communication"
+          ]
+        },
+        {
+          "title": "Vacuum Truck Operations",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Startup Procedures",
+            "Blower Operation",
+            "Relief Valve Operation",
+            "RPM Management",
+            "Gauge Monitoring",
+            "Material Handling",
+            "Shutdown Procedures"
+          ]
+        },
+        {
+          "title": "Hydroblasting Operations",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Water Supply Verification",
+            "PTO Operation",
+            "Pump Engagement",
+            "Pressure Regulation",
+            "RPM Control",
+            "Gauge Monitoring",
+            "Shutdown Procedures"
+          ]
+        },
+        {
+          "title": "Material Handling, Dumping & Cleanout",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Vacuum Truck Dump Procedure",
+            "Tailgate Operations",
+            "Bed Raise Procedure",
+            "Vibrator Operation",
+            "Equipment Cleanout",
+            "Final Inspection"
+          ]
+        },
+        {
+          "title": "Troubleshooting",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "High Temperature Conditions",
+            "Low Voltage Conditions",
+            "Water Supply Issues",
+            "Air Leak Identification",
+            "Loss of Vacuum",
+            "Pump Pulsation",
+            "Rupture Disc Failure",
+            "Hose and Equipment Failures"
+          ]
+        },
+        {
+          "title": "Over-the-Road Driving & Trailering",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Pre-Trip Inspection",
+            "Trailer Coupling/Uncoupling",
+            "Highway Driving",
+            "City Driving",
+            "Backing Procedures",
+            "Railroad Crossings",
+            "Parking and Securing Equipment"
+          ]
+        },
+        {
+          "title": "Overall Operator Readiness",
+          "kind": "rated",
+          "layout": "row-per-item",
+          "items": [
+            "Safety Awareness",
+            "Equipment Knowledge",
+            "Operational Competency",
+            "Troubleshooting Ability",
+            "Independent Work Capability"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Total Score"
+      ],
+      "notes": "Each sub-item is its own table row with its own Needs and Comments cells (the Rating cell is also repeated on every row, not merged). Each section is preceded by a heading paragraph that repeats the section title, which also appears as the second column header. No NOTES area."
+    },
+    {
+      "id": "hydroblasting-tube-bundle-automation",
+      "title": "Hydroblasting Tube Bundle Automation Skills Assessment",
+      "subtitle": null,
+      "version": null,
+      "source_file": "30a30678-Hydroblasting_Automation_Training_Assessment_1.docx",
+      "footer_title": "Hydroblasting Tube Bundle Automation Skills Assessment",
+      "instructions": null,
+      "header_fields": [
+        "Employee Name",
+        "Home Office",
+        "Date"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Automation System Overview",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Purpose of automation",
+            "Applications for tube bundle cleaning",
+            "Benefits of automated lancing systems",
+            "Operator responsibilities during automation use"
+          ]
+        },
+        {
+          "title": "Equipment and Component Identification",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Hydroblasting Equipment",
+            "Air Supply Equipment",
+            "Automation Components",
+            "Lancing Components"
+          ]
+        },
+        {
+          "title": "Equipment Inspection",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Pre-use inspection requirements",
+            "Equipment deficiencies and reporting requirements"
+          ]
+        },
+        {
+          "title": "Automation Assembly Overview",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Scaffold preparation requirements",
+            "Rail system assembly",
+            "Drive component installation",
+            "Guide assembly installation",
+            "Feed box installation",
+            "Control box setup",
+            "Air and hose connections",
+            "Lance installation",
+            "System function testing"
+          ]
+        },
+        {
+          "title": "Control Box Functions",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Control box layout",
+            "Pressure adjustments",
+            "Directional controls",
+            "Operational checks"
+          ]
+        },
+        {
+          "title": "Operating Principles",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "System positioning",
+            "Tube sheet alignment",
+            "Lance feeding and retraction",
+            "Monitoring equipment performance",
+            "Communication during operations",
+            "Operating limitations",
+            "Recognizing abnormal equipment conditions"
+          ]
+        },
+        {
+          "title": "System Shutdown and Disassembly",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Shutdown requirements",
+            "Pressure relief requirements",
+            "Hose disconnection",
+            "Feed box removal",
+            "Automation system removal",
+            "Lance removal",
+            "Equipment cleaning",
+            "Storage and transportation requirements"
+          ]
+        },
+        {
+          "title": "Equipment Care and Maintenance",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Cleaning requirements",
+            "Component inspection after use",
+            "Storage expectations",
+            "Identifying wear and damage",
+            "Replacement of damaged components"
+          ]
+        },
+        {
+          "title": "Practical Demonstration",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Component identification",
+            "Pre-use inspection",
+            "Automation assembly",
+            "Control box operation",
+            "System function testing",
+            "Shutdown and disassembly procedures",
+            "Equipment cleaning and storage"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Total Score",
+        "NOTES"
+      ],
+      "notes": "Title is printed on two lines ('Hydroblasting Tube Bundle Automation' / 'Skills Assessment') and is joined here. No rating instruction line is printed on this form (instructions is null), although the columns are the usual Rating (1-5) / Skill / Sub-Skills / Needs / Comments. All sections are rows of one large table (section title rows spanning all columns). All sub-items of a section sit in a single cell with one Needs cell and one Comments cell per section. Ends with a NOTES box. No version in filename or document."
+    },
+    {
+      "id": "pump-advance-mechanical",
+      "title": "Advance Mechanical Skills Assessment",
+      "subtitle": "(Jet Steam Pump)",
+      "version": "v1.2026",
+      "source_file": "964927a7-Pump-Advance_Mechanical_Skills_Assessment_v1.2026_EV.docx",
+      "footer_title": "Advance Mechanical Skills Assessment — Jet Steam Pump",
+      "instructions": "Please rate overall skill using 1-5 (1 = Low, 5 = High). Under the Needs column, indicate the item(s) requiring additional development using the corresponding letter. Provide comments as needed.",
+      "header_fields": [
+        "Trainee",
+        "Office"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Tools and Materials Identification",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Identifies required hand tools",
+            "Selects correct socket sizes",
+            "Properly uses Allen wrenches",
+            "Uses screwdrivers appropriately",
+            "Selects proper cleaning materials",
+            "Demonstrates proper tool care and handling",
+            "Maintains organized work area"
+          ]
+        },
+        {
+          "title": "Equipment Disassembly Procedures",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Removes pony rod bolts correctly",
+            "Removes gland nuts properly",
+            "Disconnects lubricators safely",
+            "Removes head retaining bolts correctly",
+            "Demonstrates proper lifting techniques for pump head removal",
+            "Removes plungers without damage",
+            "Removes valves safely for inspection"
+          ]
+        },
+        {
+          "title": "Component Inspection and Troubleshooting",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Identifies scratches and grooves on plungers",
+            "Inspects valves for wear and damage",
+            "Evaluates brass sleeve condition",
+            "Inspects packing material condition",
+            "Inspects gaskets and O-rings",
+            "Identifies components requiring replacement",
+            "Demonstrates effective troubleshooting practices"
+          ]
+        },
+        {
+          "title": "Cleaning and Component Preparation",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Uses brake cleaner properly",
+            "Removes contaminants from components",
+            "Protects components during cleaning",
+            "Verifies parts are clean before reassembly",
+            "Applies lubricant correctly",
+            "Maintains clean work environment"
+          ]
+        },
+        {
+          "title": "Parts Replacement Procedures",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Replaces packing correctly",
+            "Replaces valves correctly",
+            "Replaces brass sleeves when required",
+            "Replaces gaskets and O-rings correctly",
+            "Verifies replacement part installation",
+            "Uses proper replacement techniques"
+          ]
+        },
+        {
+          "title": "Equipment Reassembly Procedures",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Installs plungers correctly",
+            "Lubricates cylinders properly",
+            "Installs packing and gland nuts correctly",
+            "Reconnects lubricators properly",
+            "Connects pony rods correctly",
+            "Installs valves properly",
+            "Reinstalls pump head safely",
+            "Uses proper X-pattern bolt tightening sequence"
+          ]
+        },
+        {
+          "title": "Final Inspection and Operational Verification",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Verifies all components are installed",
+            "Verifies all bolts are properly tightened",
+            "Conducts final work area inspection",
+            "Starts equipment safely",
+            "Verifies smooth pump operation",
+            "Identifies leaks or abnormal conditions",
+            "Confirms equipment is ready for service"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Trainee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Average Score",
+        "NOTES"
+      ],
+      "notes": "Uses Trainee/Office instead of Employee Name/Home Office, and 'Average Score' instead of 'Total Score'. Instruction says Needs is filled with the letter(s) of the items. Sub-items sit in a single cell per section. Inconsistency: the first section ('Tools and Materials Identification') has one blank Rating cell, but every other section's Rating cell contains a per-letter blank list ('a.____ b.____ ...'), i.e. a rating per sub-item (kind 'rated-per-item'). Ends with NOTES."
+    },
+    {
+      "id": "driver-part-1-pickup-trailer",
+      "title": "Driver Equipment Training Assessment",
+      "subtitle": "Part 1: Pickup Truck & Trailer Operations",
+      "version": "v1.2026",
+      "source_file": "042c94cb-Driver_Equipment_Training_Part_1_Pickup_Truck_and_Trailer_Assessment_v1.2026_EV.docx",
+      "footer_title": "Driver Equipment Training Assessment — Part 1: Pickup Truck & Trailer",
+      "instructions": "Please rate overall skill using 1-5 (1 = Low, 5 = High). Under the Needs column, indicate the item(s) requiring additional development using the corresponding letter. Provide comments as needed.",
+      "header_fields": [
+        "Trainee",
+        "Office"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Pre-Trip Inspection",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Vehicle condition inspection",
+            "Tire condition and inflation",
+            "Mirrors and visibility",
+            "Trailer inspection",
+            "Hitch and coupler inspection",
+            "Safety chains",
+            "Breakaway cable",
+            "Electrical connection and lights"
+          ]
+        },
+        {
+          "title": "360° Walk-Around Verification",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Conducts complete pre-operation walk-around",
+            "Identifies hazards around vehicle/trailer",
+            "Properly places four orange magnets",
+            "Maintains situational awareness during inspection",
+            "Conducts complete post-operation walk-around",
+            "Retrieves all four magnets",
+            "Returns magnets to designated storage location",
+            "Verifies all magnets removed before vehicle movement"
+          ]
+        },
+        {
+          "title": "Trailer Hookup Procedures",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Properly positions tow vehicle",
+            "Couples trailer correctly",
+            "Verifies coupler lock engagement",
+            "Attaches safety chains correctly",
+            "Connects breakaway cable properly",
+            "Connects electrical pigtail",
+            "Conducts trailer light check",
+            "Raises and secures trailer jack",
+            "Completes final walk-around verification"
+          ]
+        },
+        {
+          "title": "Driving with a Trailer",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Maintains proper speed",
+            "Maintains following distance",
+            "Proper mirror usage",
+            "Proper lane positioning",
+            "Safe turning techniques",
+            "Hazard recognition",
+            "Trailer sway awareness and control",
+            "Application of Smith System principles"
+          ]
+        },
+        {
+          "title": "Backing and Maneuvering",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Uses mirrors effectively",
+            "Maintains trailer control while backing",
+            "Uses spotter appropriately",
+            "Demonstrates clear communication with spotter",
+            "Straight-line backing",
+            "Parking maneuver completion"
+          ]
+        },
+        {
+          "title": "Parking and Trailer Securement",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Selects safe parking location",
+            "Properly parks vehicle/trailer",
+            "Applies parking brake",
+            "Correctly installs wheel chocks",
+            "Verifies trailer is secure"
+          ]
+        },
+        {
+          "title": "Trailer Unhooking Procedures",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Applies wheel chocks prior to disconnecting",
+            "Lowers trailer jack properly",
+            "Disconnects electrical pigtail",
+            "Removes safety chains correctly",
+            "Disconnects breakaway cable",
+            "Releases coupler safely",
+            "Separates vehicle and trailer safely"
+          ]
+        },
+        {
+          "title": "Smith System Defensive Driving",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Aim High in Steering",
+            "Get the Big Picture",
+            "Keep Your Eyes Moving",
+            "Leave Yourself an Out",
+            "Make Sure They See You"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Trainee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Total Score",
+        "NOTES"
+      ],
+      "notes": "Uses Trainee/Office header fields; no training date in the header (Date is in the sign-off). Instruction says Needs is filled with the letter(s) of the items. Sub-items sit in a single cell per section with one Needs/Comments cell. Ends with NOTES."
+    },
+    {
+      "id": "driver-part-2-vacuum-truck",
+      "title": "Driver Equipment Training Assessment",
+      "subtitle": "Part 2: Vacuum Truck Operations & Material Disposal",
+      "version": "v1.2026",
+      "source_file": "3f92c9bd-Driver_Equipment_Training_Part_2_Vacuum_Truck_Assessment_v1.2026_EV.docx",
+      "footer_title": "Driver Equipment Training Assessment — Part 2: Vacuum Truck",
+      "instructions": "Please rate overall skill using 1-5 (1 = Low, 5 = High). Under the Needs column, indicate the item(s) requiring additional development using the corresponding letter. Provide comments as needed.",
+      "header_fields": [
+        "Trainee",
+        "Office"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Vacuum Truck Familiarization",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Identifies truck dimensions and blind spots",
+            "Demonstrates understanding of vehicle weight considerations",
+            "Understands center-of-gravity effects",
+            "Demonstrates clearance awareness",
+            "Understands turning radius limitations",
+            "Identifies major vacuum truck components"
+          ]
+        },
+        {
+          "title": "Pre-Operation Assessment",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Conducts vehicle walk-around inspection",
+            "Inspects mirrors and visibility systems",
+            "Verifies tailgate security",
+            "Verifies truck load condition",
+            "Assesses ground conditions",
+            "Plans travel route prior to movement"
+          ]
+        },
+        {
+          "title": "Maneuvering in Congested Areas",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Maintains safe speed",
+            "Identifies pedestrian hazards",
+            "Maintains proper following distance",
+            "Navigates around obstacles safely",
+            "Demonstrates situational awareness",
+            "Avoids fixed-object contact",
+            "Uses mirrors effectively"
+          ]
+        },
+        {
+          "title": "Vehicle Positioning for Operations",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Selects appropriate setup location",
+            "Maintains emergency access routes",
+            "Considers hose run requirements",
+            "Evaluates ground stability",
+            "Evaluates overhead hazards",
+            "Positions truck to minimize backing"
+          ]
+        },
+        {
+          "title": "Backing and Spotter Communications",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Uses spotter appropriately",
+            "Demonstrates proper hand-signal recognition",
+            "Maintains communication with spotter",
+            "Stops when visual contact is lost",
+            "Uses GOAL (Get Out And Look)",
+            "Completes backing maneuver safely"
+          ]
+        },
+        {
+          "title": "Driving with a Load",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Understands liquid load movement",
+            "Understands solid load movement",
+            "Demonstrates stopping distance awareness",
+            "Demonstrates appropriate braking techniques",
+            "Manages turns safely",
+            "Demonstrates rollover prevention awareness"
+          ]
+        },
+        {
+          "title": "Material Identification and Waste Awareness",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Knows material contained in truck",
+            "Reviews JHSA and scope of work",
+            "Locates SDS for material",
+            "Identifies material hazards",
+            "Understands compatibility concerns",
+            "Understands waste profile requirements",
+            "Identifies disposal requirements",
+            "Demonstrates spill response awareness"
+          ]
+        },
+        {
+          "title": "Dump Site Evaluation",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Identifies approved disposal location",
+            "Evaluates ground conditions",
+            "Evaluates slope and grade",
+            "Identifies overhead hazards",
+            "Assesses traffic flow concerns",
+            "Determines safe dump position",
+            "Exercises stop-work authority when necessary"
+          ]
+        },
+        {
+          "title": "Vacuum Truck Dumping Best Practices",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Positions truck properly",
+            "Establishes exclusion zone",
+            "Opens tailgate correctly",
+            "Raises bed safely",
+            "Monitors load movement",
+            "Identifies bridging or hung material",
+            "Uses vibrator appropriately",
+            "Performs post-dump inspection",
+            "Secures unit following dump operation"
+          ]
+        },
+        {
+          "title": "Smith System Defensive Driving",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Aim High in Steering",
+            "Get the Big Picture",
+            "Keep Your Eyes Moving",
+            "Leave Yourself an Out",
+            "Make Sure They See You"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Trainee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Total Score",
+        "NOTES"
+      ],
+      "notes": "Uses Trainee/Office header fields; no training date in the header (Date is in the sign-off). Instruction says Needs is filled with the letter(s) of the items. Sub-items sit in a single cell per section with one Needs/Comments cell. Ends with NOTES."
+    },
+    {
+      "id": "basic-mechanical-troubleshooting",
+      "title": "Basic Mechanical Trouble Shooting",
+      "subtitle": "Blaster/Vacuum Truck Skills Assessment",
+      "version": "v1.2026",
+      "source_file": "b11ea781-Basic_Mechanical_Trouble_Shooting_BlasterVacuum_Truck_Skills_Assessment_v1.2026_EV_1.docx",
+      "footer_title": "Basic Mechanical Trouble Shooting — Blaster/Vacuum Truck Skills Assessment",
+      "instructions": "Please rate the Overall skill using 1-5 (1 Low and 5 High). Under the Needs column, please indicate any sub skill that needs further development (a, b, c, …). Then provide any comments you feel necessary.",
+      "header_fields": [
+        "Employee Name",
+        "Home Office",
+        "Date"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Pump Overview",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Check Fluids (add tips)",
+              "subitems": [
+                "Oil level and leaks",
+                "Water"
+              ]
+            },
+            "Check dump valves",
+            {
+              "text": "Belts",
+              "subitems": [
+                "Give Resistance"
+              ]
+            },
+            "Know the difference between your RPM's and PSI",
+            "Winterization"
+          ]
+        },
+        {
+          "title": "Pump Mechanical Skills",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            "Change a packing",
+            "Change a rupture disc",
+            "Change seals and O rings",
+            "Change fuses",
+            "Change Diffuser",
+            "Changing Water Filter"
+          ]
+        },
+        {
+          "title": "Common Pump Issues",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Not Enough Pressure at the End of the Hose",
+              "subitems": [
+                "Walk down hoses",
+                "Make sure all hoses are tight",
+                "Check for leaks in hoses",
+                "Check to see if nozzle is tight and not clogged",
+                "Check bypass",
+                "Bad packing"
+              ]
+            },
+            {
+              "text": "Belts begin to squeal",
+              "subitems": [
+                "Shut down pump and tighten belts. Do not operate if they are making a squealing sound.",
+                "Check to ensure water is not running onto belts causing them to slip"
+              ]
+            },
+            {
+              "text": "Ruptured – Rupture Disc",
+              "subitems": [
+                "Change it but make sure you have the correct rupture disk for the correct type of pump and brand"
+              ]
+            },
+            {
+              "text": "Delay in Water Flow",
+              "subitems": [
+                "Dirty Filters"
+              ]
+            },
+            {
+              "text": "Pressure Drop",
+              "subitems": [
+                "Damaged hoses on Pump (should be replaced as soon as possible)",
+                "Possible leaks"
+              ]
+            },
+            "Bypass Damage",
+            {
+              "text": "Water level gets low",
+              "subitems": [
+                "Bag might be dirty",
+                "Note: if your hose starts bouncing around, the water could be low"
+              ]
+            },
+            {
+              "text": "Water is exiting the tank",
+              "subitems": [
+                "Hose may have become detached from the filter pot or just placed inside the tank"
+              ]
+            },
+            {
+              "text": "Float Fails",
+              "subitems": [
+                "Adjust water level so the level stays where it should be (not exiting the tank)"
+              ]
+            },
+            {
+              "text": "Pump Begins to Pulsate",
+              "subitems": [
+                "Check water level – if low, check filter bag",
+                "If tank is full of water, check packing. Open plunger box if water is spraying out the packing is blown",
+                "If none of the above, drop head and check for debris in valve"
+              ]
+            },
+            {
+              "text": "Pump Engine suddenly begins to die",
+              "subitems": [
+                "Check fuel level",
+                "If you have fuel filter, you may need to change it"
+              ]
+            },
+            {
+              "text": "Leaking Water from Various Locations",
+              "subitems": [
+                "Water from Weep holes",
+                "Water from Dump Valve",
+                "Blown packing"
+              ]
+            },
+            "What is RPM's",
+            "What is PSI",
+            "Steps to Winterize Pumps"
+          ]
+        },
+        {
+          "title": "Overview",
+          "kind": "rated",
+          "layout": "single-cell",
+          "part": "Vacuum Truck",
+          "items": [
+            {
+              "text": "Inspections",
+              "subitems": [
+                "Check for air leaks",
+                "Inspect battery and connections",
+                "Verify emergency stop switches",
+                "Check air bags",
+                "Inspect filters and cyclone",
+                "Check hoses for blockage",
+                "Inspect cab"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Vacuum Truck Mechanical Skills",
+          "kind": "rated",
+          "layout": "single-cell",
+          "part": "Vacuum Truck",
+          "items": [
+            "PTO Wires"
+          ]
+        },
+        {
+          "title": "Common Vacuum Truck Issues",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "part": "Vacuum Truck",
+          "items": [
+            "Sudden Loss of Suction",
+            {
+              "text": "Hazing",
+              "subitems": [
+                "Check Bag House – Most likely need to be changed"
+              ]
+            },
+            {
+              "text": "Engine gets hot (225°F or higher)",
+              "subitems": [
+                "If outside temperature is above 90°F this could be the cause. Get a water hose and barely open the valve. Position water flow onto the radiator."
+              ]
+            },
+            {
+              "text": "Voltage gets below 12",
+              "subitems": [
+                "Truck could have an alternator problem and the batteries are about to fail"
+              ]
+            },
+            {
+              "text": "Hydraulic issues",
+              "subitems": [
+                "Leaking hoses or fittings",
+                "Weak or slow hydraulic functions",
+                "Overheating hydraulic oil",
+                "Pump failure"
+              ]
+            }
+          ]
+        }
+      ],
+      "example": {
+        "title": "Example",
+        "skill_column_header": "JHSA Knowledge",
+        "rating": "5",
+        "items": [
+          {
+            "text": "What is a JHSA",
+            "subitems": [
+              "Why",
+              "When",
+              "Who",
+              "How",
+              "Where"
+            ]
+          }
+        ],
+        "needs": "e",
+        "comments": "Needs more training in HSI"
+      },
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Total Score",
+        "NOTES"
+      ],
+      "notes": "Includes a filled-in Example table (see 'example'). Sections are nested: some items have their own lettered sub-items (shown as {text, subitems}). 'Common Pump Issues' and 'Common Vacuum Truck Issues' are lists of problems, one table row each with its own Rating/Needs/Comments cells, with lettered troubleshooting tips beneath; some rows have no tips. The last three sections follow a 'Vacuum Truck' heading paragraph (recorded as 'part'). In 'Pump Begins to Pulsate' the third tip uses a bullet (•) instead of a letter. Ends with NOTES. Kept verbatim: 'Check Fluids (add tips)' (looks like an author's drafting note)."
+    },
+    {
+      "id": "basic-setup-troubleshooting",
+      "title": "Basic Set-Up & Troubleshooting",
+      "subtitle": "Equipment Evaluation Form",
+      "version": "v1.2026",
+      "source_file": "005954fb-Basic_Set-Up_Troubleshooting_and_Equipment_Evaluation_Form_v1.2026_EV_1.docx",
+      "footer_title": "Basic Set-Up & Troubleshooting — Equipment Evaluation Form",
+      "instructions": "Please rate the Overall skill using 1-5 (1 Low and 5 High). Under the Needs column, please indicate any sub skill that needs further development (a, b, c, …). Then provide any comments you feel necessary.",
+      "header_fields": [
+        "Name",
+        "Office",
+        "Cohort",
+        "Cohort Start Date"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Vac and Blasting Jobs",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Walk down job",
+              "subitems": [
+                "Things to look for",
+                "Things to Discuss"
+              ]
+            },
+            {
+              "text": "Getting permits for the job",
+              "subitems": [
+                "Getting confined space permits",
+                "Water Permits"
+              ]
+            },
+            "Reviewing SDS for material reactions and compatibility",
+            {
+              "text": "Check PPE requirements",
+              "subitems": [
+                "Respirators, gloves, FR clothing, face shields, hearing protection"
+              ]
+            },
+            "Make sure equipment is on even ground and wheel chokes are applied",
+            "Proper grounding of equipment and flex",
+            "Whip checks and clamps especially on vertical set ups",
+            {
+              "text": "Check the fluid levels and check for leaks",
+              "subitems": [
+                "Oil, Fuel, Water, liquids"
+              ]
+            },
+            {
+              "text": "Check Radiators",
+              "subitems": [
+                "Vac Truck – while running",
+                "If pump does have gauge, you can check while running"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Blasting Jobs",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Pressure drop Consideration",
+              "subitems": [
+                "Hose size",
+                "Length of Run",
+                "Vertical vs horizontal runs",
+                "Check for leaks, clogged nozzle, worn pump seals, or low water supply, dump valves"
+              ]
+            },
+            {
+              "text": "Type of Tip/Nozzles/Heads",
+              "subitems": [
+                "Size/Numbers",
+                "How to identify different types and applications"
+              ]
+            },
+            {
+              "text": "Water Supply Location and Type",
+              "subitems": [
+                "Quality of Water",
+                "Permission for use"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Proper rigging for vacuum in various runs (the best way to set up a job is in a straight line)",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "part": "Vacuum Jobs",
+          "items": [
+            "Stand Pipes – Permanent Runs",
+            "Stand Pipe – Smooth Bore",
+            {
+              "text": "Vertical Runs",
+              "subitems": [
+                {
+                  "text": "More than 1 floor",
+                  "subitems": [
+                    "Make sure every level is tied off"
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Types of Hoses and Amounts",
+              "subitems": [
+                "Least amount as possible",
+                "Best size for the job 4\" or 6\"",
+                {
+                  "text": "Flex, Smooth Bore, Metal, Hard Rubber, Stainless Steel",
+                  "subitems": [
+                    "Continuity with Combustibles"
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Specific fittings",
+              "subitems": [
+                "Note: The more 90s or 45s the more restriction",
+                "Always use a vacuum break (ALWAYS)",
+                "All vertical rigs need clamps and tape and tied off",
+                "Area must be danger or caution taped for a vertical rig"
+              ]
+            },
+            {
+              "text": "Check the headers",
+              "subitems": [
+                {
+                  "text": "Monitor pressure gauge – watch for spikes and drops",
+                  "subitems": [
+                    "Inches of Mercury"
+                  ]
+                },
+                {
+                  "text": "Verify airflow and suction components",
+                  "subitems": [
+                    "Ensure filters, relief valves, and cyclones are clean and functional"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "example": {
+        "title": "Example",
+        "skill_column_header": "JHSA Knowledge",
+        "rating": null,
+        "items": [
+          {
+            "text": "What is a JHSA",
+            "subitems": [
+              "Why",
+              "When",
+              "Who",
+              "How",
+              "Where"
+            ]
+          }
+        ],
+        "needs": "E",
+        "comments": "Needs more training in HSI"
+      },
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date",
+        "Training Location",
+        "Total Score",
+        "NOTES"
+      ],
+      "notes": "Header fields are Name/Office/Cohort/Cohort Start Date. Includes an Example table (see 'example'). Each section is a list of topics, one table row each with its own Rating/Needs/Comments cells; topics may have lettered sub-items, and some sub-items have a further nested level (lettered or numbered '1.'). A 'Blasting Jobs' heading paragraph precedes the Blasting Jobs table and a 'Vacuum Jobs' heading paragraph precedes the vacuum rigging table (recorded as 'part'). Ends with NOTES. Example: sub-items are numbered i.-v. and the Rating cell is blank, but Needs shows 'E'. Kept verbatim: 'wheel chokes' (likely 'chocks')."
+    },
+    {
+      "id": "hazwoper-decontamination",
+      "title": "HAZWOPER Hands-On Skill Assessment",
+      "subtitle": "Decontamination Assessment",
+      "version": "v1.2026",
+      "source_file": "84deb050-HAZWOPER_Decontamination_Assessment_v1.2026_EV_1_1.docx",
+      "footer_title": "HAZWOPER Hands-On Skill Assessment — Decontamination",
+      "instructions": "Please rate the Overall skill using 1-5 (1 Low and 5 High). Under the Needs column, indicate any sub skill that needs further development (a, b, c, …). Then provide any comments you feel necessary.",
+      "header_fields": [
+        "Name",
+        "Office",
+        "Trainer Name",
+        "Date"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Decontamination Knowledge",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Purpose of Decontamination",
+              "subitems": [
+                "Explain why decontamination is required",
+                "Explain how contaminants spread",
+                "Identify routes of exposure",
+                "Explain consequences of poor decontamination"
+              ]
+            },
+            {
+              "text": "Work Zones",
+              "subitems": [
+                "Identify Exclusion Zone",
+                "Identify Contamination Reduction Zone",
+                "Identify Support Zone",
+                "Explain movement between zones"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Decontamination Line Setup",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Set up Decontamination Corridor",
+              "subitems": [
+                "Deploy tarps and containment",
+                "Establish station sequence",
+                "Set up wash/rinse stations",
+                "Establish waste collection area",
+                "Establish runoff containment"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "PPE Donning and Doffing",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "PPE Inspection",
+              "subitems": [
+                "Inspect suit",
+                "Inspect gloves and boots",
+                "Inspect respirator"
+              ]
+            },
+            {
+              "text": "Proper Donning",
+              "subitems": [
+                "Demonstrate proper donning sequence",
+                "Perform buddy check",
+                "Verify fit and seal"
+              ]
+            },
+            {
+              "text": "Proper Doffing",
+              "subitems": [
+                "Remove outer gloves",
+                "Remove boots",
+                "Remove suit",
+                "Remove respirator at proper station",
+                "Prevent self-contamination"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Decontamination Procedures",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Gross Decontamination",
+              "subitems": [
+                "Remove visible contamination",
+                "Demonstrate brushing",
+                "Demonstrate rinsing",
+                "Demonstrate scrubbing"
+              ]
+            },
+            {
+              "text": "Equipment Decontamination",
+              "subitems": [
+                "Decontaminate hand tools",
+                "Decontaminate hoses/accessories",
+                "Verify cleanliness",
+                "Segregate reusable/disposable equipment"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Waste Handling",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Contaminated Material Management",
+              "subitems": [
+                "Identify contaminated waste",
+                "Segregate PPE",
+                "Package waste properly",
+                "Label waste containers",
+                "Maintain contamination control"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Emergency Decontamination",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Emergency Response",
+              "subitems": [
+                "Recognize contamination event",
+                "Direct employee to emergency decon",
+                "Perform rapid PPE removal",
+                "Minimize responder contamination",
+                "Initiate emergency notification",
+                "Explain exposure priorities",
+                "Locate and verify emergency shower/eyewash stations"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Practical Demonstration",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "Employee Demonstrates Ability To:",
+              "subitems": [
+                "Set up complete decontamination corridor",
+                "Properly don PPE",
+                "Complete decon station sequence",
+                "Remove contamination from PPE",
+                "Properly doff PPE",
+                "Decontaminate equipment",
+                "Dispose of contaminated waste",
+                "Conduct emergency decon scenario"
+              ]
+            }
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date"
+      ],
+      "notes": "Header fields are Name/Office/Trainer Name/Date. Each section is one row whose single cell holds one or more unlettered sub-headings (e.g. 'Purpose of Decontamination', 'Work Zones'), each with lettered sub-items restarting at a.; represented as {text, subitems}. One Needs/Comments cell per section. Sign-off has only Trainer, Employee, Date (no location, score or notes)."
+    },
+    {
+      "id": "tech-i-to-tech-ii",
+      "title": "Technician I → Technician II Skill Assessment",
+      "subtitle": null,
+      "version": "v1.2026",
+      "source_file": "33cea8f3-Tech_I_to_Tech_II_Skill_Set_Assessment_v1.2026_EV_1.docx",
+      "footer_title": "Technician I to Technician II Skill Assessment",
+      "instructions": "Please rate the Overall skill using 1-5 (1 Low and 5 High). Under the Needs column, please indicate any sub skill that needs further development (a, b, c, …). Then provide any comments you feel necessary.",
+      "header_fields": [],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "JHSA Knowledge",
+          "kind": "rated",
+          "layout": "single-cell",
+          "items": [
+            {
+              "text": "What is a JHSA",
+              "subitems": [
+                "Why",
+                "When",
+                "Who",
+                "How",
+                "Where"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "LOTO Knowledge",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Proper lock and Tag",
+              "subitems": [
+                "How to fill out a tag",
+                "Group lockout in lockout room",
+                "Group lockout on satellite box",
+                "Lockout with a Hasp/Christmas tree"
+              ]
+            },
+            {
+              "text": "Make sure there is no stored energy",
+              "subitems": [
+                "What is stored energy",
+                "Types of stored energy",
+                "Mechanical, electrical, hydraulic, pneumatic, thermal, chemical, gravitational, potential, fluid/steam"
+              ]
+            },
+            {
+              "text": "Continuous lockout",
+              "subitems": [
+                "When",
+                "Why"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Confined Space Knowledge",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Confined Space",
+              "subitems": [
+                "Large enough for an employee to make entry",
+                "Limited entries or exits",
+                "Not for continuous occupancy"
+              ]
+            },
+            {
+              "text": "Permit required Confined Space",
+              "subitems": [
+                "Confined Space Permit",
+                "Physical Hazards",
+                "Atmospheric Hazards"
+              ]
+            },
+            {
+              "text": "Air Monitors",
+              "subitems": [
+                "Different Types",
+                "How to read monitor",
+                "Calibration and Bump Test",
+                "Proper Use",
+                "Continuous monitoring"
+              ]
+            },
+            {
+              "text": "Entering Confined Space",
+              "subitems": [
+                "What",
+                "When",
+                "How",
+                "Who"
+              ]
+            },
+            {
+              "text": "Roles and Responsibilities",
+              "subitems": [
+                "Entrant",
+                "Attendant/Hole Watch",
+                "Supervisor",
+                "Emergency Rescue"
+              ]
+            },
+            {
+              "text": "Rescue Equipment",
+              "subitems": [
+                "Harness",
+                "Lifeline",
+                "Tripod"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "General Skill Knowledge",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Rolling and Hanging Hoses",
+              "subitems": [
+                "How to roll hoses",
+                "How to hang hoses"
+              ]
+            },
+            {
+              "text": "Different Types of Hoses",
+              "subitems": [
+                "Chicago",
+                "Fire",
+                "Blast",
+                "Lance",
+                "Pressure Washer"
+              ]
+            },
+            {
+              "text": "Knot Tying",
+              "subitems": [
+                "Slip Knot",
+                "Figure 8",
+                "Clove Hitch"
+              ]
+            },
+            {
+              "text": "Barricading",
+              "subitems": [
+                "Caution tape",
+                "Danger tape",
+                "Barricade Tag"
+              ]
+            },
+            {
+              "text": "Whip Checks",
+              "subitems": [
+                "How",
+                "When"
+              ]
+            },
+            {
+              "text": "Fire Extinguisher",
+              "subitems": [
+                "P.A.S.S",
+                "Inspection"
+              ]
+            },
+            {
+              "text": "Stop Work Authority",
+              "subitems": [
+                "When",
+                "How",
+                "Who"
+              ]
+            },
+            {
+              "text": "Tying off Hoses on elevated jobs",
+              "subitems": [
+                "When",
+                "Why",
+                "Where",
+                "How"
+              ]
+            },
+            {
+              "text": "Fall Protection",
+              "subitems": [
+                "When (4ft)",
+                "Fall Arrest (A. Anchorage point B. Body Harness C. Connecting Components D. Descend & Rescue)",
+                "Fall Restraint"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hydroblasting",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Parts of the Pump",
+              "subitems": [
+                "Water Tank",
+                "Piston Box",
+                "Piston Lubricating Tubes",
+                "Pressure Gauge",
+                "By-Pass Valve",
+                "Belt Box",
+                "Fuel Tank",
+                "Gear Shifter",
+                "Control Panel",
+                "Exhaust",
+                "Radiator Fan",
+                "Wheel Chocks"
+              ]
+            },
+            {
+              "text": "Basic Trailer Hook-up",
+              "subitems": [
+                "Trailer Jack",
+                "Safety chains",
+                "Ball Housing",
+                "Ball Lock",
+                "Trailer Light Pigtail",
+                "Trailer Hitch",
+                "Trailer Ball",
+                "Hitch Safety Pin",
+                "Emergency Brake Cable"
+              ]
+            },
+            {
+              "text": "Hose Connections",
+              "subitems": [
+                "Quick Connect",
+                "Thread",
+                "Teflon",
+                "Anti-seize"
+              ]
+            },
+            {
+              "text": "Different Size Blast Pumps",
+              "subitems": [
+                "10k",
+                "20k",
+                "40k"
+              ]
+            },
+            {
+              "text": "Rupture Disk",
+              "subitems": [
+                "How to do the math to get the proper rating (120%)",
+                "How to check the rupture disc"
+              ]
+            },
+            {
+              "text": "Flushing the Lines",
+              "subitems": [
+                "What",
+                "When",
+                "Why",
+                "How"
+              ]
+            },
+            {
+              "text": "Blasting Safety Devices",
+              "subitems": [
+                "Anti Withdrawal Device",
+                "Anti Reversal/Stinger",
+                "Whip Checks",
+                "Hose Shroud"
+              ]
+            },
+            {
+              "text": "Basic PPE for Blasting",
+              "subitems": [
+                "Hard Hat",
+                "Safety Glasses",
+                "Face Shield and Bracket",
+                "Hearing Protection",
+                "Hand Protection",
+                "Body Protection",
+                "Blast Boots"
+              ]
+            },
+            {
+              "text": "Blasting Stance/Techniques",
+              "subitems": [
+                "How to properly stand when shot gunning",
+                "What Techniques to use",
+                "What are the common blasting hand signals"
+              ]
+            },
+            {
+              "text": "Shot Gun",
+              "subitems": [
+                "Nozzles",
+                "Barrel (min. 48in/min. 66in)",
+                "Dump Valve",
+                "Trigger",
+                "Safety Switch",
+                "Shoulder Stock"
+              ]
+            },
+            {
+              "text": "Lancing/Line Moling",
+              "subitems": [
+                "Lance Hoses",
+                "Nozzles",
+                "Foot Pedal",
+                "Lancing Techniques"
+              ]
+            },
+            {
+              "text": "Automation",
+              "subitems": [
+                "What is automation",
+                "Why is automation safer than manual blasting",
+                "Multi-Directional Hydroblasting Heads (3D tools)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Vacuuming",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Vacuum Trucks",
+              "subitems": [
+                "Combo Truck/Sewer",
+                "Liquid",
+                "Air Mover"
+              ]
+            },
+            {
+              "text": "Basic Parts of an Air Mover",
+              "subitems": [
+                "Pig Tail",
+                "Debris Tank",
+                "Separator",
+                "Cyclone",
+                "Bag House",
+                "Control Panel",
+                "Silencer"
+              ]
+            },
+            {
+              "text": "Grounding and Bonding",
+              "subitems": [
+                "Continuous continuity",
+                "Reading multi meter"
+              ]
+            },
+            {
+              "text": "Vacuum Hoses/Pipes",
+              "subitems": [
+                "Flex",
+                "Smooth Bore",
+                "Hard Piping"
+              ]
+            },
+            {
+              "text": "Basic PPE for Vacuuming",
+              "subitems": [
+                "Hard Hat",
+                "Hearing Protection",
+                "Safety Glasses",
+                "Hand Protection",
+                "Body Protection",
+                "Foot Protection"
+              ]
+            },
+            {
+              "text": "Safety T/Vacuum Breaker",
+              "subitems": [
+                "Why",
+                "When",
+                "Where",
+                "Male End",
+                "Female End",
+                "Plunger",
+                "Hose coupling/reducer"
+              ]
+            },
+            {
+              "text": "Taping and Connecting Hoses",
+              "subitems": [
+                "When/How to tape flex",
+                "When/How to use clamps"
+              ]
+            },
+            {
+              "text": "Deconning Vacuum Truck",
+              "subitems": [
+                "Cleaning debris tank and door",
+                "Cleaning the Shoots",
+                "Cleaning the Cyclone",
+                "Inspecting and cleaning the bags in bag house",
+                "Inspecting top hatches and seals",
+                "Inspecting Deflector plate"
+              ]
+            }
+          ]
+        }
+      ],
+      "example": {
+        "title": "Example",
+        "skill_column_header": "Skill / Sub-Skills",
+        "rating": "5",
+        "items": [
+          {
+            "text": "What is a JHSA",
+            "subitems": [
+              "Why",
+              "When",
+              "Who",
+              "How",
+              "Where"
+            ]
+          }
+        ],
+        "needs": "e",
+        "comments": "Needs more training in HSI"
+      },
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date"
+      ],
+      "notes": "Title is printed on two lines ('Technician I → Technician II' / 'Skill Assessment') and is joined here. No header fields at all (no employee/office/date block above the sections). Includes an Example table (see 'example'). All sections are rows of one large table; each section is a list of topics, one row each with its own Rating/Needs/Comments cells, with lettered sub-items. Sign-off has only Trainer, Employee, Date. Kept verbatim: 'Cleaning the Shoots' (likely 'Chutes'). Under 'Make sure there is no stored energy', 'Mechanical, electrical, hydraulic, ...' is lettered c. as a sibling of 'Types of stored energy' rather than nested under it."
+    },
+    {
+      "id": "tech-ii-to-tech-iii",
+      "title": "Technician II → Technician III Skill Assessment",
+      "subtitle": null,
+      "version": "v1.2026",
+      "source_file": "f04994d9-Tech_II_to_Tech_III_Skills_Assessment_v1.2026_EV_1.docx",
+      "footer_title": "Technician II to Technician III Skill Assessment",
+      "instructions": "Please rate the Overall skill using 1-5 (1 Low and 5 High). Under the Needs column, please indicate any sub skill that needs further development (a, b, c, …). Then provide any comments you feel are necessary.",
+      "header_fields": [
+        "Employee",
+        "Office",
+        "Trainer",
+        "Evaluation Date"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Lock Out Tag Out",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Understand Energy Source Being Locked Out (what they mean and what to watch out for)",
+              "subitems": [
+                "Compressed air",
+                "Electricity",
+                "Natural Gas",
+                "Pressurized Water",
+                "Steam"
+              ]
+            },
+            {
+              "text": "Reading SDS (key sections)",
+              "subitems": [
+                "Section 1 – Identification",
+                "Section 2 – Hazard Identification",
+                "Section 4 – First Aid Measures",
+                "Section 8 – Exposure Controls/Personal Protection",
+                "Section 9 – Physical and Chemical Properties (odor, appearance, pH, density, etc.)"
+              ]
+            },
+            "Knowing where to locate the SDS",
+            "Verify Lock Box is correct (color of locks, tags, names, members)",
+            "How to confirm Lock Out is Complete"
+          ]
+        },
+        {
+          "title": "PPE",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Understand mandatory PPE requirements for each mill type",
+              "subitems": [
+                "Steel",
+                "Chemical",
+                "Pulp and Paper",
+                "Oil Refineries"
+              ]
+            },
+            "Ability to identify correct PPE based off job type",
+            "Ability to identify ratings for each PPE"
+          ]
+        },
+        {
+          "title": "Vacuum",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            "Identify correct place to “place” vac brake",
+            "Properly place wheel chocks",
+            {
+              "text": "Basic Set Up of Vac Job",
+              "subitems": [
+                "Type of Material, what they are called, and measurements",
+                "understanding the uses of different types of vacuum hose"
+              ]
+            },
+            "Basic Taping",
+            "Understand how to shut down a vacuum truck properly in case of an emergency.",
+            "Understand the different types of vacuum trucks and their applications (king vac, liquid truck, etc)",
+            "Understand how to be an effective spotter and the importance of communication"
+          ]
+        },
+        {
+          "title": "Confined Space",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Ability to explain in your own words the distinct type of hazards associated with Confined Space",
+              "subitems": [
+                "Oxygen deficiency",
+                "Entanglement",
+                "Engulfment",
+                "Limited Visibility",
+                "Toxic Vapors",
+                "Combustible Gases, solvents, or dust"
+              ]
+            },
+            "How to use an air monitor",
+            "Know what the air monitor is able to detect",
+            "Understand what each level means (ppm, % of)",
+            "Know how to read the battery level in the air monitor",
+            "Basic elements or things that can cause an air monitor to have errors",
+            "Know and explain the different roles in a confined space job",
+            "Be able to correctly complete confined space paperwork",
+            "Know steps to take in case of an emergency"
+          ]
+        },
+        {
+          "title": "Hydroblasting",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Understanding the differences between 10k, 20k, 40k, and High-Volume options",
+              "subitems": [
+                "Applications",
+                "Hoses"
+              ]
+            },
+            "Basic water blaster prechecks (oil, coolant level, fuel level, leaks, filters, and recognizing if there are default codes that may have appeared from the previous shift.)",
+            "Explain the procedures for hand lancing, shot gunning, and automation",
+            {
+              "text": "Proper Radius for taping",
+              "subitems": [
+                "Lancing",
+                "Shot Gunning"
+              ]
+            },
+            {
+              "text": "Explain type, use, and how to check Anti Withdrawal Devices",
+              "subitems": [
+                "Bolt On",
+                "Flangless",
+                "C-Clamp",
+                "Flange attachment",
+                "Foot Pedal",
+                "Chicken Wing",
+                "Automation",
+                "Lance Stops",
+                "Hose stops"
+              ]
+            },
+            {
+              "text": "Basic Tip selection",
+              "subitems": [
+                "Spin Nozzles",
+                "Beetle",
+                "Pineapple",
+                "Button Tips",
+                "Banshee"
+              ]
+            },
+            "Basic Tip Selection for tubing",
+            {
+              "text": "Different Lances",
+              "subitems": [
+                "10K",
+                "20K"
+              ]
+            },
+            {
+              "text": "Various Lancing Techniques",
+              "subitems": [
+                "Manual",
+                "Rotary head",
+                "AWD (chicken wing, c-clamp, etc.)"
+              ]
+            },
+            {
+              "text": "Shot-gunning techniques",
+              "subitems": [
+                "Posture (Right vs Left-Handed)",
+                {
+                  "text": "Tip Choice",
+                  "subitems": [
+                    "Straight Tips",
+                    "Cut vs Flow",
+                    "Fan Tips"
+                  ]
+                },
+                "Utilization inside vessels"
+              ]
+            },
+            "Proper tying of blast hose",
+            "Correctly apply whip check",
+            "Knot tying",
+            "Know when and how to flush the lines",
+            "Recognize when troubleshooting the pump should take place"
+          ]
+        },
+        {
+          "title": "Safety",
+          "kind": "rated",
+          "layout": "row-per-topic",
+          "items": [
+            {
+              "text": "Understand importance of reviewing the JSA",
+              "subitems": [
+                "Pre-Job Inspection",
+                "PPE needed and reasons",
+                "Chemicals involved"
+              ]
+            },
+            {
+              "text": "SDS",
+              "subitems": [
+                "Know how to locate Required PPE",
+                "Know how to locate First Aid Measures"
+              ]
+            },
+            "Basic Policies",
+            "Identify proper use of tools and applications for safe working conditions",
+            "Proper Barricading and Barricade tags",
+            "When and how to use Barrier Cream/Neutralite",
+            "Proper Chemical Taping"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Employee (Print and Sign)",
+        "Date"
+      ],
+      "notes": "Title is printed on two lines ('Technician II → Technician III' / 'Skill Assessment') and is joined here. Header fields (Employee/Office/Trainer/Evaluation Date) are printed ABOVE the title. An extra intro line precedes the instructions: 'The topics included are: LOTO, PPE, Vacuuming, Confined Space, Hydroblasting, and Safety.' Items use bullets (•) with hollow-bullet (o) sub-items and one third level (▪) instead of letters, even though the instruction refers to (a, b, c, …). Each topic is its own table row with its own Rating/Needs/Comments cells. No section heading paragraphs; the section title is the second column header. Sign-off has only Trainer, Employee, Date. Under 'Basic Set Up of Vac Job', the line 'understanding the uses of different types of vacuum hose' has no bullet but sits at sub-bullet indent; kept as its own sub-item. Kept verbatim: 'Flangless' (likely 'Flangeless'); 'O' bullet markers normalized to 'o'."
+    }
+  ],
+  "conventions": {
+    "items": "Each item is a string, or {text, subitems} when the source nests sub-items under it. Leading letters/bullets ('a.', 'i.', '1.', '•', 'o', '▪') are removed; order is preserved, so letters can be re-derived from position (restarting at a. within each level).",
+    "kind": "'rated' = one overall 1-5 rating for the section plus a Needs flag per sub-item and comments. 'rated-per-item' = the Rating column lists a blank per sub-item letter (a.____ b.____ ...), i.e. each sub-item is rated individually.",
+    "layout": "'row-per-item' = one table row (own Needs/Comments cells) per sub-item; 'single-cell' = all sub-items in one cell with one Needs/Comments cell for the section (Needs is written as item letters); 'row-per-topic' = one table row (own Rating/Needs/Comments cells) per top-level topic, sub-items listed in that row.",
+    "part": "Heading paragraph printed above a group of sections (e.g. 'Vacuum Truck'), when it differs from the section title."
+  }
+}
