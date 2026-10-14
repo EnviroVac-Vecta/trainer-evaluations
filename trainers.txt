@@ -1,2 +1,5 @@
 # One trainer name per line. Lines starting with # are ignored.
 # Edit this file on GitHub (pencil icon) and commit; the site updates in about a minute.
+# Substitute trainers can type their own name on the site; they do not need to be listed here.
+Noah Porter
+Shaquan Patterson

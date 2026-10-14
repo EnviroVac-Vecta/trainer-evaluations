@@ -190,7 +190,7 @@ textarea{min-height:70px;resize:vertical}
 
     <div class="card" id="who">
       <div class="grid">
-        <div class="field" id="fld-trainer"><label for="trainer">Trainer <span class="req">*</span></label><input type="text" id="trainer" autocomplete="off" placeholder="Start typing your name"></div>
+        <div class="field" id="fld-trainer"><label for="trainer">Trainer <span class="req">*</span></label><input type="text" id="trainer" autocomplete="off" placeholder="Pick your name, or type it if you are subbing"></div>
         <div class="field" id="fld-employee"><label for="employee">Employee <span class="req">*</span></label><input type="text" id="employee" autocomplete="off" placeholder="Start typing a name"></div>
         <div class="field"><label for="office">Home office</label><input type="text" id="office" autocomplete="off"></div>
         <div class="field"><label for="date">Evaluation date <span class="req">*</span></label><input type="date" id="date"></div>
@@ -304,7 +304,7 @@ function typeahead(input, getOptions, onPick){
     opts = (q.length ? all.filter(o=>q.every(t=>(o.label+' '+(o.sub||'')).toLowerCase().includes(t))) : all).slice(0,60);
     if(!all.length){ close(); return; }
     if(!list){ list=document.createElement('div'); list.className='ta-list'; list.setAttribute('role','listbox'); box.appendChild(list); }
-    list.innerHTML = opts.length ? opts.map((o,i)=>'<button type="button" role="option" class="ta-opt" data-i="'+i+'" aria-selected="'+(i===idx)+'">'+esc(o.label)+(o.sub?'<small>'+esc(o.sub)+'</small>':'')+'</button>').join('') : '<div class="ta-none">No match. You can keep what you typed.</div>';
+    list.innerHTML = opts.length ? opts.map((o,i)=>'<button type="button" role="option" class="ta-opt" data-i="'+i+'" aria-selected="'+(i===idx)+'">'+esc(o.label)+(o.sub?'<small>'+esc(o.sub)+'</small>':'')+'</button>').join('') : '<div class="ta-none">'+(input.id==='trainer'?'Not on the list. Keep typing your full name (substitute trainer).':'No match. You can keep what you typed.')+'</div>';
   };
   input.addEventListener('focus', draw);
   input.addEventListener('input', ()=>{ idx=-1; draw(); });
