@@ -32,7 +32,9 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);fon
 [hidden]{display:none!important}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.wrap{max-width:980px;margin:0 auto;padding:16px clamp(16px,3vw,28px) 120px;display:flex;flex-direction:column;gap:16px}
+.wrap{max-width:1440px;margin:0 auto;padding:16px clamp(16px,3vw,28px) 120px;display:flex;flex-direction:column;gap:16px}
+header.top,nav.tabs{width:100%;max-width:980px;margin-left:auto;margin-right:auto}
+body.wide header.top,body.wide nav.tabs{max-width:none}
 header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:8px 20px;border-bottom:2px solid var(--fg);padding-bottom:10px}
 .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 h1{font-family:var(--f-display);font-stretch:80%;font-weight:800;font-size:clamp(26px,5vw,36px);line-height:1;margin:4px 0 0}
@@ -119,6 +121,44 @@ textarea{min-height:70px;resize:vertical}
 .ptable td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
 .empty{padding:36px 16px;text-align:center;color:var(--muted)}
+.evalpanel:not([hidden]){display:flex;flex-direction:column;gap:16px;width:100%;max-width:980px;margin:0 auto}
+.cohortpanel{flex-direction:column;gap:12px}
+.cohortpanel:not([hidden]){display:flex}
+.cfilters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(4,minmax(140px,1fr));gap:10px;align-items:end}
+@media (max-width:900px){.cfilters{grid-template-columns:1fr 1fr}.cfilters .q{grid-column:1/-1}}
+.cbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.ctable{border-collapse:separate;border-spacing:0;font-size:13px;min-width:100%}
+.ctable th{position:sticky;top:0;z-index:2;background:var(--sunk);text-align:left;font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--muted);padding:8px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:bottom}
+.ctable th button{all:unset;cursor:pointer}
+.ctable th.tc{writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;height:118px;padding:8px 4px;max-width:34px}
+.ctable td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle;background:var(--surface)}
+.ctable td.sticky,.ctable th.sticky{position:sticky;left:0;z-index:1;box-shadow:1px 0 0 var(--line);min-width:210px}
+.ctable td:nth-child(2){min-width:150px}
+.ctable td:nth-child(3){min-width:120px}
+.ctable th.sticky{z-index:3}
+.ctable tr.nr td{background:color-mix(in srgb,#e5484d 13%,var(--surface))}
+.ctable tr.gone td{color:var(--muted)}
+.ctable tr.det td{background:var(--sunk)}
+.who2{all:unset;cursor:pointer;font-weight:600;border-bottom:1px dotted var(--muted)}
+.meta{display:block;font-size:11.5px;color:var(--muted)}
+.tag2{display:inline-block;font-size:10.5px;font-weight:600;border-radius:4px;padding:0 5px;margin:2px 4px 0 0;border:1px solid var(--line);color:var(--muted)}
+.tag2.nr{border-color:#e5484d;color:#c0362c}
+.prog{display:flex;align-items:center;gap:6px;min-width:110px}
+.prog .b{flex:1;height:8px;border-radius:4px;background:var(--sunk);overflow:hidden}
+.prog .b i{display:block;height:100%;background:var(--good)}
+.prog b{font-family:var(--f-mono);font-size:12px;font-weight:500}
+.st{display:inline-block;min-width:26px;text-align:center;border-radius:4px;padding:2px 4px;font-family:var(--f-mono);font-size:10.5px;white-space:nowrap}
+.st.c{background:color-mix(in srgb,var(--good) 20%,var(--surface));color:var(--fg)}
+.st.s{background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--fg)}
+.st.d{background:color-mix(in srgb,var(--bad) 22%,var(--surface));color:var(--fg)}
+.st.i{box-shadow:inset 0 0 0 1px var(--warn);color:var(--warn)}
+.st.u{color:var(--muted)}
+.st.n{color:var(--line)}
+.detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:6px 2px}
+.detail h5{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.detail ul{margin:0;padding-left:18px;font-size:13px}
 @media (max-width:600px){
   .stars button{width:42px;height:42px}
   .item{flex-wrap:wrap}
@@ -140,11 +180,12 @@ textarea{min-height:70px;resize:vertical}
 
   <nav class="tabs" role="tablist">
     <button type="button" role="tab" id="t-eval" aria-selected="true" aria-controls="p-eval">Evaluations</button>
-    <button type="button" role="tab" id="t-prog" aria-selected="false" aria-controls="p-prog">Progress</button>
+    <button type="button" role="tab" id="t-cur" aria-selected="false" aria-controls="p-cur">Current Cohorts</button>
+    <button type="button" role="tab" id="t-past" aria-selected="false" aria-controls="p-past">Past Cohorts</button>
   </nav>
 
   <!-- ============ EVALUATIONS ============ -->
-  <section id="p-eval" role="tabpanel" aria-labelledby="t-eval" style="display:flex;flex-direction:column;gap:16px">
+  <section id="p-eval" role="tabpanel" aria-labelledby="t-eval" class="evalpanel">
     <div id="result" hidden></div>
 
     <div class="card" id="who">
@@ -165,10 +206,9 @@ textarea{min-height:70px;resize:vertical}
     <div id="evaluation" hidden style="display:flex;flex-direction:column;gap:14px"></div>
   </section>
 
-  <!-- ============ PROGRESS ============ -->
-  <section id="p-prog" role="tabpanel" aria-labelledby="t-prog" hidden style="flex-direction:column;gap:14px">
-    <div id="progress"></div>
-  </section>
+  <!-- ============ COHORTS ============ -->
+  <section id="p-cur" role="tabpanel" aria-labelledby="t-cur" hidden class="cohortpanel"></section>
+  <section id="p-past" role="tabpanel" aria-labelledby="t-past" hidden class="cohortpanel"></section>
 </div>
 
 <div class="actionbar" id="actionbar" hidden>
@@ -194,7 +234,7 @@ const fmtDate = iso => { if(!iso) return ''; const [y,m,d]=iso.split('-').map(Nu
 const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
 const lsSet = (k,v) => { try{ v==null ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){} };
 
-let FORMS = [], CONFIG = {trainers:[], submitUrl:'', minRating:1, maxRating:5}, ROSTER = [], PROGRESS = null;
+let FORMS = [], CONFIG = {trainers:[], submitUrl:'', logUrl:'', minRating:1, maxRating:5}, ROSTER = [];
 let FORM = null, MODEL = null;
 let S = null; // current answers
 
@@ -536,6 +576,7 @@ $('b-send').addEventListener('click', async ()=>{
     const res = await fetch(CONFIG.submitUrl, {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(payload)});
     if(!res.ok) throw new Error('the server answered '+res.status);
     lsSet(LS_DRAFT, null); lsSet(LS_TRAINER, payload.trainer);
+    addSubmission({employee:payload.employee, formId:payload.formId, date:payload.evaluationDate});
     showResult(true, payload);
   }catch(e){
     setMsg('Not sent: '+e.message+'. Your answers are saved on this device; try again, or use Download PDF.', true);
@@ -553,19 +594,134 @@ function showResult(ok, p){
 
 /* ---------- tabs ---------- */
 function setTab(t){
-  $('p-eval').hidden = t!=='eval'; $('p-prog').hidden = t!=='prog'; $('p-prog').style.display = t==='prog'?'flex':'';
-  $('t-eval').setAttribute('aria-selected', t==='eval'); $('t-prog').setAttribute('aria-selected', t==='prog');
+  document.body.classList.toggle('wide', t!=='eval');
+  ['eval','cur','past'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
   $('actionbar').hidden = !(t==='eval' && FORM && !$('evaluation').hidden);
-  if(t==='prog') renderProgress();
+  if(t!=='eval') renderCohorts(t);
 }
-$('t-eval').addEventListener('click', ()=>setTab('eval'));
-$('t-prog').addEventListener('click', ()=>setTab('prog'));
+['eval','cur','past'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
 
-/* ---------- progress (filled in once the data file is connected) ---------- */
-function renderProgress(){
-  const el=$('progress');
-  if(!PROGRESS){ el.innerHTML='<div class="card empty">The progress view will appear here once its data file is connected.</div>'; return; }
-  if(window.renderProgressView) window.renderProgressView(el, PROGRESS);
+/* ---------- cohorts ---------- */
+const SHORT = {'24 or 40 Hour Hazwoper with Hands On':'HAZWOPER','Advance Blasting Classroom Training or HASC WJTA Online':'Adv. Blasting Class','Advance Blasting Hands On or WJTA Hands On Training':'Adv. Blasting Hands On','Advance Mechanics Training':'Adv. Mechanics','Basic Mechanical Troubleshooting':'Basic Mech. Troubleshoot','Basic Set Up, Troubleshooting and Equipment':'Basic Set-Up','CDL':'CDL','Defensive Driving - EnviroVac':'Defensive Driving','DiSC Profile':'DiSC','Driver Equipment Training':'Driver Equipment','Envirovac Hands On Training':'Hands On','HASC WJTA Online':'WJTA Online','Lancing Automation Training':'Lancing Automation','Level Up -Part One':'Level Up 1','Level Up-Part Two':'Level Up 2','Management and Leadership Skills for New Managers':'Mgmt & Leadership','OSHA 30hr':'OSHA 30','Operator Training':'Operator Training','Tech I to Tech II Skill Assessment':'Tech I to II','Tech II to Tech III Post Test Assessment':'Tech II to III Post Test','Tech II to Tech III Skill Assessment':'Tech II to III','WJTA Hands On Training':'WJTA Hands On'};
+// Which training column an evaluation counts toward.
+const FORM_TO_TRAINING = {'operator-training':'Operator Training','driver-part-1-pickup-trailer':'Driver Equipment Training','driver-part-2-vacuum-truck':'Driver Equipment Training','pump-advance-mechanical':'Advance Mechanics Training','basic-mechanical-troubleshooting':'Basic Mechanical Troubleshooting','basic-setup-troubleshooting':'Basic Set Up, Troubleshooting and Equipment','hydroblasting-tube-bundle-automation':'Lancing Automation Training','hazwoper-decontamination':'24 or 40 Hour Hazwoper with Hands On','tech-i-to-tech-ii':'Tech I to Tech II Skill Assessment','tech-ii-to-tech-iii':'Tech II to Tech III Skill Assessment'};
+const nameKey = n => { n=String(n||''); if(n.includes(',')){ const [l,f]=n.split(','); n=f+' '+l; } const t=n.toLowerCase().replace(/[^a-z ]/g,' ').split(/\s+/).filter(x=>x.length>1); return t.length? t[0]+' '+t[t.length-1] : ''; };
+let HIST = null, SUB = new Map(); // SUB: nameKey -> Map(training -> {date, forms:Set})
+function addSubmission(row){
+  const k = nameKey(row.employee), t = FORM_TO_TRAINING[row.formId]; if(!k || !t) return;
+  const m = SUB.get(k) || SUB.set(k, new Map()).get(k);
+  const cur = m.get(t) || {date:'', forms:new Set()};
+  cur.forms.add(row.formId); if(!cur.date || (row.date||'') > cur.date) cur.date = row.date||'';
+  m.set(t, cur);
+}
+const isDate = v => /^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(v||'');
+const shortD = iso => { if(!iso) return ''; const [y,m,d]=iso.slice(0,10).split('-'); return m+'/'+d; };
+function statusOf(p, t){
+  const v = (p.trainings||{})[t] || '';
+  if(isDate(v)) return {k:'c', label:v, text:'Complete '+v};
+  const sub = (SUB.get(nameKey(p.name))||new Map()).get(t);
+  if(sub){
+    let note='';
+    if(t==='Driver Equipment Training'){ const n=sub.forms.size; note = n<2 ? ' (part '+(sub.forms.has('driver-part-1-pickup-trailer')?'1':'2')+' of 2)' : ' (both parts)'; }
+    return {k:'s', label:'Sub '+shortD(sub.date), text:'Submitted '+fmtDate(sub.date)+note+', waiting for HSI'};
+  }
+  if(/delinquent/i.test(v)) return {k:'d', label:'Delinq', text:'Delinquent'};
+  if(!p.inHSIReport) return {k:'u', label:'?', text:'Not in the HSI cohort report'};
+  return {k:'i', label:'Inc', text:'Incomplete'};
+}
+function required(p){
+  if(p.inHSIReport) return HIST.trainings.filter(t=>{ const v=(p.trainings[t]||'').toUpperCase(); return v && v!=='N/A'; });
+  return (HIST.requiredByCohort[p.cohort]||[]).slice();
+}
+function periodLabel(p){
+  if(p.period) return p.period;
+  const f = iso => iso ? new Date(iso+'T12:00').toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '';
+  return f(p.start)+' - '+f(p.end);
+}
+function summarize(p){
+  const req = required(p), sts = req.map(t=>[t,statusOf(p,t)]);
+  const done = sts.filter(x=>x[1].k==='c').length, sub = sts.filter(x=>x[1].k==='s').length;
+  return {req, sts, done, sub, total:req.length, pct: req.length? done/req.length : 0};
+}
+const CV = {cur:{q:'',office:'',cohort:'',period:'',show:'all',sort:'name',open:new Set()}, past:{q:'',office:'',cohort:'',period:'',show:'all',sort:'name',open:new Set()}};
+function cohortPeople(mode){
+  const today = todayISO();
+  return HIST.people.filter(p=> mode==='cur' ? (p.end && p.end>=today && p.employed) : (p.end && (p.end<today || !p.employed)));
+}
+function selectHTML(id,label,vals,cur,all){ return '<div class="field"><label for="'+id+'">'+label+'</label><select id="'+id+'"><option value="">'+all+'</option>'+vals.map(v=>'<option'+(v===cur?' selected':'')+'>'+esc(v)+'</option>').join('')+'</select></div>'; }
+function renderCohorts(mode){
+  const el = $(mode==='cur'?'p-cur':'p-past'), st = CV[mode];
+  if(!HIST){ el.innerHTML='<div class="card empty">Cohort data is not connected yet.</div>'; return; }
+  const all = cohortPeople(mode);
+  const uniq = f => [...new Set(all.map(f).filter(Boolean))].sort();
+  if(!el.querySelector('.cfilters')){
+    el.innerHTML = '<div class="cfilters">'+
+      '<div class="field q"><label for="'+mode+'-q">Find a person</label><input type="search" id="'+mode+'-q" placeholder="Name or ID"></div>'+
+      selectHTML(mode+'-office','Office',uniq(p=>p.office),st.office,'All offices')+
+      selectHTML(mode+'-cohort','Cohort',uniq(p=>p.cohort),st.cohort,'All cohorts')+
+      selectHTML(mode+'-period','Cohort period',uniq(periodLabel),st.period,'All periods')+
+      '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option></select></div>'+
+      '</div><div class="cbar"><span class="count" id="'+mode+'-count"></span><div class="legend">'+
+      '<span><i class="st c">date</i> Complete</span><span><i class="st s">Sub</i> Submitted, waiting for HSI</span><span><i class="st i">Inc</i> Incomplete</span><span><i class="st d">Delinq</i> Delinquent</span><span><i class="st u">?</i> Not in HSI report</span>'+
+      '<span><i class="st" style="background:color-mix(in srgb,#e5484d 18%,var(--surface))">&nbsp;&nbsp;&nbsp;</i> Not recommended for promotion</span></div></div>'+
+      '<div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="ctable"><thead></thead><tbody></tbody></table></div>';
+    $(mode+'-q').addEventListener('input',e=>{ st.q=e.target.value; drawCohortTable(mode); });
+    ['office','cohort','period','show'].forEach(k=>$(mode+'-'+k).addEventListener('change',e=>{ st[k]=e.target.value; drawCohortTable(mode); }));
+    el.querySelector('table').addEventListener('click',e=>{
+      const s=e.target.closest('[data-sort]'); if(s){ st.sort = st.sort===s.dataset.sort ? '-'+s.dataset.sort : s.dataset.sort; drawCohortTable(mode); return; }
+      const w=e.target.closest('[data-open]'); if(w){ const k=w.dataset.open; st.open.has(k)?st.open.delete(k):st.open.add(k); drawCohortTable(mode); }
+    });
+  }
+  drawCohortTable(mode);
+}
+function drawCohortTable(mode){
+  const el = $(mode==='cur'?'p-cur':'p-past'), st = CV[mode];
+  const q = st.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  let rows = cohortPeople(mode).map(p=>Object.assign({p},summarize(p))).filter(r=>{
+    const p=r.p;
+    if(q.length && !q.every(t=>(p.name+' '+p.id).toLowerCase().includes(t))) return false;
+    if(st.office && p.office!==st.office) return false;
+    if(st.cohort && p.cohort!==st.cohort) return false;
+    if(st.period && periodLabel(p)!==st.period) return false;
+    if(st.show==='missing' && !(r.done<r.total)) return false;
+    if(st.show==='complete' && !(r.total && r.done===r.total)) return false;
+    if(st.show==='submitted' && !r.sub) return false;
+    if(st.show==='nr' && !p.notRecommended) return false;
+    return true;
+  });
+  const desc = st.sort.startsWith('-'), key = st.sort.replace('-','');
+  const val = r => key==='progress'? r.pct : key==='office'? r.p.office : key==='cohort'? r.p.cohort+' '+r.p.start : r.p.name.toLowerCase();
+  rows.sort((a,b)=>{ const x=val(a), y=val(b); const c = typeof x==='number'? x-y : String(x).localeCompare(String(y)); return (desc?-c:c) || a.p.name.localeCompare(b.p.name); });
+  const cols = HIST.trainings.filter(t=>rows.some(r=>r.req.includes(t)));
+  const arr = k => st.sort===k?' ↑':st.sort==='-'+k?' ↓':'';
+  el.querySelector('thead').innerHTML = '<tr><th class="sticky"><button data-sort="name">Employee'+arr('name')+'</button></th><th><button data-sort="cohort">Cohort'+arr('cohort')+'</button></th><th><button data-sort="progress">Complete'+arr('progress')+'</button></th>'+
+    cols.map(t=>'<th class="tc" title="'+esc(t)+'">'+esc(SHORT[t]||t)+'</th>').join('')+'</tr>';
+  const body = rows.map(r=>{
+    const p=r.p, k=p.id||p.name, open=st.open.has(k);
+    const tags = (p.notRecommended?'<span class="tag2 nr">Not recommended</span>':'')+(!p.employed?'<span class="tag2">No longer employed</span>':'')+(p.employed && !p.inHSIReport?'<span class="tag2">Not in HSI report</span>':'');
+    let h = '<tr class="'+(p.notRecommended?'nr ':'')+(!p.employed?'gone':'')+'"><td class="sticky"><button type="button" class="who2" data-open="'+esc(k)+'" aria-expanded="'+open+'">'+esc(p.name)+'</button><span class="meta">'+esc([p.office,p.jobTitle].filter(Boolean).join(' · '))+'</span>'+tags+'</td>'+
+      '<td>'+esc(p.cohort||'—')+'<span class="meta">'+esc(periodLabel(p))+'</span></td>'+
+      '<td><div class="prog"><span class="b"><i style="width:'+Math.round(r.pct*100)+'%"></i></span><b>'+r.done+'/'+r.total+'</b></div>'+(r.sub?'<span class="meta">'+r.sub+' submitted</span>':'')+'</td>'+
+      cols.map(t=>{ if(!r.req.includes(t)) return '<td><span class="st n">·</span></td>'; const s=statusOf(p,t); return '<td><span class="st '+s.k+'" title="'+esc((SHORT[t]||t)+': '+s.text)+'">'+esc(s.k==='c'? s.label.replace(/\/\d{2,4}$/,'') : s.label)+'</span></td>'; }).join('')+'</tr>';
+    if(open){
+      const done=r.sts.filter(x=>x[1].k==='c'), sub=r.sts.filter(x=>x[1].k==='s'), miss=r.sts.filter(x=>!['c','s'].includes(x[1].k));
+      const li = a => a.length? '<ul>'+a.map(([t,s])=>'<li>'+esc(t)+' <span class="meta" style="display:inline">'+esc(s.text)+'</span></li>').join('')+'</ul>' : '<div class="meta">None</div>';
+      h += '<tr class="det"><td colspan="'+(3+cols.length)+'"><div class="detail"><div><h5>Completed ('+done.length+')</h5>'+li(done)+'</div><div><h5>Submitted ('+sub.length+')</h5>'+li(sub)+'</div><div><h5>Missing ('+miss.length+')</h5>'+li(miss)+'</div></div></td></tr>';
+    }
+    return h;
+  }).join('');
+  el.querySelector('tbody').innerHTML = body || '<tr><td colspan="'+(3+cols.length)+'"><div class="empty">No one matches these filters.</div></td></tr>';
+  $(mode+'-count').textContent = rows.length+' '+(rows.length===1?'person':'people')+' · '+rows.filter(r=>r.total&&r.done===r.total).length+' all complete · '+rows.filter(r=>r.done<r.total).length+' missing items';
+}
+async function loadLog(){
+  if(!CONFIG.logUrl) return;
+  try{
+    const r = await fetch(CONFIG.logUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:'{}'});
+    if(!r.ok) return;
+    let rows = await r.json(); rows = Array.isArray(rows)? rows : (rows.value||rows.rows||[]);
+    rows.forEach(x=>addSubmission({employee:x['Employee']||x.employee, formId:x['Form ID']||x.formId, date:String(x['Evaluation Date']||x.evaluationDate||'').slice(0,10)}));
+    ['cur','past'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
+  }catch(e){}
 }
 
 /* ---------- boot ---------- */
@@ -573,7 +729,8 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
 (async()=>{
   try{ FORMS = (await getJSON('forms.json')).forms; }catch(e){ $('formlist').innerHTML='<div class="notice err">The evaluation forms could not be loaded. Reload the page.</div>'; return; }
   try{ Object.assign(CONFIG, await getJSON('config.json')); }catch(e){}
-  try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; PROGRESS = d.progress||null; }catch(e){}
+  try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; }catch(e){}
+  loadLog();
   renderFormList();
   typeahead($('trainer'), ()=>(CONFIG.trainers||[]).map(t=>({label:t})), null);
   typeahead($('employee'), ()=>ROSTER.map(r=>({label:r.name, sub:[r.office,r.id].filter(Boolean).join(' · '), r})), o=>{ if(o.r && o.r.office) $('office').value=o.r.office; });

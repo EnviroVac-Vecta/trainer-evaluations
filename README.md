@@ -8,7 +8,8 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 
 | File | What it does |
 |---|---|
-| `index.html` | the site (Evaluations and Progress tabs) |
+| `index.html` | the site (Evaluations, Current Cohorts, Past Cohorts tabs) |
+| `history.json` | cohort history imported once from the Trainer Tracker (`tools/import_tracker.py`) |
 | `forms.json` | the 10 evaluations: sections, items, rating scale |
 | `trainers.txt` | trainer names for the picker, one per line |
 | `build.py` | builds the site (adds trainer list, flow link, employee list) |
@@ -23,7 +24,8 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 | Secret | What |
 |---|---|
 | `EVAL_SUBMIT_URL` | HTTP URL of the "Evaluations - Save and Send" flow |
-| `EVAL_DATA_URL` | optional - HTTP URL of a flow that sends the employee file (for the employee picker) |
+| `EVAL_LOG_URL` | HTTP URL of the "Evaluations - Read log" flow (shows **Submitted** on the cohort tabs) |
+| `EVAL_DATA_URL` | optional - HTTP URL of a flow that sends `HSI Data.xlsx` (Active employees for the picker) |
 
 After adding or changing a secret: Actions → **Publish Evaluations Site** → **Run workflow**.
 
@@ -35,13 +37,28 @@ After adding or changing a secret: Actions → **Publish Evaluations Site** → 
    - File Name: `fileName` (from Parse JSON)
    - File Content (Expression): `base64ToBinary(body('Parse_JSON')?['fileContent'])`
 4. **Add a row into a table** (Excel Online (Business)). Point it at `Evaluation_Log.xlsx` in SharePoint, table `Evaluations`,
-   and map each column from Parse JSON (Submitted At → submittedAt, Evaluation → formTitle, PDF File → fileName, and so on).
+   and map each column from Parse JSON (Submitted At → submittedAt, Form ID → formId, Evaluation → formTitle,
+   PDF File → fileName, and so on).
 5. **Send an email (V2)** (or *Send an email from a shared mailbox (V2)* to send from the training mailbox).
    - To: `envirovactraining@envirovac.us`
    - Subject: `trainer` submitted `formTitle` for `employee`
    - Body: date, office, total/average score, items needing work, `needsList`, `notes`
    - Attachments (optional): Name `fileName`, Content (Expression) `base64ToBinary(body('Parse_JSON')?['fileContent'])`
 6. **Response.** Status code `200`. Headers: `Access-Control-Allow-Origin` = `*`.
+
+## Power Automate flow: "Evaluations - Read log"
+1. **Trigger: When an HTTP request is received.** Who can trigger: Anyone.
+2. **List rows present in a table** (Excel Online (Business)): `Evaluation_Log.xlsx`, table `Evaluations`.
+3. **Response.** Status `200`. Headers: `Access-Control-Allow-Origin` = `*`. Body: `value` from step 2.
+Copy the trigger URL into the `EVAL_LOG_URL` secret.
+
+## Cohort tabs
+- **Current Cohorts:** people whose cohort period hasn't ended. **Past Cohorts:** ended, or no longer employed.
+- Each training shows Complete (date), **Submitted** (an evaluation was sent from this site, waiting for HSI),
+  Incomplete, Delinquent, or ? (person isn't in the HSI cohort report). Rows shaded light red: not recommended for promotion.
+- Evaluations count toward: Operator Training, Driver Equipment Training (Part 1/2), Advance Mechanics Training,
+  Basic Mechanical Troubleshooting, Basic Set Up, Lancing Automation Training, 24/40 Hour Hazwoper (hands on),
+  Tech I to Tech II and Tech II to Tech III Skill Assessments.
 
 Sample payload for step 2:
 ```json

@@ -3,14 +3,16 @@
 Writes site/ with:
   index.html, forms.json, vendor/      (copied as-is)
   config.json   trainer list (trainers.txt) + where Save & Send goes (EVAL_SUBMIT_URL secret)
-  data.json     employee list for the picker, from the SharePoint file sent by the
-                Power Automate flow in the EVAL_DATA_URL secret (optional until it's set up)
+  data.json     employee list for the picker + cohort history (history.json, imported once
+                from the Trainer Tracker). The employee list comes from the flow in the
+                EVAL_DATA_URL secret when set, otherwise from the imported roster.
 
 Local test with a file instead of the flow:
     python build.py "Employee file.xlsx"
 """
 import io
 import os
+import re
 import sys
 import json
 import shutil
@@ -37,6 +39,7 @@ ROSTER_COLUMNS = {
     "last": ["lastname", "last"],
     "id": ["employeeid", "empid", "id", "loginid", "eeid"],
     "office": ["office", "homeoffice", "location", "team", "teams", "branch"],
+    "status": ["status", "employeestatus"],
 }
 
 
@@ -70,11 +73,20 @@ def read_roster(xlsx_bytes):
                 people = {}
                 for r in rows[h + 1:]:
                     get = lambda k: (str(r[found[k]]).strip() if k in found and found[k] < len(r) and r[found[k]] is not None else "")
-                    name = get("name") or (get("first") + " " + get("last")).strip()
+                    if "status" in found and get("status").lower() not in ("active", ""):
+                        continue  # HSI member list: only Active people
+                    last, emp_id = get("last"), get("id")
+                    if "," in last:  # HSI puts the employee ID after the last name: "Chase,F3IH3KEL"
+                        last, tail = [x.strip() for x in last.split(",", 1)]
+                        if re.fullmatch(r"[A-Z0-9]{6,12}", tail):
+                            emp_id = emp_id if emp_id and "@" not in emp_id else tail
+                    if "@" in emp_id:
+                        emp_id = ""
+                    name = get("name") or (get("first") + " " + last).strip()
                     if not name:
                         continue
-                    key = get("id") or name.lower()
-                    people.setdefault(key, {"name": name, "id": get("id"), "office": get("office")})
+                    key = emp_id or name.lower()
+                    people.setdefault(key, {"name": name, "id": emp_id, "office": get("office")})
                 roster = sorted(people.values(), key=lambda p: p["name"].lower())
                 print(f"Employee list: {len(roster)} people from sheet '{ws.title}'.")
                 return roster
@@ -97,16 +109,19 @@ def main():
     if not submit:
         print("::warning title=Save & Send not connected::Add the EVAL_SUBMIT_URL secret; until then trainers can only download the PDF.")
     with open(os.path.join(OUT, "config.json"), "w") as f:
-        json.dump({"trainers": trainers, "submitUrl": submit}, f)
+        json.dump({"trainers": trainers, "submitUrl": submit, "logUrl": secret("EVAL_LOG_URL")}, f)
 
+    with open(os.path.join(HERE, "history.json")) as f:
+        history = json.load(f)
     data = get_data_file()
-    if data:
-        with open(os.path.join(OUT, "data.json"), "w") as f:
-            json.dump({"roster": read_roster(data)}, f, separators=(",", ":"))
+    roster = read_roster(data) if data else history.pop("roster", [])
+    history.pop("roster", None)
+    with open(os.path.join(OUT, "data.json"), "w") as f:
+        json.dump({"roster": roster, "history": history}, f, separators=(",", ":"))
     with open(os.path.join(OUT, "robots.txt"), "w") as f:
         f.write("User-agent: *\nDisallow: /\n")
     print(f"::notice title=Trainer evaluations::{len(trainers)} trainers, Save & Send {'on' if submit else 'off'}, "
-          f"employee list {'loaded' if data else 'not connected'}")
+          f"{len(roster)} employees, {len(history['people'])} cohort members")
 
 
 if __name__ == "__main__":
