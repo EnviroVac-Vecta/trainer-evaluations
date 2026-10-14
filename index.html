@@ -719,7 +719,9 @@ async function loadLog(){
     const r = await fetch(CONFIG.logUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
     if(!r.ok) return;
     let rows = await r.json(); rows = Array.isArray(rows)? rows : (rows.value||rows.rows||[]);
-    rows.forEach(x=>addSubmission({employee:x['Employee']||x.employee, formId:x['Form ID']||x.formId, date:String(x['Evaluation Date']||x.evaluationDate||'').slice(0,10)}));
+    // Excel can hand dates back as serial numbers (46309 = 2026-10-14).
+    const toISO = v => { v=String(v||'').trim(); if(/^\d{4,6}(\.\d+)?$/.test(v)){ const d=new Date(Date.UTC(1899,11,30)+Math.floor(+v)*86400000); return d.toISOString().slice(0,10); } return v.slice(0,10); };
+    rows.forEach(x=>addSubmission({employee:x['Employee']||x.employee, formId:x['Form ID']||x.formId, date:toISO(x['Evaluation Date']||x.evaluationDate||x['Submitted At'])}));
     ['cur','past'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
   }catch(e){}
 }
