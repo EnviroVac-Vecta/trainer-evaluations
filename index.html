@@ -573,8 +573,7 @@ $('b-send').addEventListener('click', async ()=>{
       needsList: needs.join('; '), sectionScores: sectionScores(), notes: S.notes||'',
       officeFolder: officeFolder(), fileName: fileName(), fileContent: pdf
     };
-    // Sent as plain text so the browser goes straight to the flow without an extra permission check.
-    const res = await fetch(CONFIG.submitUrl, {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(payload)});
+    const res = await fetch(CONFIG.submitUrl, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
     if(!res.ok) throw new Error('the server answered '+res.status);
     lsSet(LS_DRAFT, null); lsSet(LS_TRAINER, payload.trainer);
     addSubmission({employee:payload.employee, formId:payload.formId, date:payload.evaluationDate});
@@ -717,7 +716,7 @@ function drawCohortTable(mode){
 async function loadLog(){
   if(!CONFIG.logUrl) return;
   try{
-    const r = await fetch(CONFIG.logUrl,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:'{}'});
+    const r = await fetch(CONFIG.logUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
     if(!r.ok) return;
     let rows = await r.json(); rows = Array.isArray(rows)? rows : (rows.value||rows.rows||[]);
     rows.forEach(x=>addSubmission({employee:x['Employee']||x.employee, formId:x['Form ID']||x.formId, date:String(x['Evaluation Date']||x.evaluationDate||'').slice(0,10)}));
