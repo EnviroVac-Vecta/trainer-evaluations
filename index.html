@@ -534,7 +534,8 @@ function buildPDF(){
   return doc;
 }
 const safe = t => pdfText(t).replace(/[\\/:*?"<>|#%&{}~]+/g,'').replace(/\s+/g,' ').trim();
-function fileName(){ return safe(($('date').value||todayISO())+' '+$('employee').value+' - '+FORM.title+' - '+$('trainer').value).slice(0,180)+'.pdf'; }
+function officeFolder(){ return safe($('office').value) || 'No Office'; }
+function fileName(){ return safe([$('employee').value, FORM.title, officeFolder(), $('date').value||todayISO()].join(' - ')).slice(0,180)+'.pdf'; }
 
 /* ---------- needs list (for email + log) ---------- */
 function needsList(){
@@ -570,7 +571,7 @@ $('b-send').addEventListener('click', async ()=>{
       submittedAt: new Date().toISOString(),
       totalScore: s.total, maxScore: s.max, averageScore: +s.avg.toFixed(2), itemsNeedingWork: s.needs,
       needsList: needs.join('; '), sectionScores: sectionScores(), notes: S.notes||'',
-      fileName: fileName(), fileContent: pdf
+      officeFolder: officeFolder(), fileName: fileName(), fileContent: pdf
     };
     // Sent as plain text so the browser goes straight to the flow without an extra permission check.
     const res = await fetch(CONFIG.submitUrl, {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(payload)});

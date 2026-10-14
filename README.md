@@ -33,8 +33,10 @@ After adding or changing a secret: Actions → **Publish Evaluations Site** → 
 1. **Trigger: When an HTTP request is received.** Who can trigger: Anyone. Leave the schema empty.
 2. **Parse JSON.** Content: `triggerBody()` (Expression tab). Schema: click *Use sample payload to generate schema*
    and paste the sample below.
-3. **Create file** (SharePoint). Site + folder for the PDFs.
-   - File Name: `fileName` (from Parse JSON)
+3. **Create file** (SharePoint). Site, and Folder Path =
+   `/Shared Documents/Training Files to Upload to HSI/Evaluation PDFs/` + `officeFolder` (from Parse JSON).
+   The office folder is created automatically the first time.
+   - File Name: `fileName` (from Parse JSON) - "Employee - Evaluation - Office - Date.pdf"
    - File Content (Expression): `base64ToBinary(body('Parse_JSON')?['fileContent'])`
 4. **Add a row into a table** (Excel Online (Business)). Point it at `Evaluation_Log.xlsx` in SharePoint, table `Evaluations`,
    and map each column from Parse JSON (Submitted At → submittedAt, Form ID → formId, Evaluation → formTitle,
@@ -79,7 +81,8 @@ Sample payload for step 2:
   "needsList": "Safety Fundamentals: JHSA Review; Troubleshooting: Loss of Vacuum",
   "sectionScores": [{"section": "Safety Fundamentals", "rating": 4}],
   "notes": "",
-  "fileName": "2026-10-14 Employee Name - Operator Training Skills Assessment - Trainer Name.pdf",
+  "officeFolder": "008-Tuscaloosa",
+  "fileName": "Employee Name - Operator Training Skills Assessment - 008-Tuscaloosa - 2026-10-14.pdf",
   "fileContent": "JVBERi0xLjMK"
 }
 ```
