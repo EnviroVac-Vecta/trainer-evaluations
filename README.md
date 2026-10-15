@@ -12,7 +12,7 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 | `history.json` | cohort history imported once from the Trainer Tracker (`tools/import_tracker.py`) |
 | `forms.json` | the 10 evaluations: sections, items, rating scale |
 | `trainers.txt` | trainer names for the picker, one per line |
-| `build.py` | builds the site (adds trainer list, flow link, employee list) |
+| `build.py` | builds the site (trainer list, flow links, employee list) and merges the daily HSI cohort report into `history.json` |
 | `.github/workflows/publish.yml` | publishes on every change and each morning |
 | `vendor/` | PDF library (jsPDF + AutoTable) |
 
@@ -25,6 +25,7 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 |---|---|
 | `EVAL_SUBMIT_URL` | HTTP URL of the "Evaluations - Save and Send" flow |
 | `EVAL_LOG_URL` | HTTP URL of the "Evaluations - Read log" flow (shows **Submitted** on the cohort tabs) |
+| `EVAL_COHORT_URL` | HTTP URL of the "Cohort Report - Send file" flow (today's HSI Cohort Daily Report) |
 | `EVAL_DATA_URL` | optional - HTTP URL of a flow that sends `HSI Data.xlsx` (Active employees for the picker) |
 
 After adding or changing a secret: Actions → **Publish Evaluations Site** → **Run workflow**.
@@ -55,6 +56,10 @@ After adding or changing a secret: Actions → **Publish Evaluations Site** → 
 Copy the trigger URL into the `EVAL_LOG_URL` secret.
 
 ## Cohort tabs
+- Each morning the build reads the **Cohort Daily Report** (HSI Envirovac Cohort Status Report, pulled by the
+  `hsi_cohort` bot) and updates `history.json`: completions, incomplete/delinquent items, cohort, and anyone new
+  to a cohort. People stay in the history after they drop off the report, so past cohorts are kept.
+  The workflow commits the updated `history.json` back to the repo ("Daily cohort history update").
 - **Current Cohorts:** people whose cohort period hasn't ended. **Past Cohorts:** ended, or no longer employed.
 - Each training shows Complete (date), **Submitted** (an evaluation was sent from this site, waiting for HSI),
   Incomplete, Delinquent, or ? (person isn't in the HSI cohort report). Rows shaded light red: not recommended for promotion.

@@ -635,6 +635,7 @@ function required(p){
 }
 function periodLabel(p){
   if(p.period) return p.period;
+  if(!p.start) return 'Period not set';
   const f = iso => iso ? new Date(iso+'T12:00').toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '';
   return f(p.start)+' - '+f(p.end);
 }
@@ -646,7 +647,8 @@ function summarize(p){
 const CV = {cur:{q:'',office:'',cohort:'',period:'',show:'all',sort:'name',open:new Set()}, past:{q:'',office:'',cohort:'',period:'',show:'all',sort:'name',open:new Set()}};
 function cohortPeople(mode){
   const today = todayISO();
-  return HIST.people.filter(p=> mode==='cur' ? (p.end && p.end>=today && p.employed) : (p.end && (p.end<today || !p.employed)));
+  const current = p => p.employed && (p.end ? p.end>=today : !!p.inHSIReport);
+  return HIST.people.filter(p=> mode==='cur' ? current(p) : (!current(p) && (p.end || !p.employed)));
 }
 function selectHTML(id,label,vals,cur,all){ return '<div class="field"><label for="'+id+'">'+label+'</label><select id="'+id+'"><option value="">'+all+'</option>'+vals.map(v=>'<option'+(v===cur?' selected':'')+'>'+esc(v)+'</option>').join('')+'</select></div>'; }
 function renderCohorts(mode){
@@ -661,7 +663,7 @@ function renderCohorts(mode){
       selectHTML(mode+'-cohort','Cohort',uniq(p=>p.cohort),st.cohort,'All cohorts')+
       selectHTML(mode+'-period','Cohort period',uniq(periodLabel),st.period,'All periods')+
       '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option></select></div>'+
-      '</div><div class="cbar"><span class="count" id="'+mode+'-count"></span><div class="legend">'+
+      '</div><div class="cbar"><span class="count"><span id="'+mode+'-count"></span>'+(HIST.cohortReportDate?' · HSI cohort report from '+esc(fmtDate(HIST.cohortReportDate)):' · from the Trainer Tracker import')+'</span><div class="legend">'+
       '<span><i class="st c">date</i> Complete</span><span><i class="st s">Sub</i> Submitted, waiting for HSI</span><span><i class="st i">Inc</i> Incomplete</span><span><i class="st d">Delinq</i> Delinquent</span><span><i class="st u">?</i> Not in HSI report</span>'+
       '<span><i class="st" style="background:color-mix(in srgb,#e5484d 18%,var(--surface))">&nbsp;&nbsp;&nbsp;</i> Not recommended for promotion</span></div></div>'+
       '<div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="ctable"><thead></thead><tbody></tbody></table></div>';

@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -31,6 +31,15 @@ jobs:
         env:
           ALL_SECRETS: ${{ toJSON(secrets) }}
         run: python build.py
+      - name: Save cohort history
+        run: |
+          if ! git diff --quiet history.json; then
+            git config user.name "evaluations-bot"
+            git config user.email "evaluations-bot@users.noreply.github.com"
+            git add history.json
+            git commit -m "Daily cohort history update"
+            git push
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
