@@ -56,7 +56,7 @@ def main(path):
     for sheet, employed in (("Active Roster", True), ("Terminated - Cohort", False), ("Terminated - No Cohort", False)):
         h, data = rows(sheet)
         col = lambda name: next((i for i, x in enumerate(h) if x.lower() == name.lower()), next((i for i, x in enumerate(h) if x.lower().startswith(name.lower())), None))
-        ci = {k: col(k) for k in ("Employee", "Employee ID", "Team", "Job Title", "Target to Evaluate", "Cohort Dates", "Promtion Recommendation", "Ready to be Promoted")}
+        ci = {k: col(k) for k in ("Employee", "Employee ID", "Team", "Job Title", "Target to Evaluate", "Cohort Dates", "Promtion Recommendation", "Ready to be Promoted", "Intake Form Entered")}
         for r in data:
             g = lambda k: (r[ci[k]] if ci[k] is not None and ci[k] < len(r) else None)
             if not g("Employee"): continue
@@ -68,6 +68,7 @@ def main(path):
                 "cohortDates": cell(g("Cohort Dates")), "start": start, "end": end,
                 "employed": employed, "notRecommended": rec == "not recommended",
                 "cohort": "", "trainings": {}, "inHSIReport": False,
+                "intake": str(g("Intake Form Entered") or "").strip().lower().startswith("complete"),
             })
     h, data = rows("Training Matrix")
     trainings = h[4:]

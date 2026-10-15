@@ -1,6 +1,89 @@
 {
   "forms": [
     {
+      "id": "intake",
+      "type": "intake",
+      "title": "Employee Intake Form",
+      "subtitle": "Initial Evaluation - all levels",
+      "version": "v1.2026",
+      "source_file": "Employee Intake Form for Initial Evaluation.docx",
+      "footer_title": "Employee Intake Form for Initial Evaluation",
+      "instructions": "For each training, check Previously Completed and/or Previously Observed, add the date it was observed, and any note.",
+      "header_fields": [
+        "Employee Name",
+        "Office",
+        "Current Employee Level",
+        "Date"
+      ],
+      "levels": [
+        "Tech I",
+        "Tech II",
+        "Tech III",
+        "Jr. Operator",
+        "Sr. Operator",
+        "Crew Leader",
+        "Supervisor"
+      ],
+      "signoff_fields": [
+        "Skills Trainer Completing Evaluation",
+        "Employee"
+      ],
+      "sections": [
+        {
+          "title": "Tech I",
+          "items": [
+            "NHT - Hands-On"
+          ]
+        },
+        {
+          "title": "Tech II",
+          "items": [
+            "Advance Blasting Classroom or WJTA Online",
+            "Advance Blasting Hands On or WJTA Hands On",
+            "Defensive Driving"
+          ]
+        },
+        {
+          "title": "Tech III",
+          "items": [
+            "HAZWOPER"
+          ]
+        },
+        {
+          "title": "Jr. Operator",
+          "items": [
+            "Operator Training",
+            "Driver Training - Equipment Operation"
+          ]
+        },
+        {
+          "title": "Sr. Operator",
+          "items": [
+            "Basic Set Up and Troubleshooting",
+            "Basic Mechanical Troubleshooting",
+            "CDL"
+          ]
+        },
+        {
+          "title": "Crew Leader",
+          "items": [
+            "OSHA 30",
+            "Level Up Phase 1",
+            "Automation",
+            "Advanced Mechanical"
+          ]
+        },
+        {
+          "title": "Supervisor",
+          "items": [
+            "DiSC",
+            "Pryor Virtual",
+            "Level Up Phase 2"
+          ]
+        }
+      ]
+    },
+    {
       "id": "operator-training",
       "title": "Operator Training Skills Assessment",
       "subtitle": "Vacuum Truck & Hydroblasting Operations",

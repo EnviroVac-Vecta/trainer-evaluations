@@ -191,6 +191,15 @@ textarea{min-height:70px;resize:vertical}
 .rhead .lt{font-family:var(--f-mono);font-size:12px;color:var(--muted);min-width:22px}
 .rhead .tx{font-weight:700;font-size:16px}
 .talk{list-style:none;margin:-2px 0 0 32px;padding:0;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.iitem{padding:12px 16px;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(170px,1.4fr) 170px 165px 150px minmax(150px,1.6fr);gap:10px 14px;align-items:center}
+.sec > h3 + .iitem{border-top:0}
+.iitem.got{background:color-mix(in srgb,var(--brand) 6%,var(--surface))}
+.iitem .tx{font-weight:600}
+.ichk{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer;white-space:nowrap;min-height:40px}
+.ichk input{width:22px;height:22px;accent-color:var(--orange);flex:none}
+.iitem input[type=date],.iitem input[type=text]{min-height:40px;padding:7px 10px}
+.ihead{display:grid;grid-template-columns:minmax(170px,1.4fr) 170px 165px 150px minmax(150px,1.6fr);gap:14px;padding:8px 16px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--sunk)}
+@media (max-width:760px){.iitem{grid-template-columns:1fr 1fr}.iitem .tx{grid-column:1/-1}.iitem .note{grid-column:1/-1}.ihead{display:none}}
 .talk .t2{margin-left:22px}.talk .t3{margin-left:44px}
 .talk .lt{font-family:var(--f-mono);font-size:11px}
 .rrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-left:32px}
@@ -307,6 +316,7 @@ const levelClass = v => !v ? '' : v<=2 ? 'lv-need' : v===5 ? 'lv-top' : 'lv-ok';
 const RATE_HELP = 'Rate each item 1–5:  1–2 Needs Work · 3 Meets Standard · 4 Proficient · 5 Mastered. Bullets under an item are talking points.';
 // Which evaluations belong to each cohort.
 const COHORT_FORMS = [
+  ['Intake (all levels)', ['intake']],
   ['Tech I to Tech II', ['tech-i-to-tech-ii']],
   ['Tech II to Tech III', ['tech-ii-to-tech-iii','hazwoper-decontamination']],
   ['Tech III to Jr. Operator', ['operator-training','driver-part-1-pickup-trailer','driver-part-2-vacuum-truck']],
@@ -328,7 +338,17 @@ function fieldRole(name){
 }
 
 /* ---------- state ---------- */
-function blankState(formId){ return {formId, ratings:{}, comments:{}, extra:{}, notes:'', sigTrainer:null, sigEmployee:null}; }
+function blankState(formId){ return {formId, ratings:{}, comments:{}, extra:{}, intake:{}, notes:'', sigTrainer:null, sigEmployee:null}; }
+const isIntake = f => !!f && f.type==='intake';
+const INTAKE_HELP = 'For each training, check Previously Completed and/or Previously Observed, add the date it was observed, and any note.';
+function intakeRow(u){
+  const v=S.intake[u.key]||{}, k=esc(u.key);
+  return '<div class="iitem'+(v.done||v.obs?' got':'')+'" data-irow="'+k+'"><span class="tx">'+esc(u.title)+'</span>'+
+    '<label class="ichk"><input type="checkbox" data-ik="'+k+'" data-f="done"'+(v.done?' checked':'')+'> Previously completed</label>'+
+    '<label class="ichk"><input type="checkbox" data-ik="'+k+'" data-f="obs"'+(v.obs?' checked':'')+'> Previously observed</label>'+
+    '<input type="date" data-ik="'+k+'" data-f="date" value="'+esc(v.date||'')+'" aria-label="'+esc(u.title)+' observed date">'+
+    '<input type="text" class="note" data-ik="'+k+'" data-f="note" value="'+esc(v.note||'')+'" placeholder="Note / comment" aria-label="'+esc(u.title)+' note"></div>';
+}
 function saveDraft(){
   if(!S) return;
   const d = Object.assign({}, S, {trainer:$('trainer').value, employee:$('employee').value, office:$('office').value, date:$('date').value, location:$('location').value, savedAt:Date.now()});
@@ -370,7 +390,7 @@ function renderFormList(){
   const ids = (COHORT_FORMS.find(c=>c[0]===PICKED_COHORT)||[,[]])[1];
   $('formlist').innerHTML = ids.map(id=>FORMS.find(f=>f.id===id)).filter(Boolean).map(f=>{
     const n = buildModel(f).units.length;
-    return '<button type="button" class="formbtn" data-id="'+esc(f.id)+'"><b>'+esc(nice(f.title))+'</b>'+(f.subtitle?'<span>'+esc(f.subtitle)+'</span>':'')+'<em>'+f.sections.length+' sections · '+n+' items to rate</em></button>';
+    return '<button type="button" class="formbtn" data-id="'+esc(f.id)+'"><b>'+esc(nice(f.title))+'</b>'+(f.subtitle?'<span>'+esc(f.subtitle)+'</span>':'')+'<em>'+f.sections.length+(isIntake(f)?' levels · '+n+' trainings to check':' sections · '+n+' items to rate')+'</em></button>';
   }).join('');
 }
 function pickCohort(c){ PICKED_COHORT = c; lsSet(LS_COHORT, c); renderFormList(); }
@@ -403,16 +423,24 @@ function openForm(id, draft){
   if(!$('date').value) $('date').value = todayISO();
   const extras = FORM.header_fields.filter(h=>fieldRole(h)==='extra');
   let h = '<div class="card evalhead"><div><h2>'+esc(nice(FORM.title))+'</h2>'+(FORM.subtitle?'<div class="sub">'+esc(FORM.subtitle)+'</div>':'')+'</div><button type="button" class="btn" id="b-change">Choose a different evaluation</button></div>';
-  if(extras.length) h += '<div class="card grid">'+extras.map(x=>'<div class="field"><label>'+esc(x)+'</label><input type="'+(/date/i.test(x)?'date':'text')+'" data-extra="'+esc(x)+'" value="'+esc(S.extra[x]||'')+'"></div>').join('')+'</div>';
-  h += '<div class="instr">'+esc(RATE_HELP)+'</div>';
+  if(extras.length) h += '<div class="card grid">'+extras.map(x=>'<div class="field"><label>'+esc(x)+(isIntake(FORM)&&/level/i.test(x)?' <span class="req">*</span>':'')+'</label>'+
+    (FORM.levels && /level/i.test(x)
+      ? '<select data-extra="'+esc(x)+'"><option value="">Pick a level</option>'+FORM.levels.map(l=>'<option'+(S.extra[x]===l?' selected':'')+'>'+esc(l)+'</option>').join('')+'</select>'
+      : '<input type="'+(/date/i.test(x)?'date':'text')+'" data-extra="'+esc(x)+'" value="'+esc(S.extra[x]||'')+'">')+'</div>').join('')+'</div>';
+  h += '<div class="instr">'+esc(isIntake(FORM)? INTAKE_HELP : RATE_HELP)+'</div>';
   let lastPart = null;
-  FORM.sections.forEach((sec,si)=>{
+  if(isIntake(FORM)) FORM.sections.forEach((sec,si)=>{
+    h += '<div class="sec" data-sec="'+si+'"><h3><span>'+esc(sec.title)+'</span><span class="done" id="done-'+si+'"></span></h3>'+
+      '<div class="ihead"><span>Training</span><span>Completed</span><span>Observed</span><span>Observed date</span><span>Note / comment</span></div>'+
+      sec._units.map(intakeRow).join('')+'</div>';
+  });
+  else FORM.sections.forEach((sec,si)=>{
     if(sec.part && sec.part!==lastPart){ h+='<div class="part">'+esc(sec.part)+'</div>'; lastPart=sec.part; }
     h += '<div class="sec" data-sec="'+si+'"><h3><span>'+esc(sec.title)+'</span><span class="done" id="done-'+si+'"></span></h3>'+
       sec._units.map(itemBlock).join('')+
       '<div class="unit"><div class="field"><label>Comments</label><textarea data-comment="'+esc(sec._commentKey)+'">'+esc(S.comments[sec._commentKey]||'')+'</textarea></div></div></div>';
   });
-  const hasNotes = FORM.signoff_fields.some(f=>/notes/i.test(f));
+  const hasNotes = isIntake(FORM) || FORM.signoff_fields.some(f=>/notes/i.test(f));
   if(hasNotes) h += '<div class="card field"><label for="notes">Notes</label><textarea id="notes">'+esc(S.notes||'')+'</textarea></div>';
   h += '<div class="card scorebar" id="score"></div>';
   const empLabel = FORM.signoff_fields.find(f=>/trainee/i.test(f)) ? 'Trainee' : 'Employee';
@@ -458,19 +486,30 @@ $('evaluation').addEventListener('click', e=>{
 });
 $('evaluation').addEventListener('input', e=>{
   const t=e.target;
-  if(t.dataset.comment!==undefined){ S.comments[t.dataset.comment]=t.value; }
-  else if(t.dataset.extra!==undefined){ S.extra[t.dataset.extra]=t.value; }
+  if(t.dataset.ik!==undefined){
+    const k=t.dataset.ik, o=S.intake[k]||(S.intake[k]={});
+    o[t.dataset.f] = t.type==='checkbox' ? t.checked : t.value;
+    const row=t.closest('.iitem'); if(row) row.classList.toggle('got', !!(o.done||o.obs));
+    updateDone(+t.closest('.sec').dataset.sec); updateScore();
+  }
+  else if(t.dataset.comment!==undefined){ S.comments[t.dataset.comment]=t.value; }
+  else if(t.dataset.extra!==undefined){ S.extra[t.dataset.extra]=t.value; t.classList.remove('invalid'); }
   else if(t.id==='notes'){ S.notes=t.value; }
   queueSave();
 });
 ['trainer','employee','office','date','location'].forEach(k=>$(k).addEventListener('input', ()=>{ $(k).classList.remove('invalid'); queueSave(); }));
 
+const intakeGot = k => { const o=S.intake[k]||{}; return !!(o.done||o.obs); };
+function intakeCounts(){ const ks=MODEL.units.map(u=>u.key); return {count:ks.length, got:ks.filter(intakeGot).length}; }
 function allRatingKeys(){
+  if(isIntake(FORM)) return [];
   const keys=[];
   FORM.sections.forEach(sec=>sec._units.forEach(u=>keys.push(u.key)));
   return keys;
 }
 function updateDone(si){
+  if(isIntake(FORM)){ const ks=FORM.sections[si]._units.map(u=>u.key), d=ks.filter(intakeGot).length, el=$('done-'+si);
+    if(el){ el.textContent=d+'/'+ks.length+' completed or observed'; el.classList.toggle('ok', d===ks.length); } return; }
   const sec=FORM.sections[si]; const ks=sec._units.map(u=>u.key); const d=ks.filter(k=>S.ratings[k]).length;
   const vals=ks.map(k=>S.ratings[k]).filter(Boolean); const avg=vals.length? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1) : '';
   const el=$('done-'+si); if(!el) return; el.textContent=d+'/'+ks.length+' rated'+(avg?' · avg '+avg:''); el.classList.toggle('ok', d===ks.length);
@@ -481,6 +520,10 @@ function scores(){
   return {rated:vals.length, count:ks.length, total, max:ks.length*CONFIG.maxRating, avg: vals.length? total/vals.length : 0, needs:vals.filter(v=>v<=2).length};
 }
 function updateScore(){
+  if(isIntake(FORM)){ const c=intakeCounts(), lvl=Object.keys(S.extra).find(k=>/level/i.test(k));
+    $('score').innerHTML = '<div><span>Current level</span><br><b>'+esc((lvl&&S.extra[lvl])||'–')+'</b></div>'+
+      '<div><span>Completed or observed</span><br><b>'+c.got+'</b> <span>of '+c.count+'</span></div>'+
+      '<div><span>Not yet</span><br><b>'+(c.count-c.got)+'</b></div>'; return; }
   const s=scores();
   $('score').innerHTML = '<div><span>Total score</span><br><b>'+s.total+'</b> <span>of '+s.max+'</span></div>'+
     '<div><span>Average</span><br><b>'+(s.rated? s.avg.toFixed(2):'–')+'</b></div>'+
@@ -496,6 +539,7 @@ function validate(){
   if(!$('trainer').value.trim()) mark($('trainer'),'trainer');
   if(!$('employee').value.trim()) mark($('employee'),'employee');
   if(!$('date').value) mark($('date'),'date');
+  if(isIntake(FORM)){ const lv=document.querySelector('[data-extra][data-extra*="Level"]'); if(lv && !lv.value) mark(lv,'current employee level'); }
   const missing = allRatingKeys().filter(k=>!S.ratings[k]);
   missing.forEach(k=>{ const g=document.querySelector('[data-rate="'+CSS.escape(k)+'"]'); if(g){ g.classList.add('invalid'); if(!first) first=g; } });
   if(missing.length) problems.push(missing.length+' rating'+(missing.length>1?'s':''));
@@ -523,9 +567,25 @@ function buildPDF(){
   Object.keys(S.extra).forEach(k=>{ if(S.extra[k]) head.push([k, /date/i.test(k)?fmtDate(S.extra[k]):S.extra[k]]); });
   doc.autoTable({startY:y+12, body:head.map(r=>r.map(pdfText)), theme:'plain', styles:{fontSize:10,cellPadding:3}, columnStyles:{0:{fontStyle:'bold',cellWidth:110}}, margin:{left:M,right:M}});
   y = doc.lastAutoTable.finalY + 6;
-  { doc.setFontSize(8.5); doc.setTextColor(90); const lines=doc.splitTextToSize(RATE_HELP.replace(/ · /g,', '), W-2*M); doc.text(lines, M, y+10); y+=10+lines.length*10; doc.setTextColor(0); }
+  { doc.setFontSize(8.5); doc.setTextColor(90); const lines=doc.splitTextToSize((isIntake(FORM)?INTAKE_HELP:RATE_HELP).replace(/ · /g,', '), W-2*M); doc.text(lines, M, y+10); y+=10+lines.length*10; doc.setTextColor(0); }
   const indent = lv => '    '.repeat(lv);
-  FORM.sections.forEach(sec=>{
+  if(isIntake(FORM)){
+    const body=[];
+    FORM.sections.forEach(sec=>{
+      body.push([{content:sec.title, colSpan:5, styles:{fontStyle:'bold', fillColor:[238,244,252], textColor:[36,47,110]}}]);
+      sec._units.forEach(u=>{ const o=S.intake[u.key]||{}; body.push([u.title, o.done?'X':'', o.obs?'X':'', o.date?fmtDate(o.date):'', o.note||'']); });
+    });
+    doc.autoTable({startY:y+8, head:[['Training','Previously Completed','Previously Observed','Observed Date','Note / Comment']], body,
+      theme:'grid', margin:{left:M,right:M}, styles:{fontSize:9, cellPadding:4, valign:'top', lineColor:200},
+      headStyles:{fillColor:[51,73,158], textColor:255, fontSize:9},
+      columnStyles:{0:{cellWidth:150}, 1:{cellWidth:62, halign:'center'}, 2:{cellWidth:62, halign:'center'}, 3:{cellWidth:80}},
+      didParseCell:d=>{ d.cell.text = d.cell.text.map(pdfText); }});
+    y = doc.lastAutoTable.finalY;
+    const c=intakeCounts(), sum=[['Completed or observed', c.got+' of '+c.count]];
+    if(S.notes) sum.push(['Notes', S.notes]);
+    doc.autoTable({startY:y+14, body:sum.map(r=>r.map(pdfText)), theme:'grid', styles:{fontSize:10,cellPadding:5}, columnStyles:{0:{fontStyle:'bold',cellWidth:150}}, margin:{left:M,right:M}});
+  }
+  else FORM.sections.forEach(sec=>{
     const body=[];
     sec._units.forEach(u=>{
       const v=S.ratings[u.key];
@@ -547,12 +607,12 @@ function buildPDF(){
   });
   const sum = [['Total score', s.total+' of '+s.max],['Average score', s.rated? s.avg.toFixed(2):''],['Items rated Needs Work (1-2)', String(s.needs)]];
   if(S.notes) sum.push(['Notes', S.notes]);
-  doc.autoTable({startY:y+14, body:sum.map(r=>r.map(pdfText)), theme:'grid', styles:{fontSize:10,cellPadding:5}, columnStyles:{0:{fontStyle:'bold',cellWidth:130}}, margin:{left:M,right:M}});
+  if(!isIntake(FORM)) doc.autoTable({startY:y+14, body:sum.map(r=>r.map(pdfText)), theme:'grid', styles:{fontSize:10,cellPadding:5}, columnStyles:{0:{fontStyle:'bold',cellWidth:130}}, margin:{left:M,right:M}});
   y = doc.lastAutoTable.finalY + 20;
   if(y > doc.internal.pageSize.getHeight()-130){ doc.addPage(); y = 50; }
   const sigW = (W-2*M-30)/2, sigH = 70;
   const empLabel = FORM.signoff_fields.find(f=>/trainee/i.test(f)) ? 'Trainee' : 'Employee';
-  [['sigTrainer','Trainer: '+v('trainer'), M],['sigEmployee', empLabel+': '+v('employee'), M+sigW+30]].forEach(([k,label,x])=>{
+  [['sigTrainer',(isIntake(FORM)?'Skills Trainer: ':'Trainer: ')+v('trainer'), M],['sigEmployee', empLabel+': '+v('employee'), M+sigW+30]].forEach(([k,label,x])=>{
     if(S[k]) doc.addImage(S[k],'PNG',x,y,sigW,sigH);
     doc.setDrawColor(120); doc.line(x,y+sigH+2,x+sigW,y+sigH+2);
     doc.setFontSize(9); doc.text(label, x, y+sigH+14);
@@ -568,11 +628,13 @@ function fileName(){ return safe([$('employee').value, FORM.title, officeFolder(
 
 /* ---------- needs list (for email + log) ---------- */
 function needsList(){
+  if(isIntake(FORM)){ const out=[]; FORM.sections.forEach(sec=>sec._units.forEach(u=>{ if(!intakeGot(u.key)) out.push(sec.title+': '+u.title); })); return out; }
   const out=[];
   FORM.sections.forEach(sec=>sec._units.forEach(u=>{ const v=S.ratings[u.key]; if(v && v<=2) out.push(sec.title+': '+u.title+' ('+v+')'); }));
   return out;
 }
 function sectionScores(){
+  if(isIntake(FORM)) return FORM.sections.map(sec=>({section:sec.title, rating: sec._units.filter(u=>intakeGot(u.key)).length}));
   return FORM.sections.map(sec=>{ const vals=sec._units.map(u=>S.ratings[u.key]).filter(Boolean); return {section:sec.title, rating: vals.length? +(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2):null}; });
 }
 
@@ -595,7 +657,9 @@ $('b-send').addEventListener('click', async ()=>{
       trainer: $('trainer').value.trim(), employee: $('employee').value.trim(), employeeId: (ROSTER.find(r=>r.name===$('employee').value.trim())||{}).id || '',
       office: $('office').value.trim(), location: $('location').value.trim(), evaluationDate: $('date').value,
       submittedAt: new Date().toISOString(),
-      totalScore: s.total, maxScore: s.max, averageScore: +s.avg.toFixed(2), itemsNeedingWork: s.needs,
+      ...(isIntake(FORM)
+        ? (c=>({totalScore:c.got, maxScore:c.count, averageScore:0, itemsNeedingWork:c.count-c.got}))(intakeCounts())
+        : {totalScore: s.total, maxScore: s.max, averageScore: +s.avg.toFixed(2), itemsNeedingWork: s.needs}),
       needsList: needs.join('; '), sectionScores: sectionScores(), notes: S.notes||'',
       officeFolder: officeFolder(), fileName: fileName(), fileContent: pdf
     };
@@ -628,9 +692,10 @@ function setTab(t){
 ['eval','cur','past'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
 
 /* ---------- cohorts ---------- */
-const SHORT = {'24 or 40 Hour Hazwoper with Hands On':'HAZWOPER','Advance Blasting Classroom Training or HASC WJTA Online':'Adv. Blasting Class','Advance Blasting Hands On or WJTA Hands On Training':'Adv. Blasting Hands On','Advance Mechanics Training':'Adv. Mechanics','Basic Mechanical Troubleshooting':'Basic Mech. Troubleshoot','Basic Set Up, Troubleshooting and Equipment':'Basic Set-Up','CDL':'CDL','Defensive Driving - EnviroVac':'Defensive Driving','DiSC Profile':'DiSC','Driver Equipment Training':'Driver Equipment','Envirovac Hands On Training':'Hands On','HASC WJTA Online':'WJTA Online','Lancing Automation Training':'Lancing Automation','Level Up -Part One':'Level Up 1','Level Up-Part Two':'Level Up 2','Management and Leadership Skills for New Managers':'Mgmt & Leadership','OSHA 30hr':'OSHA 30','Operator Training':'Operator Training','Tech I to Tech II Skill Assessment':'Tech I to II','Tech II to Tech III Post Test Assessment':'Tech II to III Post Test','Tech II to Tech III Skill Assessment':'Tech II to III','WJTA Hands On Training':'WJTA Hands On'};
+const SHORT = {'Intake Form':'Intake Form','24 or 40 Hour Hazwoper with Hands On':'HAZWOPER','Advance Blasting Classroom Training or HASC WJTA Online':'Adv. Blasting Class','Advance Blasting Hands On or WJTA Hands On Training':'Adv. Blasting Hands On','Advance Mechanics Training':'Adv. Mechanics','Basic Mechanical Troubleshooting':'Basic Mech. Troubleshoot','Basic Set Up, Troubleshooting and Equipment':'Basic Set-Up','CDL':'CDL','Defensive Driving - EnviroVac':'Defensive Driving','DiSC Profile':'DiSC','Driver Equipment Training':'Driver Equipment','Envirovac Hands On Training':'Hands On','HASC WJTA Online':'WJTA Online','Lancing Automation Training':'Lancing Automation','Level Up -Part One':'Level Up 1','Level Up-Part Two':'Level Up 2','Management and Leadership Skills for New Managers':'Mgmt & Leadership','OSHA 30hr':'OSHA 30','Operator Training':'Operator Training','Tech I to Tech II Skill Assessment':'Tech I to II','Tech II to Tech III Post Test Assessment':'Tech II to III Post Test','Tech II to Tech III Skill Assessment':'Tech II to III','WJTA Hands On Training':'WJTA Hands On'};
 // Which training column an evaluation counts toward.
-const FORM_TO_TRAINING = {'operator-training':'Operator Training','driver-part-1-pickup-trailer':'Driver Equipment Training','driver-part-2-vacuum-truck':'Driver Equipment Training','pump-advance-mechanical':'Advance Mechanics Training','basic-mechanical-troubleshooting':'Basic Mechanical Troubleshooting','basic-setup-troubleshooting':'Basic Set Up, Troubleshooting and Equipment','hydroblasting-tube-bundle-automation':'Lancing Automation Training','hazwoper-decontamination':'24 or 40 Hour Hazwoper with Hands On','tech-i-to-tech-ii':'Tech I to Tech II Skill Assessment','tech-ii-to-tech-iii':'Tech II to Tech III Skill Assessment'};
+const INTAKE_COL = 'Intake Form';
+const FORM_TO_TRAINING = {'intake':INTAKE_COL,'operator-training':'Operator Training','driver-part-1-pickup-trailer':'Driver Equipment Training','driver-part-2-vacuum-truck':'Driver Equipment Training','pump-advance-mechanical':'Advance Mechanics Training','basic-mechanical-troubleshooting':'Basic Mechanical Troubleshooting','basic-setup-troubleshooting':'Basic Set Up, Troubleshooting and Equipment','hydroblasting-tube-bundle-automation':'Lancing Automation Training','hazwoper-decontamination':'24 or 40 Hour Hazwoper with Hands On','tech-i-to-tech-ii':'Tech I to Tech II Skill Assessment','tech-ii-to-tech-iii':'Tech II to Tech III Skill Assessment'};
 const nameKey = n => { n=String(n||''); if(n.includes(',')){ const [l,f]=n.split(','); n=f+' '+l; } const t=n.toLowerCase().replace(/[^a-z ]/g,' ').split(/\s+/).filter(x=>x.length>1); return t.length? t[0]+' '+t[t.length-1] : ''; };
 let HIST = null, SUB = new Map(); // SUB: nameKey -> Map(training -> {date, forms:Set})
 function addSubmission(row){
@@ -643,6 +708,11 @@ function addSubmission(row){
 const isDate = v => /^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(v||'');
 const shortD = iso => { if(!iso) return ''; const [y,m,d]=iso.slice(0,10).split('-'); return m+'/'+d; };
 function statusOf(p, t){
+  if(t===INTAKE_COL){
+    const sub = (SUB.get(nameKey(p.name))||new Map()).get(t);
+    if(sub) return {k:'c', label: sub.date? sub.date.slice(5,7)+'/'+sub.date.slice(8,10)+'/'+sub.date.slice(2,4) : 'Done', text:'Intake form sent from this site '+fmtDate(sub.date)};
+    return p.intake ? {k:'c', label:'Done', text:'Intake form entered (Trainer Tracker)'} : {k:'i', label:'Inc', text:'No intake form yet'};
+  }
   const v = (p.trainings||{})[t] || '';
   if(isDate(v)) return {k:'c', label:v, text:'Complete '+v};
   const sub = (SUB.get(nameKey(p.name))||new Map()).get(t);
@@ -655,7 +725,8 @@ function statusOf(p, t){
   if(!p.inHSIReport) return {k:'u', label:'?', text:'Not in the HSI cohort report'};
   return {k:'i', label:'Inc', text:'Incomplete'};
 }
-function required(p){
+function required(p){ return [INTAKE_COL].concat(requiredHSI(p)); }
+function requiredHSI(p){
   if(p.inHSIReport) return HIST.trainings.filter(t=>{ const v=(p.trainings[t]||'').toUpperCase(); return v && v!=='N/A'; });
   return (HIST.requiredByCohort[p.cohort]||[]).slice();
 }
@@ -795,7 +866,7 @@ async function exportCohorts(mode){
   btn.disabled = true; const old = btn.textContent; btn.textContent = 'Building…';
   try{
     const X = await loadXLSX(), {rows, cols} = st.last;
-    const cell = (p,r,t) => { if(!r.req.includes(t)) return 'Not required'; const s=statusOf(p,t); return s.k==='c' ? s.label : s.text; };
+    const cell = (p,r,t) => { if(!r.req.includes(t)) return 'Not required'; const s=statusOf(p,t); return s.k==='c' ? (s.label==='Done'?'Complete':s.label) : s.text; };
     const head = ['Employee','Employee ID','Office','Job Title','Cohort','Cohort Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing'].concat(cols);
     const data = rows.map(r=>{ const p=r.p;
       const missing = r.sts.filter(x=>!['c','s'].includes(x[1].k)).map(x=>SHORT[x[0]]||x[0]).join('; ');
@@ -838,7 +909,7 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
 (async()=>{
   try{ FORMS = (await getJSON('forms.json')).forms; }catch(e){ $('formlist').innerHTML='<div class="notice err">The evaluation forms could not be loaded. Reload the page.</div>'; return; }
   try{ Object.assign(CONFIG, await getJSON('config.json')); }catch(e){}
-  try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; }catch(e){}
+  try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; if(HIST && !HIST.trainings.includes(INTAKE_COL)) HIST.trainings.unshift(INTAKE_COL); }catch(e){}
   loadLog();
   renderFormList();
   $('cohortpick').addEventListener('click', e=>{ const b=e.target.closest('.cpick'); if(b) pickCohort(b.dataset.cohort); });
@@ -846,7 +917,7 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
   typeahead($('employee'), ()=>ROSTER.map(r=>({label:r.name, sub:[r.office,r.id].filter(Boolean).join(' · '), r})), o=>{ if(o.r && o.r.office) $('office').value=o.r.office;
     // jump to the employee's current cohort
     const k=nameKey(o.label), p=HIST && HIST.people.find(x=>nameKey(x.name)===k && x.employed && (!x.end || x.end>=todayISO()));
-    if(p && COHORT_FORMS.some(c=>c[0]===p.cohort) && $('evaluation').hidden) pickCohort(p.cohort); });
+    if(p && COHORT_FORMS.some(c=>c[0]===p.cohort) && $('evaluation').hidden && PICKED_COHORT!=='Intake (all levels)') pickCohort(p.cohort); });
   const t = lsGet(LS_TRAINER); if(t) $('trainer').value=t;
   $('date').value = todayISO();
   const d = JSON.parse(lsGet(LS_DRAFT)||'null');

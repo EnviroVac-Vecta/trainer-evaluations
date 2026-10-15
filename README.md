@@ -56,6 +56,7 @@ After adding or changing a secret: Actions → **Publish Evaluations Site** → 
 Copy the trigger URL into the `EVAL_LOG_URL` secret.
 
 ## Cohort tabs
+- **Intake Form** column (first column, for everyone): Done = the Trainer Tracker's "Intake Form Entered" says Complete (imported into `history.json`); a date = an intake form sent from this site.
 - Each morning the build reads the **Cohort Daily Report** (HSI Envirovac Cohort Status Report, pulled by the
   `hsi_cohort` bot) and updates `history.json`: completions, incomplete/delinquent items, cohort, and anyone new
   to a cohort. People stay in the history after they drop off the report, so past cohorts are kept.
@@ -96,7 +97,7 @@ Sample payload for step 2:
 
 ## How trainers use it
 1. Pick their name and the employee (start typing to filter), check the date and location.
-2. Pick the cohort tab (Tech I to Tech II, Tech II to Tech III, Tech III to Jr. Operator, Jr. Operator to Sr. Operator,
+2. Pick the cohort tab (Intake (all levels), Tech I to Tech II, Tech II to Tech III, Tech III to Jr. Operator, Jr. Operator to Sr. Operator,
    Sr. Operator to Crew Leader). Picking an employee jumps to their current cohort. Then pick the evaluation.
 3. Rate **every item** 1–5: 1–2 Needs Work, 3 Meets Standard, 4 Proficient, 5 Mastered. Bullets under an item are
    talking points. Items rated 1–2 are listed as "needing work" in the email, log and PDF. Add comments per section.
@@ -104,3 +105,6 @@ Sample payload for step 2:
 
 Unsent work is saved on the device automatically, so a dropped connection or closed tab doesn't lose it.
 **Download PDF** works any time, even without a connection to the flow.
+
+## Intake form
+The **Intake (all levels)** tab holds the Employee Intake Form for Initial Evaluation: current employee level, then every training from Tech I to Supervisor with Previously Completed, Previously Observed, Observed Date and a note. It sends like the evaluations (PDF to the office folder, Evaluation Log row with Total Score = trainings completed or observed, email).
