@@ -1211,50 +1211,6 @@
   "Tech II to Tech III Skill Assessment"
  ],
  "requiredByCohort": {
-  "Tech II to Tech III": [
-   "24 or 40 Hour Hazwoper with Hands On",
-   "Advance Blasting Classroom Training or HASC WJTA Online",
-   "Advance Blasting Hands On or WJTA Hands On Training",
-   "Defensive Driving - EnviroVac",
-   "Envirovac Hands On Training",
-   "Tech I to Tech II Skill Assessment",
-   "Tech II to Tech III Post Test Assessment",
-   "Tech II to Tech III Skill Assessment"
-  ],
-  "Tech III to Jr. Operator": [
-   "24 or 40 Hour Hazwoper with Hands On",
-   "Advance Blasting Classroom Training or HASC WJTA Online",
-   "Advance Blasting Hands On or WJTA Hands On Training",
-   "Defensive Driving - EnviroVac",
-   "Driver Equipment Training",
-   "Envirovac Hands On Training",
-   "Operator Training",
-   "Tech I to Tech II Skill Assessment",
-   "Tech II to Tech III Post Test Assessment",
-   "Tech II to Tech III Skill Assessment"
-  ],
-  "Tech I to Tech II": [
-   "Advance Blasting Classroom Training or HASC WJTA Online",
-   "Advance Blasting Hands On or WJTA Hands On Training",
-   "Defensive Driving - EnviroVac",
-   "Envirovac Hands On Training",
-   "Tech I to Tech II Skill Assessment"
-  ],
-  "Jr. Operator to Sr. Operator": [
-   "24 or 40 Hour Hazwoper with Hands On",
-   "Advance Blasting Classroom Training or HASC WJTA Online",
-   "Advance Blasting Hands On or WJTA Hands On Training",
-   "Basic Mechanical Troubleshooting",
-   "Basic Set Up, Troubleshooting and Equipment",
-   "CDL",
-   "Defensive Driving - EnviroVac",
-   "Driver Equipment Training",
-   "Envirovac Hands On Training",
-   "Operator Training",
-   "Tech I to Tech II Skill Assessment",
-   "Tech II to Tech III Post Test Assessment",
-   "Tech II to Tech III Skill Assessment"
-  ],
   "Sr. Operator to Crew Leader": [
    "24 or 40 Hour Hazwoper with Hands On",
    "Advance Blasting Classroom Training or HASC WJTA Online",
@@ -1269,6 +1225,18 @@
    "Lancing Automation Training",
    "Level Up -Part One",
    "OSHA 30hr",
+   "Operator Training",
+   "Tech I to Tech II Skill Assessment",
+   "Tech II to Tech III Post Test Assessment",
+   "Tech II to Tech III Skill Assessment"
+  ],
+  "Tech III to Jr. Operator": [
+   "24 or 40 Hour Hazwoper with Hands On",
+   "Advance Blasting Classroom Training or HASC WJTA Online",
+   "Advance Blasting Hands On or WJTA Hands On Training",
+   "Defensive Driving - EnviroVac",
+   "Driver Equipment Training",
+   "Envirovac Hands On Training",
    "Operator Training",
    "Tech I to Tech II Skill Assessment",
    "Tech II to Tech III Post Test Assessment",
@@ -1295,6 +1263,38 @@
    "Tech I to Tech II Skill Assessment",
    "Tech II to Tech III Post Test Assessment",
    "Tech II to Tech III Skill Assessment"
+  ],
+  "Tech II to Tech III": [
+   "24 or 40 Hour Hazwoper with Hands On",
+   "Advance Blasting Classroom Training or HASC WJTA Online",
+   "Advance Blasting Hands On or WJTA Hands On Training",
+   "Defensive Driving - EnviroVac",
+   "Envirovac Hands On Training",
+   "Tech I to Tech II Skill Assessment",
+   "Tech II to Tech III Post Test Assessment",
+   "Tech II to Tech III Skill Assessment"
+  ],
+  "Jr. Operator to Sr. Operator": [
+   "24 or 40 Hour Hazwoper with Hands On",
+   "Advance Blasting Classroom Training or HASC WJTA Online",
+   "Advance Blasting Hands On or WJTA Hands On Training",
+   "Basic Mechanical Troubleshooting",
+   "Basic Set Up, Troubleshooting and Equipment",
+   "CDL",
+   "Defensive Driving - EnviroVac",
+   "Driver Equipment Training",
+   "Envirovac Hands On Training",
+   "Operator Training",
+   "Tech I to Tech II Skill Assessment",
+   "Tech II to Tech III Post Test Assessment",
+   "Tech II to Tech III Skill Assessment"
+  ],
+  "Tech I to Tech II": [
+   "Advance Blasting Classroom Training or HASC WJTA Online",
+   "Advance Blasting Hands On or WJTA Hands On Training",
+   "Defensive Driving - EnviroVac",
+   "Envirovac Hands On Training",
+   "Tech I to Tech II Skill Assessment"
   ]
  },
  "people": [
@@ -1363,7 +1363,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Christopher Garrett",
@@ -1400,7 +1401,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Chucky Dingle",
@@ -1437,7 +1439,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Cortuz Javon Byrd",
@@ -1474,7 +1477,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Craig Watkins",
@@ -1511,7 +1515,8 @@
     "Tech II to Tech III Skill Assessment": "08/26/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Daniel Pitts",
@@ -1548,7 +1553,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Dario Olivas",
@@ -1600,7 +1606,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Darron Armstrong",
@@ -1637,7 +1644,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "DeMario Brown",
@@ -1674,7 +1682,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Demetrick Anywa Simmons",
@@ -1711,7 +1720,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Derrick Slay",
@@ -1748,7 +1758,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Dexter Henry",
@@ -1785,7 +1796,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Dominique Mitchell",
@@ -1822,7 +1834,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Donte Dorman",
@@ -1859,7 +1872,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Eduardo Fernandez G.",
@@ -1926,7 +1940,8 @@
     "Tech II to Tech III Skill Assessment": "08/13/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Eric Williams",
@@ -1963,7 +1978,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Forrest Harpole",
@@ -2000,7 +2016,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Frank C Shropshire",
@@ -2037,7 +2054,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Frank Cokley",
@@ -2074,7 +2092,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Hayden Patrick Toler",
@@ -2111,7 +2130,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Henry Moore",
@@ -2148,7 +2168,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Howard Shelly",
@@ -2185,7 +2206,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Israel Gonzalez Milian",
@@ -2222,7 +2244,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "JaNardreon Jones",
@@ -2259,7 +2282,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jalen J Clea",
@@ -2311,7 +2335,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jamaree Jenkins",
@@ -2378,7 +2403,8 @@
     "Tech II to Tech III Skill Assessment": "08/21/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jeffery Demon Miller",
@@ -2430,7 +2456,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jonathon L Roberts",
@@ -2467,7 +2494,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Kendall Blake Hardin",
@@ -2504,7 +2532,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Landon Ray Nye",
@@ -2556,7 +2585,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Luis Jose Sanchez Herndandez",
@@ -2608,7 +2638,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Marcus Geathers",
@@ -2660,7 +2691,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Matthew Murphy",
@@ -2712,7 +2744,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Micheal D Stevens",
@@ -2749,7 +2782,8 @@
     "Tech II to Tech III Skill Assessment": "08/26/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Mitchell Logan Mcmullin",
@@ -2786,7 +2820,8 @@
     "Tech II to Tech III Skill Assessment": "07/10/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Nelvin Eric Murray",
@@ -2823,7 +2858,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "NiTwaun Hill",
@@ -2860,7 +2896,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Quantez Foster",
@@ -2897,7 +2934,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Aug 2026"
+   "period": "Jan 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Reginald A Norfleet",
@@ -2949,7 +2987,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Robbion Carter",
@@ -2986,7 +3025,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Robert Lee Hoban",
@@ -3023,7 +3063,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Robert Nathaniel Cooper",
@@ -3060,7 +3101,8 @@
     "Tech II to Tech III Skill Assessment": "08/13/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Rodney Terrell Edwards",
@@ -3097,7 +3139,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Ron Black",
@@ -3134,7 +3177,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Samuel Laury",
@@ -3171,7 +3215,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Sean Mullenix",
@@ -3208,7 +3253,8 @@
     "Tech II to Tech III Skill Assessment": "08/17/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Sherman L Smith",
@@ -3245,7 +3291,8 @@
     "Tech II to Tech III Skill Assessment": "08/26/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Stafphon Williams",
@@ -3282,7 +3329,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Tate O Titus",
@@ -3319,7 +3367,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Terrence A Singleton",
@@ -3356,7 +3405,8 @@
     "Tech II to Tech III Skill Assessment": "08/17/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Tyler Tubby",
@@ -3393,7 +3443,8 @@
     "Tech II to Tech III Skill Assessment": "08/25/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Apr 2026"
+   "period": "Jan 2026 - Apr 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Walter Johnson",
@@ -3430,7 +3481,8 @@
     "Tech II to Tech III Skill Assessment": "08/17/26"
    },
    "inHSIReport": true,
-   "period": "Jan 2026 - Dec 2026"
+   "period": "Jan 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Adam C Hampton",
@@ -3467,7 +3519,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Dec 2026"
+   "period": "May 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Albert Deayne Buckley",
@@ -3504,7 +3557,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Alex Crews",
@@ -3541,7 +3595,8 @@
     "Tech II to Tech III Skill Assessment": "08/26/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Dec 2026"
+   "period": "May 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Anthony Paul Whaley",
@@ -3578,7 +3633,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Cavaris Rashad Lanier",
@@ -3615,7 +3671,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Dec 2026"
+   "period": "May 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Chance Hudson",
@@ -3667,7 +3724,8 @@
     "Tech II to Tech III Skill Assessment": "08/20/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Apr 2027"
+   "period": "May 2026 - Apr 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Cole Alexander Michelin",
@@ -3719,7 +3777,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Darius Mull",
@@ -3756,7 +3815,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "David Decker",
@@ -3793,7 +3853,8 @@
     "Tech II to Tech III Skill Assessment": "07/16/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "David Williams",
@@ -3830,7 +3891,8 @@
     "Tech II to Tech III Skill Assessment": "07/09/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Demetrios Petty",
@@ -3867,7 +3929,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Apr 2027"
+   "period": "May 2026 - Apr 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Derrion Nash",
@@ -3904,7 +3967,8 @@
     "Tech II to Tech III Skill Assessment": "07/08/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jonathan Ferguson",
@@ -3941,7 +4005,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jonathan Hunter Peterman",
@@ -3978,7 +4043,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Kevin Hardin",
@@ -4015,7 +4081,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Apr 2027"
+   "period": "May 2026 - Apr 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Kevin M McCall",
@@ -4052,7 +4119,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Dec 2026"
+   "period": "May 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Ladarius Andre Tate",
@@ -4089,7 +4157,8 @@
     "Tech II to Tech III Skill Assessment": "06/12/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Lennox Spann",
@@ -4126,7 +4195,8 @@
     "Tech II to Tech III Skill Assessment": "08/10/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Mercury Coleman",
@@ -4163,7 +4233,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Quinton Meaders",
@@ -4215,7 +4286,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Taiveon Cardel Robbins",
@@ -4267,7 +4339,8 @@
     "Tech II to Tech III Skill Assessment": "07/30/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "William Davis",
@@ -4304,7 +4377,8 @@
     "Tech II to Tech III Skill Assessment": "08/24/26"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Apr 2027"
+   "period": "May 2026 - Apr 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Yexi Carolina Rodriguez A.",
@@ -4341,7 +4415,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Zoriah Mobley",
@@ -4415,7 +4490,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "May 2026 - Aug 2026"
+   "period": "May 2026 - Aug 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Andrew Bryant",
@@ -4452,7 +4528,8 @@
     "Tech II to Tech III Skill Assessment": "09/29/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Antonio Alvin King",
@@ -4489,7 +4566,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Austin Williams",
@@ -4526,7 +4604,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Brian Randale Meaders",
@@ -4563,7 +4642,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Bryan Williamson",
@@ -4600,7 +4680,8 @@
     "Tech II to Tech III Skill Assessment": "09/30/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Bryson Malik Ellis",
@@ -4637,7 +4718,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Christian Cunningham",
@@ -4674,7 +4756,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Christian Michael Revelle",
@@ -4726,7 +4809,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Deandra Shondrecus Buck",
@@ -4778,7 +4862,8 @@
     "Tech II to Tech III Skill Assessment": "09/29/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Diquawn Washington",
@@ -4815,7 +4900,8 @@
     "Tech II to Tech III Skill Assessment": "10/06/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Donell Jerome White",
@@ -4852,7 +4938,8 @@
     "Tech II to Tech III Skill Assessment": "09/22/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Donnie Bush",
@@ -4889,7 +4976,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Edward D Logan",
@@ -4926,7 +5014,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Erick Slater",
@@ -4963,7 +5052,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Eugene Jamar Archie",
@@ -5000,7 +5090,8 @@
     "Tech II to Tech III Skill Assessment": "09/30/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Gary Davis",
@@ -5037,7 +5128,8 @@
     "Tech II to Tech III Skill Assessment": "09/30/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Glenn Jose Vivenes Villahermosa",
@@ -5074,7 +5166,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Gregory Partlow",
@@ -5111,7 +5204,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Hendrick Eugene Griffin",
@@ -5148,7 +5242,8 @@
     "Tech II to Tech III Skill Assessment": "09/30/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jacques Marquis Brown",
@@ -5185,7 +5280,8 @@
     "Tech II to Tech III Skill Assessment": "09/29/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jasmine Hairston",
@@ -5222,7 +5318,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Javario Rashad Sharp",
@@ -5259,7 +5356,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Jayvon Harris",
@@ -5311,7 +5409,8 @@
     "Tech II to Tech III Skill Assessment": "09/09/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Johnnie Wayne Kyles",
@@ -5348,7 +5447,8 @@
     "Tech II to Tech III Skill Assessment": "09/09/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Joshua De Andre Pridgen",
@@ -5385,7 +5485,8 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Kancey Lamont Bradshaw",
@@ -5422,7 +5523,8 @@
     "Tech II to Tech III Skill Assessment": "09/17/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Kieren Webb",
@@ -5459,7 +5561,8 @@
     "Tech II to Tech III Skill Assessment": "09/30/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Kimberly Yoselin Jimenez Torres",
@@ -5511,7 +5614,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Aug 2027"
+   "period": "Sep 2026 - Aug 2027",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Marcos Felton",
@@ -5548,7 +5652,8 @@
     "Tech II to Tech III Skill Assessment": "09/29/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Mykenya Cumbee",
@@ -5585,7 +5690,8 @@
     "Tech II to Tech III Skill Assessment": "09/17/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Noel Valenzuela",
@@ -5622,7 +5728,8 @@
     "Tech II to Tech III Skill Assessment": "Delinquent"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Quantin Cunningham",
@@ -5659,7 +5766,8 @@
     "Tech II to Tech III Skill Assessment": "10/02/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Raul A. Parra",
@@ -5711,7 +5819,8 @@
     "Tech II to Tech III Skill Assessment": "08/14/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Tennell Owens Anderson",
@@ -5748,7 +5857,8 @@
     "Tech II to Tech III Skill Assessment": "09/29/26"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   },
   {
    "name": "Travis Brunson",
@@ -5785,7 +5895,9 @@
     "Tech II to Tech III Skill Assessment": "N/A"
    },
    "inHSIReport": true,
-   "period": "Sep 2026 - Dec 2026"
+   "period": "Sep 2026 - Dec 2026",
+   "lastSeen": "2026-10-15"
   }
- ]
+ ],
+ "cohortReportDate": "2026-10-15"
 }
