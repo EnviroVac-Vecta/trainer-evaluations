@@ -94,8 +94,11 @@ Sample payload for step 2:
 
 ## How trainers use it
 1. Pick their name and the employee (start typing to filter), check the date and location.
-2. Pick the evaluation. Rate each section 1–5, tap **Needs?** on any item that needs more work, add comments.
-3. Trainer and employee sign with a finger. **Save & Send**.
+2. Pick the cohort tab (Tech I to Tech II, Tech II to Tech III, Tech III to Jr. Operator, Jr. Operator to Sr. Operator,
+   Sr. Operator to Crew Leader). Picking an employee jumps to their current cohort. Then pick the evaluation.
+3. Rate **every item** 1–5: 1–2 Needs Work, 3 Meets Standard, 4 Proficient, 5 Mastered. Bullets under an item are
+   talking points. Items rated 1–2 are listed as "needing work" in the email, log and PDF. Add comments per section.
+4. Trainer and employee sign with a finger. **Save & Send**.
 
 Unsent work is saved on the device automatically, so a dropped connection or closed tab doesn't lose it.
 **Download PDF** works any time, even without a connection to the flow.

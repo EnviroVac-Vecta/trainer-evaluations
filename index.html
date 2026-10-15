@@ -166,7 +166,26 @@ textarea{min-height:70px;resize:vertical}
 .detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:6px 2px}
 .detail h5{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .detail ul{margin:0;padding-left:18px;font-size:13px}
+.cpicks{display:flex;flex-wrap:wrap;gap:8px}
+.cpick{font:inherit;font-weight:700;border:1.5px solid var(--line);background:var(--surface);color:var(--brand);border-radius:999px;padding:9px 16px;cursor:pointer;min-height:42px}
+.cpick:hover{border-color:var(--brand)}
+.cpick[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:inset 0 -3px 0 var(--orange)}
+.ritem{padding:12px 16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.sec > h3 + .ritem{border-top:0}
+.ritem.flag{background:var(--needs-soft)}
+.rhead{display:flex;gap:10px;align-items:baseline}
+.rhead .lt{font-family:var(--f-mono);font-size:12px;color:var(--muted);min-width:22px}
+.rhead .tx{font-weight:700;font-size:16px}
+.talk{list-style:none;margin:-2px 0 0 32px;padding:0;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.talk .t2{margin-left:22px}.talk .t3{margin-left:44px}
+.talk .lt{font-family:var(--f-mono);font-size:11px}
+.rrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-left:32px}
+.lvltag{font-size:13px;font-weight:700;border-radius:999px;padding:4px 12px;background:var(--sunk);color:var(--muted)}
+.lvltag.lv-need{background:var(--orange);color:#fff}
+.lvltag.lv-ok{background:var(--accent-soft);color:var(--brand)}
+.lvltag.lv-top{background:color-mix(in srgb,var(--good) 20%,var(--surface));color:var(--good)}
 @media (max-width:600px){
+  .rrow,.talk{margin-left:0}
   .actionbar .msg{flex-basis:100%;order:-1}
   .actionbar .btn{flex:1}
   .stars button{width:42px;height:42px}
@@ -209,7 +228,9 @@ textarea{min-height:70px;resize:vertical}
     </div>
 
     <div id="choose">
-      <div class="flabel" style="margin-bottom:8px">Choose an evaluation</div>
+      <div class="flabel" style="margin-bottom:8px">Cohort</div>
+      <div class="cpicks" id="cohortpick" role="tablist" aria-label="Cohort"></div>
+      <div class="flabel" style="margin:14px 0 8px">Choose an evaluation</div>
       <div class="forms" id="formlist"></div>
     </div>
 
@@ -236,7 +257,7 @@ textarea{min-height:70px;resize:vertical}
 "use strict";
 const $ = id => document.getElementById(id);
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const LS_DRAFT = 'tev-draft-v1', LS_TRAINER = 'tev-trainer-v1';
+const LS_DRAFT = 'tev-draft-v2', LS_TRAINER = 'tev-trainer-v1';
 const ROMAN = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii','xiii','xiv','xv','xvi','xvii','xviii','xix','xx'];
 const letter = (lv,i) => lv===0 ? String.fromCharCode(97+(i%26))+(i>=26?String(Math.floor(i/26)):'') : lv===1 ? (ROMAN[i]||String(i+1)) : String(i+1);
 const todayISO = () => { const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
@@ -253,36 +274,33 @@ const nice = t => String(t||'').replace(/\s*→\s*/g,' to ');
 function itemText(it){ return typeof it==='string' ? it : it.text; }
 function itemSubs(it){ return typeof it==='string' ? [] : (it.subitems||[]); }
 function buildModel(form){
+  // Every main item gets its own 1-5 rating; bullets under it are talking points.
   const units = [];
   form.sections.forEach((sec,si)=>{
     const sk = 's'+si;
-    const flat = (list, lv, path, out) => list.forEach((it,i)=>{
-      const key = path+'.'+i, subs = itemSubs(it);
-      out.push({key, lv, letter:letter(lv,i), text:itemText(it), hasSubs:subs.length>0});
-      if(subs.length) flat(subs, lv+1, key, out);
+    const talk = (list, lv, out) => list.forEach((it,k)=>{ out.push({lv, letter:letter(lv,k), text:itemText(it)}); talk(itemSubs(it), lv+1, out); });
+    sec._units = sec.items.map((it,i)=>{
+      const subs=[]; talk(itemSubs(it), 1, subs);
+      const u = {key:sk+'.'+i, letter:letter(0,i), title:itemText(it), subs};
+      units.push(u); return u;
     });
-    sec._units = [];
-    if(sec.kind==='rated-per-item'){
-      sec.items.forEach((it,i)=>{
-        const items=[]; flat(itemSubs(it),1,sk+'.'+i,items);
-        const u = {key:sk+'.'+i, title:itemText(it), letter:letter(0,i), perItem:true, items, comments:false};
-        sec._units.push(u); units.push(u);
-      });
-      sec._commentKey = sk;
-    } else if(sec.layout==='row-per-topic'){
-      sec.items.forEach((it,i)=>{
-        const items=[]; flat(itemSubs(it),0,sk+'.'+i,items);
-        const u = {key:sk+'.'+i, title:itemText(it), letter:letter(0,i), items, comments:true, needsSelf:itemSubs(it).length===0};
-        sec._units.push(u); units.push(u);
-      });
-    } else {
-      const items=[]; flat(sec.items,0,sk,items);
-      const u = {key:sk, title:null, items, comments:true};
-      sec._units.push(u); units.push(u);
-    }
+    sec._commentKey = sk;
   });
   return {units};
 }
+const LEVELS = {1:'Needs Work',2:'Needs Work',3:'Meets Standard',4:'Proficient',5:'Mastered'};
+const levelClass = v => !v ? '' : v<=2 ? 'lv-need' : v===5 ? 'lv-top' : 'lv-ok';
+const RATE_HELP = 'Rate each item 1–5:  1–2 Needs Work · 3 Meets Standard · 4 Proficient · 5 Mastered. Bullets under an item are talking points.';
+// Which evaluations belong to each cohort.
+const COHORT_FORMS = [
+  ['Tech I to Tech II', ['tech-i-to-tech-ii']],
+  ['Tech II to Tech III', ['tech-ii-to-tech-iii','hazwoper-decontamination']],
+  ['Tech III to Jr. Operator', ['operator-training','driver-part-1-pickup-trailer','driver-part-2-vacuum-truck']],
+  ['Jr. Operator to Sr. Operator', ['basic-mechanical-troubleshooting','basic-setup-troubleshooting']],
+  ['Sr. Operator to Crew Leader', ['hydroblasting-tube-bundle-automation','pump-advance-mechanical']],
+];
+const LS_COHORT = 'tev-cohort-v1';
+let PICKED_COHORT = lsGet(LS_COHORT) || COHORT_FORMS[0][0];
 
 /* ---------- header field mapping ---------- */
 function fieldRole(name){
@@ -296,7 +314,7 @@ function fieldRole(name){
 }
 
 /* ---------- state ---------- */
-function blankState(formId){ return {formId, ratings:{}, needs:{}, comments:{}, extra:{}, notes:'', sigTrainer:null, sigEmployee:null}; }
+function blankState(formId){ return {formId, ratings:{}, comments:{}, extra:{}, notes:'', sigTrainer:null, sigEmployee:null}; }
 function saveDraft(){
   if(!S) return;
   const d = Object.assign({}, S, {trainer:$('trainer').value, employee:$('employee').value, office:$('office').value, date:$('date').value, location:$('location').value, savedAt:Date.now()});
@@ -333,11 +351,15 @@ function typeahead(input, getOptions, onPick){
 
 /* ---------- render form list ---------- */
 function renderFormList(){
-  $('formlist').innerHTML = FORMS.map(f=>{
+  if(!COHORT_FORMS.some(c=>c[0]===PICKED_COHORT)) PICKED_COHORT = COHORT_FORMS[0][0];
+  $('cohortpick').innerHTML = COHORT_FORMS.map(([c])=>'<button type="button" role="tab" class="cpick" data-cohort="'+esc(c)+'" aria-selected="'+(c===PICKED_COHORT)+'">'+esc(c)+'</button>').join('');
+  const ids = (COHORT_FORMS.find(c=>c[0]===PICKED_COHORT)||[,[]])[1];
+  $('formlist').innerHTML = ids.map(id=>FORMS.find(f=>f.id===id)).filter(Boolean).map(f=>{
     const n = buildModel(f).units.length;
-    return '<button type="button" class="formbtn" data-id="'+esc(f.id)+'"><b>'+esc(nice(f.title))+'</b>'+(f.subtitle?'<span>'+esc(f.subtitle)+'</span>':'')+'<em>'+f.sections.length+' sections · '+n+' rating'+(n===1?'':'s')+'</em></button>';
+    return '<button type="button" class="formbtn" data-id="'+esc(f.id)+'"><b>'+esc(nice(f.title))+'</b>'+(f.subtitle?'<span>'+esc(f.subtitle)+'</span>':'')+'<em>'+f.sections.length+' sections · '+n+' items to rate</em></button>';
   }).join('');
 }
+function pickCohort(c){ PICKED_COHORT = c; lsSet(LS_COHORT, c); renderFormList(); }
 $('formlist').addEventListener('click', e=>{
   const b=e.target.closest('.formbtn'); if(!b) return;
   const d = JSON.parse(lsGet(LS_DRAFT)||'null');
@@ -352,12 +374,12 @@ function ratingButtons(key, size){
   for(let n=CONFIG.minRating;n<=CONFIG.maxRating;n++) h+='<button type="button" role="radio" aria-pressed="'+(v===n)+'" aria-checked="'+(v===n)+'" aria-label="Rating '+n+'" data-v="'+n+'">'+n+'</button>';
   return h+'</div>';
 }
-function needsBtn(key){ const on=!!S.needs[key]; return '<button type="button" class="needs" aria-pressed="'+on+'" data-needs="'+esc(key)+'">'+(on?'Needs work':'Needs?')+'</button>'; }
-function itemRow(it, opts){
-  const on = !!S.needs[it.key];
-  const hdr = it.hasSubs;
-  return '<li class="item lv'+Math.min(it.lv,2)+(on?' flag':'')+(hdr?' hdr':'')+'" data-row="'+esc(it.key)+'"><span class="lt">'+esc(it.letter)+'.</span><span class="tx">'+esc(it.text)+'</span>'+
-    (opts && opts.rate ? '<span class="mini">'+ratingButtons(it.key)+'</span>' : '')+needsBtn(it.key)+'</li>';
+function levelTag(key){ const v=S.ratings[key]; return '<span class="lvltag '+levelClass(v)+'" id="lvl-'+esc(key)+'">'+(v?LEVELS[v]:'Not rated')+'</span>'; }
+function itemBlock(u){
+  const v=S.ratings[u.key];
+  return '<div class="ritem'+(v&&v<=2?' flag':'')+'" data-item="'+esc(u.key)+'"><div class="rhead"><span class="lt">'+esc(u.letter)+'.</span><span class="tx">'+esc(u.title)+'</span></div>'+
+    (u.subs.length?'<ul class="talk">'+u.subs.map(t=>'<li class="t'+Math.min(t.lv,3)+'"><span class="lt">'+esc(t.letter)+'.</span> '+esc(t.text)+'</li>').join('')+'</ul>':'')+
+    '<div class="rrow">'+ratingButtons(u.key)+levelTag(u.key)+'</div></div>';
 }
 function openForm(id, draft){
   FORM = FORMS.find(f=>f.id===id); if(!FORM) return;
@@ -368,24 +390,13 @@ function openForm(id, draft){
   const extras = FORM.header_fields.filter(h=>fieldRole(h)==='extra');
   let h = '<div class="card evalhead"><div><h2>'+esc(nice(FORM.title))+'</h2>'+(FORM.subtitle?'<div class="sub">'+esc(FORM.subtitle)+'</div>':'')+'</div><button type="button" class="btn" id="b-change">Choose a different evaluation</button></div>';
   if(extras.length) h += '<div class="card grid">'+extras.map(x=>'<div class="field"><label>'+esc(x)+'</label><input type="'+(/date/i.test(x)?'date':'text')+'" data-extra="'+esc(x)+'" value="'+esc(S.extra[x]||'')+'"></div>').join('')+'</div>';
-  h += '<div class="instr">'+esc(FORM.instructions || 'Rate each skill from 1 (low) to 5 (high). Tap "Needs?" on any item that needs more development, then add comments.')+'</div>';
+  h += '<div class="instr">'+esc(RATE_HELP)+'</div>';
   let lastPart = null;
   FORM.sections.forEach((sec,si)=>{
     if(sec.part && sec.part!==lastPart){ h+='<div class="part">'+esc(sec.part)+'</div>'; lastPart=sec.part; }
-    h += '<div class="sec" data-sec="'+si+'"><h3><span>'+esc(sec.title)+'</span><span class="done" id="done-'+si+'"></span></h3>';
-    if(sec.kind==='rated-per-item'){
-      h += '<div class="unit"><div class="scalehint">Rate each item 1–5.</div><ul class="items">'+
-        sec._units.map(u=>itemRow({key:u.key,lv:0,letter:u.letter,text:u.title},{rate:true})+u.items.map(it=>itemRow(it)).join('')).join('')+'</ul>'+
-        '<div class="field"><label>Comments</label><textarea data-comment="'+esc(sec._commentKey)+'">'+esc(S.comments[sec._commentKey]||'')+'</textarea></div></div>';
-    } else {
-      sec._units.forEach(u=>{
-        h += '<div class="unit">'+(u.title?'<h4>'+esc(u.letter)+'. '+esc(u.title)+'</h4>':'')+
-          '<div class="rate"><span class="flabel">Overall rating</span>'+ratingButtons(u.key)+(u.needsSelf?needsBtn(u.key):'')+'</div>'+
-          (u.items.length?'<ul class="items">'+u.items.map(it=>itemRow(it)).join('')+'</ul>':'')+
-          '<div class="field"><label>Comments</label><textarea data-comment="'+esc(u.key)+'">'+esc(S.comments[u.key]||'')+'</textarea></div></div>';
-      });
-    }
-    h += '</div>';
+    h += '<div class="sec" data-sec="'+si+'"><h3><span>'+esc(sec.title)+'</span><span class="done" id="done-'+si+'"></span></h3>'+
+      sec._units.map(itemBlock).join('')+
+      '<div class="unit"><div class="field"><label>Comments</label><textarea data-comment="'+esc(sec._commentKey)+'">'+esc(S.comments[sec._commentKey]||'')+'</textarea></div></div></div>';
   });
   const hasNotes = FORM.signoff_fields.some(f=>/notes/i.test(f));
   if(hasNotes) h += '<div class="card field"><label for="notes">Notes</label><textarea id="notes">'+esc(S.notes||'')+'</textarea></div>';
@@ -425,11 +436,9 @@ $('evaluation').addEventListener('click', e=>{
   if(r){ const g=r.parentElement, k=g.dataset.rate, v=+r.dataset.v;
     S.ratings[k] = S.ratings[k]===v ? undefined : v; if(S.ratings[k]===undefined) delete S.ratings[k];
     g.querySelectorAll('button').forEach(b=>{ const on=+b.dataset.v===S.ratings[k]; b.setAttribute('aria-pressed',on); b.setAttribute('aria-checked',on); });
+    const t=$('lvl-'+k), nv=S.ratings[k]; if(t){ t.className='lvltag '+levelClass(nv); t.textContent=nv?LEVELS[nv]:'Not rated'; }
+    const box=g.closest('.ritem'); if(box) box.classList.toggle('flag', !!nv && nv<=2);
     g.classList.remove('invalid'); updateScore(); updateDone(+g.closest('.sec').dataset.sec); queueSave(); return; }
-  const n = e.target.closest('[data-needs]');
-  if(n){ const k=n.dataset.needs; S.needs[k]=!S.needs[k]; if(!S.needs[k]) delete S.needs[k];
-    n.setAttribute('aria-pressed',!!S.needs[k]); n.textContent=S.needs[k]?'Needs work':'Needs?';
-    const row=n.closest('.item'); if(row) row.classList.toggle('flag',!!S.needs[k]); updateScore(); queueSave(); return; }
   const c = e.target.closest('[data-clear]');
   if(c){ const k=c.dataset.clear, cv=$('cv-'+k); cv.getContext('2d').clearRect(0,0,cv.width,cv.height); S[k]=null; queueSave(); }
 });
@@ -449,19 +458,20 @@ function allRatingKeys(){
 }
 function updateDone(si){
   const sec=FORM.sections[si]; const ks=sec._units.map(u=>u.key); const d=ks.filter(k=>S.ratings[k]).length;
-  const el=$('done-'+si); if(!el) return; el.textContent=d+'/'+ks.length+' rated'; el.classList.toggle('ok', d===ks.length);
+  const vals=ks.map(k=>S.ratings[k]).filter(Boolean); const avg=vals.length? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1) : '';
+  const el=$('done-'+si); if(!el) return; el.textContent=d+'/'+ks.length+' rated'+(avg?' · avg '+avg:''); el.classList.toggle('ok', d===ks.length);
 }
 function scores(){
   const ks=allRatingKeys(), vals=ks.map(k=>S.ratings[k]).filter(Boolean);
   const total=vals.reduce((a,b)=>a+b,0);
-  return {rated:vals.length, count:ks.length, total, max:ks.length*CONFIG.maxRating, avg: vals.length? total/vals.length : 0, needs:Object.keys(S.needs).length};
+  return {rated:vals.length, count:ks.length, total, max:ks.length*CONFIG.maxRating, avg: vals.length? total/vals.length : 0, needs:vals.filter(v=>v<=2).length};
 }
 function updateScore(){
   const s=scores();
   $('score').innerHTML = '<div><span>Total score</span><br><b>'+s.total+'</b> <span>of '+s.max+'</span></div>'+
     '<div><span>Average</span><br><b>'+(s.rated? s.avg.toFixed(2):'–')+'</b></div>'+
     '<div><span>Rated</span><br><b>'+s.rated+'</b> <span>of '+s.count+'</span></div>'+
-    '<div><span>Items needing work</span><br><b>'+s.needs+'</b></div>';
+    '<div><span>Needs Work (1–2)</span><br><b>'+s.needs+'</b></div>';
 }
 
 /* ---------- validation ---------- */
@@ -491,7 +501,7 @@ function buildPDF(){
   const W = doc.internal.pageSize.getWidth(), M = 40;
   const s = scores();
   const v = k=>$(k).value.trim();
-  doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text(FORM.title, M, 50);
+  doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(36,47,110); doc.text(nice(FORM.title), M, 50); doc.setTextColor(0);
   let y = 50;
   if(FORM.subtitle){ doc.setFont('helvetica','normal'); doc.setFontSize(11); y+=16; doc.text(FORM.subtitle, M, y); }
   doc.setFontSize(8); doc.setTextColor(110); doc.text('EnviroVac · Let\'s Level Up · '+(FORM.version||''), W-M, 50, {align:'right'}); doc.setTextColor(0);
@@ -499,35 +509,29 @@ function buildPDF(){
   Object.keys(S.extra).forEach(k=>{ if(S.extra[k]) head.push([k, /date/i.test(k)?fmtDate(S.extra[k]):S.extra[k]]); });
   doc.autoTable({startY:y+12, body:head.map(r=>r.map(pdfText)), theme:'plain', styles:{fontSize:10,cellPadding:3}, columnStyles:{0:{fontStyle:'bold',cellWidth:110}}, margin:{left:M,right:M}});
   y = doc.lastAutoTable.finalY + 6;
-  if(FORM.instructions){ doc.setFontSize(8.5); doc.setTextColor(90); const lines=doc.splitTextToSize(FORM.instructions, W-2*M); doc.text(lines, M, y+10); y+=10+lines.length*10; doc.setTextColor(0); }
-  const needsMark = k => S.needs[k] ? 'NEEDS' : '';
+  { doc.setFontSize(8.5); doc.setTextColor(90); const lines=doc.splitTextToSize(RATE_HELP.replace(/ · /g,', '), W-2*M); doc.text(lines, M, y+10); y+=10+lines.length*10; doc.setTextColor(0); }
   const indent = lv => '    '.repeat(lv);
   FORM.sections.forEach(sec=>{
     const body=[];
-    if(sec.kind==='rated-per-item'){
-      sec._units.forEach(u=>{
-        body.push([{content:u.letter+'. '+u.title, styles:{fontStyle:'normal'}}, String(S.ratings[u.key]||''), needsMark(u.key)]);
-        u.items.forEach(it=>body.push([indent(it.lv)+it.letter+'. '+it.text,'',needsMark(it.key)]));
-      });
-      const c=S.comments[sec._commentKey]; if(c) body.push([{content:'Comments: '+c, colSpan:3, styles:{fontStyle:'italic'}}]);
-    } else {
-      sec._units.forEach(u=>{
-        if(u.title) body.push([{content:u.letter+'. '+u.title, styles:{fontStyle:'bold'}}, String(S.ratings[u.key]||''), u.needsSelf?needsMark(u.key):'']);
-        else body.push([{content:'Overall rating', styles:{fontStyle:'bold'}}, String(S.ratings[u.key]||''), '']);
-        u.items.forEach(it=>body.push([indent(it.lv+(u.title?1:0))+it.letter+'. '+it.text,'',needsMark(it.key)]));
-        const c=S.comments[u.key]; if(c) body.push([{content:'Comments: '+c, colSpan:3, styles:{fontStyle:'italic'}}]);
-      });
-    }
+    sec._units.forEach(u=>{
+      const v=S.ratings[u.key];
+      body.push([{content:u.letter+'. '+u.title, styles:{fontStyle:'bold'}}, String(v||''), v?LEVELS[v]:'']);
+      u.subs.forEach(t=>body.push([{content:indent(t.lv)+t.letter+'. '+t.text, styles:{textColor:[95,95,105], fontSize:8.5}}, '', '']));
+    });
+    const vals=sec._units.map(u=>S.ratings[u.key]).filter(Boolean);
+    if(vals.length) body.push([{content:'Section average', styles:{fontStyle:'italic'}}, (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2), '']);
+    const c=S.comments[sec._commentKey]; if(c) body.push([{content:'Comments: '+c, colSpan:3, styles:{fontStyle:'italic'}}]);
     doc.autoTable({
-      startY:y+8, head:[[ (sec.part? sec.part+' — ':'') + sec.title, 'Rating', 'Needs']], body,
+      startY:y+8, head:[[ (sec.part? sec.part+' — ':'') + sec.title, 'Rating', 'Level']], body,
       theme:'grid', margin:{left:M,right:M}, styles:{fontSize:9, cellPadding:4, valign:'top', lineColor:200},
-      headStyles:{fillColor:[15,95,138], textColor:255, fontSize:10},
-      columnStyles:{1:{cellWidth:48, halign:'center'}, 2:{cellWidth:56, halign:'center', textColor:[192,84,26], fontStyle:'bold'}},
-      didParseCell:d=>{ d.cell.text = d.cell.text.map(pdfText); }
+      headStyles:{fillColor:[51,73,158], textColor:255, fontSize:10},
+      columnStyles:{1:{cellWidth:44, halign:'center'}, 2:{cellWidth:84, halign:'center'}},
+      didParseCell:d=>{ d.cell.text = d.cell.text.map(pdfText);
+        if(d.section==='body' && d.column.index===2 && d.cell.raw==='Needs Work'){ d.cell.styles.textColor=[240,80,32]; d.cell.styles.fontStyle='bold'; } }
     });
     y = doc.lastAutoTable.finalY;
   });
-  const sum = [['Total score', s.total+' of '+s.max],['Average score', s.rated? s.avg.toFixed(2):''],['Items needing work', String(s.needs)]];
+  const sum = [['Total score', s.total+' of '+s.max],['Average score', s.rated? s.avg.toFixed(2):''],['Items rated Needs Work (1-2)', String(s.needs)]];
   if(S.notes) sum.push(['Notes', S.notes]);
   doc.autoTable({startY:y+14, body:sum.map(r=>r.map(pdfText)), theme:'grid', styles:{fontSize:10,cellPadding:5}, columnStyles:{0:{fontStyle:'bold',cellWidth:130}}, margin:{left:M,right:M}});
   y = doc.lastAutoTable.finalY + 20;
@@ -551,10 +555,7 @@ function fileName(){ return safe([$('employee').value, FORM.title, officeFolder(
 /* ---------- needs list (for email + log) ---------- */
 function needsList(){
   const out=[];
-  FORM.sections.forEach(sec=>sec._units.forEach(u=>{
-    if(S.needs[u.key]) out.push(sec.title+': '+u.title);
-    u.items.forEach(it=>{ if(S.needs[it.key]) out.push(sec.title+(u.title&&!u.perItem?' › '+u.title:'')+(u.perItem?' › '+u.title:'')+': '+it.text); });
-  }));
+  FORM.sections.forEach(sec=>sec._units.forEach(u=>{ const v=S.ratings[u.key]; if(v && v<=2) out.push(sec.title+': '+u.title+' ('+v+')'); }));
   return out;
 }
 function sectionScores(){
@@ -747,8 +748,12 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
   try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; }catch(e){}
   loadLog();
   renderFormList();
+  $('cohortpick').addEventListener('click', e=>{ const b=e.target.closest('.cpick'); if(b) pickCohort(b.dataset.cohort); });
   typeahead($('trainer'), ()=>(CONFIG.trainers||[]).map(t=>({label:t})), null);
-  typeahead($('employee'), ()=>ROSTER.map(r=>({label:r.name, sub:[r.office,r.id].filter(Boolean).join(' · '), r})), o=>{ if(o.r && o.r.office) $('office').value=o.r.office; });
+  typeahead($('employee'), ()=>ROSTER.map(r=>({label:r.name, sub:[r.office,r.id].filter(Boolean).join(' · '), r})), o=>{ if(o.r && o.r.office) $('office').value=o.r.office;
+    // jump to the employee's current cohort
+    const k=nameKey(o.label), p=HIST && HIST.people.find(x=>nameKey(x.name)===k && x.employed && (!x.end || x.end>=todayISO()));
+    if(p && COHORT_FORMS.some(c=>c[0]===p.cohort) && $('evaluation').hidden) pickCohort(p.cohort); });
   const t = lsGet(LS_TRAINER); if(t) $('trainer').value=t;
   $('date').value = todayISO();
   const d = JSON.parse(lsGet(LS_DRAFT)||'null');
