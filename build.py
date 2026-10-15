@@ -34,6 +34,9 @@ def norm(text):
     return "".join(ch for ch in str(text or "").lower() if ch.isalnum())
 
 
+# HSI system/test logins that aren't real employees.
+SYSTEM_ACCOUNT = re.compile(r"donesafe|^test\b|\btest student\b|limited access", re.I)
+
 ROSTER_COLUMNS = {
     "name": ["name", "employeename", "employee", "fullname", "trainee", "membername"],
     "first": ["firstname", "first"],
@@ -84,7 +87,7 @@ def read_roster(xlsx_bytes):
                     if "@" in emp_id:
                         emp_id = ""
                     name = get("name") or (get("first") + " " + last).strip()
-                    if not name:
+                    if not name or SYSTEM_ACCOUNT.search(name):
                         continue
                     key = emp_id or name.lower()
                     people.setdefault(key, {"name": name, "id": emp_id, "office": get("office")})
