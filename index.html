@@ -146,7 +146,7 @@ textarea{min-height:70px;resize:vertical}
 .mslist label:hover{background:var(--sunk)}
 .mslist input{width:18px;height:18px;accent-color:var(--orange);flex:none}
 .mslist .sub{margin-left:auto;font-size:12px;color:var(--muted)}
-.clearf{align-self:end;min-height:46px}
+.fbtns{display:flex;gap:8px;align-self:end}.fbtns .btn{flex:1;padding:12px 10px;white-space:nowrap}
 .cbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:5px}
@@ -715,7 +715,8 @@ function renderCohorts(mode){
       selectHTML(mode+'-cohort','Cohort',uniq(p=>p.cohort),st.cohort,'All cohorts')+
       selectHTML(mode+'-period','Cohort period',uniq(periodLabel),st.period,'All periods')+
       '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option></select></div>'+
-      '<button type="button" class="btn clearf" id="'+mode+'-clear">Clear filters</button>'+
+      '<div class="fbtns"><button type="button" class="btn" id="'+mode+'-clear">Clear filters</button>'+
+      '<button type="button" class="btn primary" id="'+mode+'-export">Export to Excel</button></div>'+
       '</div><div class="cbar"><span class="count"><span id="'+mode+'-count"></span>'+(HIST.cohortReportDate?' · HSI cohort report from '+esc(fmtDate(HIST.cohortReportDate)):' · from the Trainer Tracker import')+'</span><div class="legend">'+
       '<span><i class="st c">date</i> Complete</span><span><i class="st s">Sub</i> Submitted, waiting for HSI</span><span><i class="st i">Inc</i> Incomplete</span><span><i class="st d">Delinq</i> Delinquent</span><span><i class="st u">?</i> Not in HSI report</span>'+
       '<span><i class="st" style="background:color-mix(in srgb,#e5484d 18%,var(--surface))">&nbsp;&nbsp;&nbsp;</i> Not recommended for promotion</span></div></div>'+
@@ -724,6 +725,7 @@ function renderCohorts(mode){
     ['cohort','period','show'].forEach(k=>$(mode+'-'+k).addEventListener('change',e=>{ st[k]=e.target.value; drawCohortTable(mode); }));
     const redraw=()=>drawCohortTable(mode);
     const syncs=[msWire(mode+'-ees',st.ees,'All employees','employees',redraw), msWire(mode+'-offices',st.offices,'All offices','offices',redraw), msWire(mode+'-trainings',st.trainings,'All trainings','trainings',redraw)];
+    $(mode+'-export').addEventListener('click',()=>exportCohorts(mode));
     $(mode+'-clear').addEventListener('click',()=>{ st.q=''; st.cohort=''; st.period=''; st.show='all'; st.ees.clear(); st.offices.clear(); st.trainings.clear();
       $(mode+'-q').value=''; ['cohort','period'].forEach(k=>$(mode+'-'+k).value=''); $(mode+'-show').value='all'; syncs.forEach(f=>f()); redraw(); });
     el.querySelector('table').addEventListener('click',e=>{
@@ -776,8 +778,47 @@ function drawCohortTable(mode){
     }
     return h;
   }).join('');
+  st.last = {rows, cols};
   el.querySelector('tbody').innerHTML = body || '<tr><td colspan="'+(3+cols.length)+'"><div class="empty">No one matches these filters.</div></td></tr>';
   $(mode+'-count').textContent = rows.length+' '+(rows.length===1?'person':'people')+' · '+rows.filter(r=>r.total&&r.done===r.total).length+' all complete · '+rows.filter(r=>r.done<r.total).length+' missing items';
+}
+/* ---------- export what the table shows ---------- */
+let xlsxLib = null;
+const showMsg = (mode,msg) => { const c=$(mode+'-count'); if(c){ c.textContent=msg; c.style.color='var(--orange)'; setTimeout(()=>{ c.style.color=''; drawCohortTable(mode); }, 5000); } };
+function loadXLSX(){
+  if(window.XLSX) return Promise.resolve(window.XLSX);
+  return xlsxLib || (xlsxLib = new Promise((ok,bad)=>{ const sc=document.createElement('script'); sc.src='vendor/xlsx.full.min.js'; sc.onload=()=>ok(window.XLSX); sc.onerror=()=>{ xlsxLib=null; bad(new Error('Excel library did not load')); }; document.head.appendChild(sc); }));
+}
+async function exportCohorts(mode){
+  const st = CV[mode], btn = $(mode+'-export');
+  if(!st.last || !st.last.rows.length){ showMsg(mode,'No one matches these filters, so there is nothing to export.'); return; }
+  btn.disabled = true; const old = btn.textContent; btn.textContent = 'Building…';
+  try{
+    const X = await loadXLSX(), {rows, cols} = st.last;
+    const cell = (p,r,t) => { if(!r.req.includes(t)) return 'Not required'; const s=statusOf(p,t); return s.k==='c' ? s.label : s.text; };
+    const head = ['Employee','Employee ID','Office','Job Title','Cohort','Cohort Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing'].concat(cols);
+    const data = rows.map(r=>{ const p=r.p;
+      const missing = r.sts.filter(x=>!['c','s'].includes(x[1].k)).map(x=>SHORT[x[0]]||x[0]).join('; ');
+      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing].concat(cols.map(t=>cell(p,r,t)));
+    });
+    const ws = X.utils.aoa_to_sheet([head].concat(data));
+    ws['!cols'] = head.map((h,i)=>({wch: i===0?26 : i===12?40 : Math.min(28, Math.max(10, String(h).length+2))}));
+    ws['!autofilter'] = {ref: X.utils.encode_range({s:{r:0,c:0}, e:{r:data.length, c:head.length-1}})};
+    for(let i=1;i<=data.length;i++){ const a=X.utils.encode_cell({r:i,c:10}); if(ws[a]) ws[a].z='0%'; }
+    const list = set => set.size ? [...set].join(', ') : 'All';
+    const show = {all:'Everyone',missing:'Missing items',complete:'All complete',submitted:'Has submitted',nr:'Not recommended'}[st.show];
+    const info = X.utils.aoa_to_sheet([
+      ['Tab', mode==='cur'?'Current Cohorts':'Past Cohorts'], ['Exported', new Date().toLocaleString('en-US')],
+      ['HSI cohort report from', HIST.cohortReportDate? fmtDate(HIST.cohortReportDate) : 'Trainer Tracker import'],
+      ['Find a person', st.q||'—'], ['Employees', list(st.ees)], ['Office', list(st.offices)], ['Training', list(st.trainings)],
+      ['Cohort', st.cohort||'All'], ['Cohort period', st.period||'All'], ['Show', show], ['People', data.length]]);
+    info['!cols'] = [{wch:24},{wch:80}];
+    const wb = X.utils.book_new();
+    X.utils.book_append_sheet(wb, ws, 'Cohort Status');
+    X.utils.book_append_sheet(wb, info, 'Filters');
+    X.writeFile(wb, (mode==='cur'?'Current':'Past')+' Cohorts - '+todayISO()+'.xlsx');
+  }catch(e){ showMsg(mode,'Export failed: '+e.message); }
+  finally{ btn.disabled = false; btn.textContent = old; }
 }
 async function loadLog(){
   if(!CONFIG.logUrl) return;
