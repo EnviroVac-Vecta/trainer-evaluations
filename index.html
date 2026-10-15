@@ -131,8 +131,22 @@ textarea{min-height:70px;resize:vertical}
 .evalpanel:not([hidden]){display:flex;flex-direction:column;gap:16px;width:100%;max-width:980px;margin:0 auto}
 .cohortpanel{flex-direction:column;gap:12px}
 .cohortpanel:not([hidden]){display:flex}
-.cfilters{display:grid;grid-template-columns:minmax(200px,2fr) repeat(4,minmax(140px,1fr));gap:10px;align-items:end}
-@media (max-width:900px){.cfilters{grid-template-columns:1fr 1fr}.cfilters .q{grid-column:1/-1}}
+.cfilters{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;align-items:end}
+@media (max-width:900px){.cfilters{grid-template-columns:1fr 1fr}}
+.msbtn{width:100%;min-height:46px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 34px 10px 12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;color:var(--fg)}
+.msbtn::after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg)}
+.msbtn.on{border-color:var(--brand);box-shadow:inset 3px 0 0 var(--orange);font-weight:600}
+.mspop{position:absolute;top:100%;left:0;z-index:40;margin-top:4px;width:max(100%,280px);max-width:calc(100vw - 32px);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.18);padding:8px;display:flex;flex-direction:column;gap:6px}
+.mspop[hidden]{display:none}
+.mspop input[type=search]{min-height:38px;padding:7px 10px}
+.msacts{display:flex;gap:6px}
+.msacts button{flex:1;border:1px solid var(--line);background:var(--sunk);border-radius:var(--radius);padding:6px 8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--brand)}
+.mslist{max-height:280px;overflow:auto;display:flex;flex-direction:column}
+.mslist label{display:flex;gap:8px;align-items:center;padding:7px 6px;border-radius:6px;cursor:pointer;font-size:14px;text-transform:none;letter-spacing:0;font-weight:400;color:var(--fg)}
+.mslist label:hover{background:var(--sunk)}
+.mslist input{width:18px;height:18px;accent-color:var(--orange);flex:none}
+.mslist .sub{margin-left:auto;font-size:12px;color:var(--muted)}
+.clearf{align-self:end;min-height:46px}
 .cbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:5px}
@@ -656,7 +670,31 @@ function summarize(p){
   const done = sts.filter(x=>x[1].k==='c').length, sub = sts.filter(x=>x[1].k==='s').length;
   return {req, sts, done, sub, total:req.length, pct: req.length? done/req.length : 0};
 }
-const CV = {cur:{q:'',office:'',cohort:'',period:'',show:'all',sort:'name',open:new Set()}, past:{q:'',office:'',cohort:'',period:'',show:'all',sort:'name',open:new Set()}};
+const newCV = () => ({q:'',ees:new Set(),offices:new Set(),trainings:new Set(),cohort:'',period:'',show:'all',sort:'name',open:new Set()});
+const CV = {cur:newCV(), past:newCV()};
+// Multi-select dropdown: a button that opens a searchable checkbox list.
+function msHTML(id,label,opts,allText){
+  return '<div class="field ms" id="'+id+'"><label for="'+id+'-b">'+label+'</label><button type="button" class="msbtn" id="'+id+'-b" aria-haspopup="true" aria-expanded="false">'+allText+'</button>'+
+    '<div class="mspop" hidden><input type="search" placeholder="Search" aria-label="Search '+label+'"><div class="msacts"><button type="button" data-ms="all">Select shown</button><button type="button" data-ms="none">Clear</button></div>'+
+    '<div class="mslist">'+opts.map(o=>'<label data-t="'+esc((o.v+' '+(o.sub||'')).toLowerCase())+'"><input type="checkbox" value="'+esc(o.v)+'"><span>'+esc(o.v)+'</span>'+(o.sub?'<span class="sub">'+esc(o.sub)+'</span>':'')+'</label>').join('')+'</div></div></div>';
+}
+function msWire(id,set,allText,many,onChange){
+  const root=$(id), btn=$(id+'-b'), pop=root.querySelector('.mspop'), q=pop.querySelector('input[type=search]');
+  const boxes=[...pop.querySelectorAll('.mslist input')];
+  const sync=()=>{ boxes.forEach(b=>b.checked=set.has(b.value)); const n=set.size; btn.textContent = !n? allText : n===1? [...set][0] : n+' '+many; btn.classList.toggle('on',n>0); };
+  const close=()=>{ pop.hidden=true; btn.setAttribute('aria-expanded','false'); };
+  btn.addEventListener('click',()=>{ const open=pop.hidden; document.querySelectorAll('.mspop').forEach(x=>x.hidden=true); pop.hidden=!open; btn.setAttribute('aria-expanded',String(open)); if(open){ pop.style.left=''; pop.style.right=''; const r=pop.getBoundingClientRect(); if(r.right>innerWidth-8){ pop.style.left='auto'; pop.style.right='0'; } q.value=''; filt(); q.focus(); } });
+  const filt=()=>{ const t=q.value.trim().toLowerCase(); pop.querySelectorAll('.mslist label').forEach(l=>l.hidden = !!t && !l.dataset.t.includes(t)); };
+  q.addEventListener('input',filt);
+  pop.addEventListener('change',e=>{ const b=e.target; if(!b.matches('.mslist input')) return; b.checked? set.add(b.value) : set.delete(b.value); sync(); onChange(); });
+  pop.addEventListener('click',e=>{ const a=e.target.closest('[data-ms]'); if(!a) return;
+    if(a.dataset.ms==='none') set.clear(); else boxes.forEach(b=>{ if(!b.closest('label').hidden) set.add(b.value); });
+    sync(); onChange(); });
+  root.addEventListener('keydown',e=>{ if(e.key==='Escape'){ close(); btn.focus(); } });
+  document.addEventListener('click',e=>{ if(!root.contains(e.target)) close(); });
+  sync();
+  return sync;
+}
 function cohortPeople(mode){
   const today = todayISO();
   const current = p => p.employed && (p.end ? p.end>=today : !!p.inHSIReport);
@@ -671,16 +709,23 @@ function renderCohorts(mode){
   if(!el.querySelector('.cfilters')){
     el.innerHTML = '<div class="cfilters">'+
       '<div class="field q"><label for="'+mode+'-q">Find a person</label><input type="search" id="'+mode+'-q" placeholder="Name or ID"></div>'+
-      selectHTML(mode+'-office','Office',uniq(p=>p.office),st.office,'All offices')+
+      msHTML(mode+'-ees','Employees',[...all].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>({v:p.name,sub:p.office})).filter((o,i,a)=>!i||a[i-1].v!==o.v),'All employees')+
+      msHTML(mode+'-offices','Office',uniq(p=>p.office).map(v=>({v})),'All offices')+
+      msHTML(mode+'-trainings','Training',HIST.trainings.filter(t=>all.some(p=>required(p).includes(t))).map(v=>({v,sub:SHORT[v]&&SHORT[v]!==v?SHORT[v]:''})),'All trainings')+
       selectHTML(mode+'-cohort','Cohort',uniq(p=>p.cohort),st.cohort,'All cohorts')+
       selectHTML(mode+'-period','Cohort period',uniq(periodLabel),st.period,'All periods')+
       '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option></select></div>'+
+      '<button type="button" class="btn clearf" id="'+mode+'-clear">Clear filters</button>'+
       '</div><div class="cbar"><span class="count"><span id="'+mode+'-count"></span>'+(HIST.cohortReportDate?' · HSI cohort report from '+esc(fmtDate(HIST.cohortReportDate)):' · from the Trainer Tracker import')+'</span><div class="legend">'+
       '<span><i class="st c">date</i> Complete</span><span><i class="st s">Sub</i> Submitted, waiting for HSI</span><span><i class="st i">Inc</i> Incomplete</span><span><i class="st d">Delinq</i> Delinquent</span><span><i class="st u">?</i> Not in HSI report</span>'+
       '<span><i class="st" style="background:color-mix(in srgb,#e5484d 18%,var(--surface))">&nbsp;&nbsp;&nbsp;</i> Not recommended for promotion</span></div></div>'+
       '<div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="ctable"><thead></thead><tbody></tbody></table></div>';
     $(mode+'-q').addEventListener('input',e=>{ st.q=e.target.value; drawCohortTable(mode); });
-    ['office','cohort','period','show'].forEach(k=>$(mode+'-'+k).addEventListener('change',e=>{ st[k]=e.target.value; drawCohortTable(mode); }));
+    ['cohort','period','show'].forEach(k=>$(mode+'-'+k).addEventListener('change',e=>{ st[k]=e.target.value; drawCohortTable(mode); }));
+    const redraw=()=>drawCohortTable(mode);
+    const syncs=[msWire(mode+'-ees',st.ees,'All employees','employees',redraw), msWire(mode+'-offices',st.offices,'All offices','offices',redraw), msWire(mode+'-trainings',st.trainings,'All trainings','trainings',redraw)];
+    $(mode+'-clear').addEventListener('click',()=>{ st.q=''; st.cohort=''; st.period=''; st.show='all'; st.ees.clear(); st.offices.clear(); st.trainings.clear();
+      $(mode+'-q').value=''; ['cohort','period'].forEach(k=>$(mode+'-'+k).value=''); $(mode+'-show').value='all'; syncs.forEach(f=>f()); redraw(); });
     el.querySelector('table').addEventListener('click',e=>{
       const s=e.target.closest('[data-sort]'); if(s){ st.sort = st.sort===s.dataset.sort ? '-'+s.dataset.sort : s.dataset.sort; drawCohortTable(mode); return; }
       const w=e.target.closest('[data-open]'); if(w){ const k=w.dataset.open; st.open.has(k)?st.open.delete(k):st.open.add(k); drawCohortTable(mode); }
@@ -691,10 +736,17 @@ function renderCohorts(mode){
 function drawCohortTable(mode){
   const el = $(mode==='cur'?'p-cur':'p-past'), st = CV[mode];
   const q = st.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  let rows = cohortPeople(mode).map(p=>Object.assign({p},summarize(p))).filter(r=>{
+  // With trainings picked, each person is judged on just those trainings.
+  const pickT = st.trainings.size ? st.trainings : null;
+  let rows = cohortPeople(mode).map(p=>{ const r=Object.assign({p},summarize(p));
+    if(pickT){ r.sts=r.sts.filter(x=>pickT.has(x[0])); r.req=r.req.filter(t=>pickT.has(t));
+      r.done=r.sts.filter(x=>x[1].k==='c').length; r.sub=r.sts.filter(x=>x[1].k==='s').length; r.total=r.req.length; r.pct=r.total? r.done/r.total : 0; }
+    return r; }).filter(r=>{
     const p=r.p;
+    if(pickT && !r.total) return false;
     if(q.length && !q.every(t=>(p.name+' '+p.id).toLowerCase().includes(t))) return false;
-    if(st.office && p.office!==st.office) return false;
+    if(st.ees.size && !st.ees.has(p.name)) return false;
+    if(st.offices.size && !st.offices.has(p.office)) return false;
     if(st.cohort && p.cohort!==st.cohort) return false;
     if(st.period && periodLabel(p)!==st.period) return false;
     if(st.show==='missing' && !(r.done<r.total)) return false;

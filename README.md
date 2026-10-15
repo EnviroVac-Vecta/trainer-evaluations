@@ -61,6 +61,7 @@ Copy the trigger URL into the `EVAL_LOG_URL` secret.
   to a cohort. People stay in the history after they drop off the report, so past cohorts are kept.
   The workflow commits the updated `history.json` back to the repo ("Daily cohort history update").
 - **Current Cohorts:** people whose cohort period hasn't ended. **Past Cohorts:** ended, or no longer employed.
+- Filters: find a person, Employees, Office and Training (pick several in each), Cohort, Cohort period, Show. Picking trainings shows only those columns and counts complete/missing on just those trainings.
 - Each training shows Complete (date), **Submitted** (an evaluation was sent from this site, waiting for HSI),
   Incomplete, Delinquent, or ? (person isn't in the HSI cohort report). Rows shaded light red: not recommended for promotion.
 - Evaluations count toward: Operator Training, Driver Equipment Training (Part 1/2), Advance Mechanics Training,
