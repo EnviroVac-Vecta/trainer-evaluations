@@ -633,6 +633,16 @@ function needsList(){
   FORM.sections.forEach(sec=>sec._units.forEach(u=>{ const v=S.ratings[u.key]; if(v && v<=2) out.push(sec.title+': '+u.title+' ('+v+')'); }));
   return out;
 }
+// Same list for the email, grouped: bold section title, its items as bullets, a space before the next section.
+function needsHtml(){
+  const groups=[];
+  FORM.sections.forEach(sec=>{
+    const items = sec._units.filter(u=> isIntake(FORM) ? !intakeGot(u.key) : (S.ratings[u.key] && S.ratings[u.key]<=2))
+      .map(u=> esc(u.title) + (isIntake(FORM) ? '' : ' ('+S.ratings[u.key]+')'));
+    if(items.length) groups.push('<p style="margin:12px 0 4px 0"><b>'+esc(nice(sec.title))+'</b></p><ul style="margin:0 0 0 20px;padding:0">'+items.map(t=>'<li>'+t+'</li>').join('')+'</ul>');
+  });
+  return groups.join('') || 'None';
+}
 function sectionScores(){
   if(isIntake(FORM)) return FORM.sections.map(sec=>({section:sec.title, rating: sec._units.filter(u=>intakeGot(u.key)).length}));
   return FORM.sections.map(sec=>{ const vals=sec._units.map(u=>S.ratings[u.key]).filter(Boolean); return {section:sec.title, rating: vals.length? +(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2):null}; });
@@ -660,7 +670,7 @@ $('b-send').addEventListener('click', async ()=>{
       ...(isIntake(FORM)
         ? (c=>({totalScore:c.got, maxScore:c.count, averageScore:0, itemsNeedingWork:c.count-c.got}))(intakeCounts())
         : {totalScore: s.total, maxScore: s.max, averageScore: +s.avg.toFixed(2), itemsNeedingWork: s.needs}),
-      needsList: needs.join('; '), sectionScores: sectionScores(), notes: S.notes||'',
+      needsList: needs.join('; '), needsHtml: needsHtml(), sectionScores: sectionScores(), notes: S.notes||'',
       officeFolder: officeFolder(), fileName: fileName(), fileContent: pdf
     };
     const res = await fetch(CONFIG.submitUrl, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
