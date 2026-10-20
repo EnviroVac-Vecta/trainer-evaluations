@@ -1312,7 +1312,9 @@
    "cohort": "Tech I to Tech II",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Galvez, Alejandro - Complete.pdf"
   },
   {
    "name": "Astrid Galindo",
@@ -1328,7 +1330,9 @@
    "cohort": "Tech I to Tech II",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Galindo, Astrid - Complete.pdf"
   },
   {
    "name": "Charles Brunson",
@@ -1367,7 +1371,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Brunson, Charles-Complete.pdf"
   },
   {
    "name": "Christopher Garrett",
@@ -1406,7 +1412,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-13",
+   "intakeFile": "Garrett, Christopher -Complete.pdf"
   },
   {
    "name": "Chucky Dingle",
@@ -1484,7 +1492,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Byrd, Cortez -Complete.pdf"
   },
   {
    "name": "Craig Watkins",
@@ -1523,7 +1533,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Watkins, Craig-Complete.pdf"
   },
   {
    "name": "Daniel Pitts",
@@ -1562,7 +1574,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-30",
+   "intakeFile": "Pitts, Daniel-Complete.pdf"
   },
   {
    "name": "Dario Olivas",
@@ -1578,7 +1592,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Olivas, Darion - Complete.pdf"
   },
   {
    "name": "Darnell Ragin",
@@ -1617,7 +1633,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Ragin, Darnell -Complete.pdf"
   },
   {
    "name": "Darron Armstrong",
@@ -1656,7 +1674,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Armstrong, Darrin -Complete.pdf"
   },
   {
    "name": "DeMario Brown",
@@ -1695,7 +1715,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-13",
+   "intakeFile": "Brown, Demario -Complete.pdf"
   },
   {
    "name": "Demetrick Anywa Simmons",
@@ -1734,7 +1756,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Simmons, Demetrick -Complete.pdf"
   },
   {
    "name": "Derrick Slay",
@@ -1773,7 +1797,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-17",
+   "intakeFile": "Slay, Derrick-Completed.pdf"
   },
   {
    "name": "Dexter Henry",
@@ -1851,7 +1877,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Mitchell, Dominique -Complete.pdf"
   },
   {
    "name": "Donte Dorman",
@@ -1890,7 +1918,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-30",
+   "intakeFile": "Dorman, Donte-Complete.pdf"
   },
   {
    "name": "Eduardo Fernandez G.",
@@ -1906,7 +1936,9 @@
    "cohort": "Tech III to Jr. Operator",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Fernandez G., Eduardo - Complete.pdf"
   },
   {
    "name": "Efrain Moreno",
@@ -1922,7 +1954,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Moreno, Efrain-Complete.pdf"
   },
   {
    "name": "Eric Robinson",
@@ -2000,7 +2034,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-30",
+   "intakeFile": "Williams, Eric-Complete.pdf"
   },
   {
    "name": "Forrest Harpole",
@@ -2039,7 +2075,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-02",
+   "intakeFile": "Harpole, Forrest -completed.pdf"
   },
   {
    "name": "Frank C Shropshire",
@@ -2078,7 +2116,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-09-14",
+   "intakeFile": "Shropshire, Frank -Complete.pdf"
   },
   {
    "name": "Frank Cokley",
@@ -2117,7 +2157,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-02-24",
+   "intakeFile": "Cokley, Frank -Complete.pdf"
   },
   {
    "name": "Hayden Patrick Toler",
@@ -2156,7 +2198,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-04",
+   "intakeFile": "Toler, Hayden-Complete.pdf"
   },
   {
    "name": "Henry Moore",
@@ -2195,7 +2239,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-30",
+   "intakeFile": "Moore, Henry-Complete.pdf"
   },
   {
    "name": "Howard Shelly",
@@ -2234,7 +2280,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-20",
+   "intakeFile": "Shelly, Howard-Complete.pdf"
   },
   {
    "name": "Israel Gonzalez Milian",
@@ -2273,7 +2321,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Gonzalez, Israel -Complete.pdf"
   },
   {
    "name": "JaNardreon Jones",
@@ -2312,7 +2362,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-09-14",
+   "intakeFile": "Jones, JaNardreon -Complete.pdf"
   },
   {
    "name": "Jalen J Clea",
@@ -2328,7 +2380,9 @@
    "cohort": "Tech I to Tech II",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-30",
+   "intakeFile": "Clea, Jalen-Complete.pdf"
   },
   {
    "name": "Jalen Simmons",
@@ -2367,7 +2421,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-17",
+   "intakeFile": "Simmons, Jalen -Completed.pdf"
   },
   {
    "name": "Jamaree Jenkins",
@@ -2383,7 +2439,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Jenkins, Jamaree -Complete.pdf"
   },
   {
    "name": "James Anthony Hornsby",
@@ -2399,7 +2457,9 @@
    "cohort": "",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-17",
+   "intakeFile": "Hornsby, Andy-Complete.pdf"
   },
   {
    "name": "Javonte Morgan",
@@ -2438,7 +2498,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Morgan, Javante -Complete.pdf"
   },
   {
    "name": "Jeffery Demon Miller",
@@ -2454,7 +2516,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-22",
+   "intakeFile": "Miller, Jeffery -Complete.pdf"
   },
   {
    "name": "Johanny Gabriela Oropeza",
@@ -2493,7 +2557,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Oropeza, Johanny Gabriela - Complete.pdf"
   },
   {
    "name": "Jonathon L Roberts",
@@ -2532,7 +2598,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Roberts, Jonathan-Complete.pdf"
   },
   {
    "name": "Kendall Blake Hardin",
@@ -2571,7 +2639,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Hardin, Kendall -Complete.pdf"
   },
   {
    "name": "Landon Ray Nye",
@@ -2587,7 +2657,9 @@
    "cohort": "Tech III to Jr. Operator",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-02",
+   "intakeFile": "Nye, Landon -Completed.pdf"
   },
   {
    "name": "Louie Barnett",
@@ -2626,7 +2698,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-22",
+   "intakeFile": "Barnett, Louie -Complete.pdf"
   },
   {
    "name": "Luis Jose Sanchez Herndandez",
@@ -2642,7 +2716,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Sanchez Herndandez, Luis Jose - Complete.pdf"
   },
   {
    "name": "Marcello Conde",
@@ -2681,7 +2757,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Conde, Marcello - Complete.pdf"
   },
   {
    "name": "Marcus Geathers",
@@ -2697,7 +2775,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-30",
+   "intakeFile": "Geathers, Marcus-Complete.pdf"
   },
   {
    "name": "Marian Giselle Sanchez Perera",
@@ -2736,7 +2816,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Sanchez Perera, Marian Giselle - Complete.pdf"
   },
   {
    "name": "Matthew Murphy",
@@ -2752,7 +2834,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Murphy, Matthew -Complete.pdf"
   },
   {
    "name": "Maxwell Richardson",
@@ -2791,7 +2875,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Richardson, Maxwell - Complete.pdf"
   },
   {
    "name": "Micheal D Stevens",
@@ -2830,7 +2916,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Stevens, Micheal -Complete.pdf"
   },
   {
    "name": "Mitchell Logan Mcmullin",
@@ -2869,7 +2957,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-14",
+   "intakeFile": "McMullin, Michell -Complete.pdf"
   },
   {
    "name": "Nelvin Eric Murray",
@@ -2908,7 +2998,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-17",
+   "intakeFile": "Murray, Nelvin -Completed.pdf"
   },
   {
    "name": "NiTwaun Hill",
@@ -2947,7 +3039,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-02-12",
+   "intakeFile": "Hill, NiTwaun -Complete.pdf"
   },
   {
    "name": "Quantez Foster",
@@ -2986,7 +3080,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-11",
+   "intakeFile": "Foster, Quantez - Complete.pdf"
   },
   {
    "name": "Reginald A Norfleet",
@@ -3002,7 +3098,9 @@
    "cohort": "Tech III to Jr. Operator",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Norfleet, Reginald -Complete.pdf"
   },
   {
    "name": "Ricky Turner",
@@ -3041,7 +3139,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Turner, Ricky -Complete.pdf"
   },
   {
    "name": "Robbion Carter",
@@ -3080,7 +3180,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-02-24",
+   "intakeFile": "Carter, Robbion -Complete.pdf"
   },
   {
    "name": "Robert Lee Hoban",
@@ -3119,7 +3221,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-03-30",
+   "intakeFile": "Hoban, Robert -Complete.pdf"
   },
   {
    "name": "Robert Nathaniel Cooper",
@@ -3197,7 +3301,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-17",
+   "intakeFile": "Edwards, Rodney -Completed.pdf"
   },
   {
    "name": "Ron Black",
@@ -3236,7 +3342,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-02",
+   "intakeFile": "Black, Ron -completed.pdf"
   },
   {
    "name": "Samuel Laury",
@@ -3275,7 +3383,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-29",
+   "intakeFile": "Laury, Samuel -Complete.pdf"
   },
   {
    "name": "Sean Mullenix",
@@ -3353,7 +3463,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-02-24",
+   "intakeFile": "Smith, Sherman -Complete.pdf"
   },
   {
    "name": "Stafphon Williams",
@@ -3392,7 +3504,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-17",
+   "intakeFile": "Williams, Stafphon-Complete.pdf"
   },
   {
    "name": "Tate O Titus",
@@ -3431,7 +3545,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-02-24",
+   "intakeFile": "Titus, Tate -Complete.pdf"
   },
   {
    "name": "Terrence A Singleton",
@@ -3470,7 +3586,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-02-24",
+   "intakeFile": "Singleton, Terrence-Complete.pdf"
   },
   {
    "name": "Tyler Tubby",
@@ -3509,7 +3627,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Apr 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Tubby, Tyler -Complete.pdf"
   },
   {
    "name": "Walter Johnson",
@@ -3587,7 +3707,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-10",
+   "intakeFile": "Hampton, Adam-Completed.pdf"
   },
   {
    "name": "Albert Deayne Buckley",
@@ -3626,7 +3748,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-14",
+   "intakeFile": "Buckley, Albert-Complete.pdf"
   },
   {
    "name": "Alex Crews",
@@ -3665,7 +3789,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-20",
+   "intakeFile": "Crew, Alex-Complete.pdf"
   },
   {
    "name": "Anthony Paul Whaley",
@@ -3704,7 +3830,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-24",
+   "intakeFile": "Whaley, Paul-completed.pdf"
   },
   {
    "name": "Cavaris Rashad Lanier",
@@ -3743,7 +3871,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-10",
+   "intakeFile": "Lanier, Cavaris-Complete.pdf"
   },
   {
    "name": "Chance Hudson",
@@ -3759,7 +3889,9 @@
    "cohort": "Tech I to Tech II",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-11",
+   "intakeFile": "Hudson, Chance-complete.pdf"
   },
   {
    "name": "Clayton Gene Griffin",
@@ -3814,7 +3946,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-06-10",
+   "intakeFile": "Michelin, Cole-Complete.pdf"
   },
   {
    "name": "Cortez Jamal Sharp",
@@ -3853,7 +3987,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-11",
+   "intakeFile": "Sharp, Cortez-Complete.pdf"
   },
   {
    "name": "Darius Mull",
@@ -3892,7 +4028,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Mull, Darius-complete.pdf"
   },
   {
    "name": "David Decker",
@@ -3970,7 +4108,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-14",
+   "intakeFile": "Williams, David -Complete.pdf"
   },
   {
    "name": "Demetrios Petty",
@@ -4009,7 +4149,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Apr 2027",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-17",
+   "intakeFile": "Petty, Demetrius-Complete.pdf"
   },
   {
    "name": "Derrion Nash",
@@ -4048,7 +4190,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Nash, Darrion-Complete.pdf"
   },
   {
    "name": "Jonathan Ferguson",
@@ -4087,7 +4231,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-06-11",
+   "intakeFile": "Ferguson, Jonathan-complete.pdf"
   },
   {
    "name": "Jonathan Hunter Peterman",
@@ -4126,7 +4272,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-21",
+   "intakeFile": "Peterman, Jonathan-complete.pdf"
   },
   {
    "name": "Kevin Hardin",
@@ -4165,7 +4313,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Apr 2027",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Hardin, Kevin-Complete.pdf"
   },
   {
    "name": "Kevin M McCall",
@@ -4204,7 +4354,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-06-26",
+   "intakeFile": "McCall, Kevin-Complete.pdf"
   },
   {
    "name": "Ladarius Andre Tate",
@@ -4243,7 +4395,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-14",
+   "intakeFile": "Tate, Ladarius-Complete.pdf"
   },
   {
    "name": "Lennox Spann",
@@ -4282,7 +4436,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-13",
+   "intakeFile": "Spann, Lennox-Complete.pdf"
   },
   {
    "name": "Mercury Coleman",
@@ -4321,7 +4477,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-04-02",
+   "intakeFile": "Coleman, Mercury -Complete.pdf"
   },
   {
    "name": "Quinton Meaders",
@@ -4337,7 +4495,9 @@
    "cohort": "Sr. Operator to Crew Leader",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-20",
+   "intakeFile": "Meaders, Quinton-complete.pdf"
   },
   {
    "name": "Robert Michael Swindle",
@@ -4376,7 +4536,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-05-15",
+   "intakeFile": "Swindle, Robert-Complete.pdf"
   },
   {
    "name": "Taiveon Cardel Robbins",
@@ -4431,7 +4593,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Brown, Tevin-Complete.pdf"
   },
   {
    "name": "William Davis",
@@ -4470,7 +4634,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Apr 2027",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-07",
+   "intakeFile": "Davis, William-Complete.pdf"
   },
   {
    "name": "Yexi Carolina Rodriguez A.",
@@ -4509,7 +4675,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-07-22",
+   "intakeFile": "Rodriguez, Yexi-complete.pdf"
   },
   {
    "name": "Zoriah Mobley",
@@ -4547,7 +4715,9 @@
    },
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-13",
+   "intakeFile": "Mobley, Zoriah-Complete.pdf"
   },
   {
    "name": "Zyon Shemar Bennett",
@@ -4586,7 +4756,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Aug 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-06-10",
+   "intakeFile": "Bennett, Zyon-complete.pdf"
   },
   {
    "name": "Andrew Bryant",
@@ -4625,7 +4797,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Bryant, Andrew-Complete.pdf"
   },
   {
    "name": "Antonio Alvin King",
@@ -4703,7 +4877,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-15",
+   "intakeFile": "Williams, Austin-Complete.pdf"
   },
   {
    "name": "Brian Randale Meaders",
@@ -4742,7 +4918,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-20",
+   "intakeFile": "Meaders, Brian-Complete.pdf"
   },
   {
    "name": "Bryan Williamson",
@@ -4781,7 +4959,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Williamson, Bryan-Complete.pdf"
   },
   {
    "name": "Bryson Malik Ellis",
@@ -4820,7 +5000,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-09",
+   "intakeFile": "Ellis, Bryson-Complete.pdf"
   },
   {
    "name": "Christian Cunningham",
@@ -4914,7 +5096,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-15",
+   "intakeFile": "Neely, Curtis-Complete.pdf"
   },
   {
    "name": "Deandra Shondrecus Buck",
@@ -4930,7 +5114,9 @@
    "cohort": "Tech II to Tech III",
    "trainings": {},
    "inHSIReport": false,
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-06",
+   "intakeFile": "Buck, Deandra-Complete.pdf"
   },
   {
    "name": "Dewon R Monroe",
@@ -4969,7 +5155,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-06",
+   "intakeFile": "Monroe, Dewon-Complete.pdf"
   },
   {
    "name": "Diquawn Washington",
@@ -5008,7 +5196,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-09",
+   "intakeFile": "Washington, Diquawn-Complete.pdf"
   },
   {
    "name": "Donell Jerome White",
@@ -5047,7 +5237,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "White, Donell-Complete.pdf"
   },
   {
    "name": "Donnie Bush",
@@ -5086,7 +5278,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-15",
+   "intakeFile": "Bush, Donnie-Complete.pdf"
   },
   {
    "name": "Edward D Logan",
@@ -5125,7 +5319,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-20",
+   "intakeFile": "Logan, Edward-Complete.pdf"
   },
   {
    "name": "Erick Slater",
@@ -5203,7 +5399,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Archie, Eugene-Complete.pdf"
   },
   {
    "name": "Gary Davis",
@@ -5242,7 +5440,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Davis, Gary-Complete.pdf"
   },
   {
    "name": "Glenn Jose Vivenes Villahermosa",
@@ -5320,7 +5520,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-20",
+   "intakeFile": "Partlow, Gregory-Complete.pdf"
   },
   {
    "name": "Hendrick Eugene Griffin",
@@ -5359,7 +5561,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Griffin, Hendrick-Complete.pdf"
   },
   {
    "name": "Jacques Marquis Brown",
@@ -5398,7 +5602,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Brown, Jacques-Complete.pdf"
   },
   {
    "name": "Jasmine Hairston",
@@ -5437,7 +5643,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-06",
+   "intakeFile": "Hairston, Jasmine-Complete.pdf"
   },
   {
    "name": "Javario Rashad Sharp",
@@ -5476,7 +5684,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-20",
+   "intakeFile": "Sharp, Javario-Complete.pdf"
   },
   {
    "name": "Jayvon Harris",
@@ -5531,7 +5741,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-15",
+   "intakeFile": "Fields, John.pdf"
   },
   {
    "name": "Johnnie Wayne Kyles",
@@ -5570,7 +5782,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-09-14",
+   "intakeFile": "Kyles, John W..pdf"
   },
   {
    "name": "Joshua De Andre Pridgen",
@@ -5648,7 +5862,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Bradshaw, Kancey-Complete.pdf"
   },
   {
    "name": "Kieren Webb",
@@ -5687,7 +5903,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Webb, Kieren-Complete.pdf"
   },
   {
    "name": "Kimberly Yoselin Jimenez Torres",
@@ -5742,7 +5960,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Harris, Laron-Complete.pdf"
   },
   {
    "name": "Marcos Felton",
@@ -5781,7 +6001,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-09",
+   "intakeFile": "Felton, Marcos-Complete.pdf"
   },
   {
    "name": "Mykenya Cumbee",
@@ -5820,7 +6042,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Cumbee, Mykenya-Complete.pdf"
   },
   {
    "name": "Noel Valenzuela",
@@ -5898,7 +6122,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-09",
+   "intakeFile": "Cunningham, Quantin-Complete.pdf"
   },
   {
    "name": "Raul A. Parra",
@@ -5953,7 +6179,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-15",
+   "intakeFile": "Hopkins, Roy.pdf"
   },
   {
    "name": "Tennell Owens Anderson",
@@ -5992,7 +6220,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-07",
+   "intakeFile": "Anderson, Tennell-Complete.pdf"
   },
   {
    "name": "Travis Brunson",
@@ -6031,7 +6261,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Dec 2026",
    "lastSeen": "2026-10-20",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-10-09",
+   "intakeFile": "Brunson, Travis-Complete.pdf"
   }
  ],
  "cohortReportDate": "2026-10-20"

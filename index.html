@@ -724,6 +724,8 @@ function statusOf(p, t){
   if(t===INTAKE_COL){
     const sub = (SUB.get(nameKey(p.name))||new Map()).get(t);
     if(sub) return {k:'c', label: sub.date? sub.date.slice(5,7)+'/'+sub.date.slice(8,10)+'/'+sub.date.slice(2,4) : 'Done', text:'Intake form sent from this site '+fmtDate(sub.date)};
+    // a completed form in SharePoint > Completed Level Up Intake Forms: its date modified
+    if(p.intakeDate) return {k:'c', label: p.intakeDate.slice(5,7)+'/'+p.intakeDate.slice(8,10)+'/'+p.intakeDate.slice(2,4), text:'Intake form in Completed Level Up Intake Forms, '+fmtDate(p.intakeDate)+(p.intakeFile?' ('+p.intakeFile+')':'')};
     return p.intake ? {k:'c', label:'Done', text:'Intake form entered (Trainer Tracker)'} : {k:'i', label:'Inc', text:'No intake form yet'};
   }
   const v = (p.trainings||{})[t] || '';

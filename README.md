@@ -56,7 +56,7 @@ After adding or changing a secret: Actions → **Publish Evaluations Site** → 
 Copy the trigger URL into the `EVAL_LOG_URL` secret.
 
 ## Cohort tabs
-- **Intake Form** column (first column, for everyone): Done = the Trainer Tracker's "Intake Form Entered" says Complete (imported into `history.json`); a date = an intake form sent from this site.
+- **Intake Form** column (first column, for everyone): a date = an intake form sent from this site, or the date modified of the person's PDF in SharePoint > Completed Level Up Intake Forms (`intakeDate` in `history.json`); Done = the Trainer Tracker's "Intake Form Entered" says Complete.
 - Each morning the build reads the **Cohort Daily Report** (HSI Envirovac Cohort Status Report, pulled by the
   `hsi_cohort` bot) and updates `history.json`: completions, incomplete/delinquent items, cohort, and anyone new
   to a cohort. People stay in the history after they drop off the report, so past cohorts are kept.
