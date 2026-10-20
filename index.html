@@ -44,7 +44,8 @@ header.top .lvl{font-family:var(--f-display);font-weight:700;font-size:15px;lett
 header.top .lvl i{display:inline-block;width:10px;height:10px;background:var(--orange);transform:rotate(45deg)}
 .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 h1{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,5vw,36px);line-height:1.05;margin:4px 0 0;color:#fff}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs button{white-space:nowrap;flex:none}
 .tabs button{font-family:var(--f-display);font-weight:700;font-size:18px;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;padding:10px 16px;color:var(--muted);cursor:pointer}
 .tabs button[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--orange)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
