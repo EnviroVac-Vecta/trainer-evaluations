@@ -624,7 +624,10 @@ function buildPDF(){
 }
 const safe = t => pdfText(t).replace(/[\\/:*?"<>|#%&{}~]+/g,'').replace(/\s+/g,' ').trim();
 function officeFolder(){ return safe($('office').value) || 'No Office'; }
-function fileName(){ return safe([$('employee').value, FORM.title, officeFolder(), $('date').value||todayISO()].join(' - ')).slice(0,180)+'.pdf'; }
+// Forms that share a title (Driver Equipment Part 1 and Part 2) get their part in the name,
+// so the second one doesn't save over the first in SharePoint.
+function formName(){ const part=(FORM.subtitle||'').match(/^\s*part\s*\d+/i); return FORM.title+(part?' '+part[0].trim():''); }
+function fileName(){ return safe([$('employee').value, formName(), officeFolder(), $('date').value||todayISO()].join(' - ')).slice(0,180)+'.pdf'; }
 
 /* ---------- needs list (for email + log) ---------- */
 function needsList(){
