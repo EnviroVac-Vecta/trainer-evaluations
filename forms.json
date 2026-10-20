@@ -1086,8 +1086,8 @@
       "header_fields": [
         "Name",
         "Office",
-        "Cohort",
-        "Cohort Start Date"
+        "Training Cycle",
+        "Training Cycle Start Date"
       ],
       "scale": {
         "type": "rating",

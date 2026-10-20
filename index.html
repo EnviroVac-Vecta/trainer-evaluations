@@ -232,8 +232,9 @@ textarea{min-height:70px;resize:vertical}
 
   <nav class="tabs" role="tablist">
     <button type="button" role="tab" id="t-eval" aria-selected="true" aria-controls="p-eval">Evaluations</button>
-    <button type="button" role="tab" id="t-cur" aria-selected="false" aria-controls="p-cur">Current Cohorts</button>
-    <button type="button" role="tab" id="t-past" aria-selected="false" aria-controls="p-past">Past Cohorts</button>
+    <button type="button" role="tab" id="t-cur" aria-selected="false" aria-controls="p-cur">Current Training Cycles</button>
+    <button type="button" role="tab" id="t-past" aria-selected="false" aria-controls="p-past">Past Training Cycles</button>
+    <button type="button" role="tab" id="t-all" aria-selected="false" aria-controls="p-all">All Training Cycles</button>
   </nav>
 
   <!-- ============ EVALUATIONS ============ -->
@@ -251,8 +252,8 @@ textarea{min-height:70px;resize:vertical}
     </div>
 
     <div id="choose">
-      <div class="flabel" style="margin-bottom:8px">Cohort</div>
-      <div class="cpicks" id="cohortpick" role="tablist" aria-label="Cohort"></div>
+      <div class="flabel" style="margin-bottom:8px">Training Cycle</div>
+      <div class="cpicks" id="cohortpick" role="tablist" aria-label="Training Cycle"></div>
       <div class="flabel" style="margin:14px 0 8px">Choose an evaluation</div>
       <div class="forms" id="formlist"></div>
     </div>
@@ -263,6 +264,7 @@ textarea{min-height:70px;resize:vertical}
   <!-- ============ COHORTS ============ -->
   <section id="p-cur" role="tabpanel" aria-labelledby="t-cur" hidden class="cohortpanel"></section>
   <section id="p-past" role="tabpanel" aria-labelledby="t-past" hidden class="cohortpanel"></section>
+  <section id="p-all" role="tabpanel" aria-labelledby="t-all" hidden class="cohortpanel"></section>
 </div>
 
 <div class="actionbar" id="actionbar" hidden>
@@ -332,7 +334,7 @@ function fieldRole(name){
   if(/trainer/.test(n)) return 'trainer';
   if(/^(employee|employee name|name|trainee)$/.test(n)) return 'employee';
   if(/office/.test(n)) return 'office';
-  if(/date/.test(n) && !/cohort/.test(n)) return 'date';
+  if(/date/.test(n) && !/cohort|training cycle/.test(n)) return 'date';
   if(/location/.test(n)) return 'location';
   return 'extra';
 }
@@ -698,11 +700,11 @@ function showResult(ok, p){
 /* ---------- tabs ---------- */
 function setTab(t){
   document.body.classList.toggle('wide', t!=='eval');
-  ['eval','cur','past'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
+  ['eval','cur','past','all'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
   $('actionbar').hidden = !(t==='eval' && FORM && !$('evaluation').hidden);
   if(t!=='eval') renderCohorts(t);
 }
-['eval','cur','past'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
+['eval','cur','past','all'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
 
 /* ---------- cohorts ---------- */
 const SHORT = {'Intake Form':'Intake Form','24 or 40 Hour Hazwoper with Hands On':'HAZWOPER','Advance Blasting Classroom Training or HASC WJTA Online':'Adv. Blasting Class','Advance Blasting Hands On or WJTA Hands On Training':'Adv. Blasting Hands On','Advance Mechanics Training':'Adv. Mechanics','Basic Mechanical Troubleshooting':'Basic Mech. Troubleshoot','Basic Set Up, Troubleshooting and Equipment':'Basic Set-Up','CDL':'CDL','Defensive Driving - EnviroVac':'Defensive Driving','DiSC Profile':'DiSC','Driver Equipment Training':'Driver Equipment','Envirovac Hands On Training':'Hands On','HASC WJTA Online':'WJTA Online','Lancing Automation Training':'Lancing Automation','Level Up -Part One':'Level Up 1','Level Up-Part Two':'Level Up 2','Management and Leadership Skills for New Managers':'Mgmt & Leadership','OSHA 30hr':'OSHA 30','Operator Training':'Operator Training','Tech I to Tech II Skill Assessment':'Tech I to II','Tech II to Tech III Post Test Assessment':'Tech II to III Post Test','Tech II to Tech III Skill Assessment':'Tech II to III','WJTA Hands On Training':'WJTA Hands On'};
@@ -737,7 +739,7 @@ function statusOf(p, t){
     return {k:'s', label:'Sub '+shortD(sub.date), text:'Submitted '+fmtDate(sub.date)+note+', waiting for HSI'};
   }
   if(/delinquent/i.test(v)) return {k:'d', label:'Delinq', text:'Delinquent'};
-  if(!p.inHSIReport) return {k:'u', label:'?', text:'Not in the HSI cohort report'};
+  if(!p.inHSIReport) return {k:'u', label:'?', text:'Not in the HSI training cycle report'};
   return {k:'i', label:'Inc', text:'Incomplete'};
 }
 function required(p){ return [INTAKE_COL].concat(requiredHSI(p)); }
@@ -756,8 +758,13 @@ function summarize(p){
   const done = sts.filter(x=>x[1].k==='c').length, sub = sts.filter(x=>x[1].k==='s').length;
   return {req, sts, done, sub, total:req.length, pct: req.length? done/req.length : 0};
 }
-const newCV = () => ({q:'',ees:new Set(),offices:new Set(),trainings:new Set(),cohort:'',period:'',show:'all',sort:'name',open:new Set()});
-const CV = {cur:newCV(), past:newCV()};
+const newCV = () => ({q:'',ees:new Set(),offices:new Set(),trainings:new Set(),stat:new Set(),cohort:'',period:'',show:'all',sort:'name',open:new Set()});
+// Status filter: a training's status falls in one of these groups (Delinquent and "not in HSI report" count as Incomplete).
+const STAT_GROUPS = [['Complete',['c']],['Submitted',['s']],['Incomplete',['i','d','u']]];
+const statGroup = k => (STAT_GROUPS.find(g=>g[1].includes(k))||['Incomplete'])[0];
+const panelOf = mode => $('p-'+mode);
+const TAB_NAME = {cur:'Current Training Cycles', past:'Past Training Cycles', all:'All Training Cycles'};
+const CV = {cur:newCV(), past:newCV(), all:newCV()};
 // Multi-select dropdown: a button that opens a searchable checkbox list.
 function msHTML(id,label,opts,allText){
   return '<div class="field ms" id="'+id+'"><label for="'+id+'-b">'+label+'</label><button type="button" class="msbtn" id="'+id+'-b" aria-haspopup="true" aria-expanded="false">'+allText+'</button>'+
@@ -784,12 +791,13 @@ function msWire(id,set,allText,many,onChange){
 function cohortPeople(mode){
   const today = todayISO();
   const current = p => p.employed && (p.end ? p.end>=today : !!p.inHSIReport);
+  if(mode==='all') return HIST.people.slice();   // everyone, current and past
   return HIST.people.filter(p=> mode==='cur' ? current(p) : (!current(p) && (p.end || !p.employed)));
 }
 function selectHTML(id,label,vals,cur,all){ return '<div class="field"><label for="'+id+'">'+label+'</label><select id="'+id+'"><option value="">'+all+'</option>'+vals.map(v=>'<option'+(v===cur?' selected':'')+'>'+esc(v)+'</option>').join('')+'</select></div>'; }
 function renderCohorts(mode){
-  const el = $(mode==='cur'?'p-cur':'p-past'), st = CV[mode];
-  if(!HIST){ el.innerHTML='<div class="card empty">Cohort data is not connected yet.</div>'; return; }
+  const el = panelOf(mode), st = CV[mode];
+  if(!HIST){ el.innerHTML='<div class="card empty">Training cycle data is not connected yet.</div>'; return; }
   const all = cohortPeople(mode);
   const uniq = f => [...new Set(all.map(f).filter(Boolean))].sort();
   if(!el.querySelector('.cfilters')){
@@ -798,21 +806,22 @@ function renderCohorts(mode){
       msHTML(mode+'-ees','Employees',[...all].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>({v:p.name,sub:p.office})).filter((o,i,a)=>!i||a[i-1].v!==o.v),'All employees')+
       msHTML(mode+'-offices','Office',uniq(p=>p.office).map(v=>({v})),'All offices')+
       msHTML(mode+'-trainings','Training',HIST.trainings.filter(t=>all.some(p=>required(p).includes(t))).map(v=>({v,sub:SHORT[v]&&SHORT[v]!==v?SHORT[v]:''})),'All trainings')+
-      selectHTML(mode+'-cohort','Cohort',uniq(p=>p.cohort),st.cohort,'All cohorts')+
-      selectHTML(mode+'-period','Cohort period',uniq(periodLabel),st.period,'All periods')+
+      msHTML(mode+'-stat','Status',STAT_GROUPS.map(([v])=>({v})),'All statuses')+
+      selectHTML(mode+'-cohort','Training Cycle',uniq(p=>p.cohort),st.cohort,'All training cycles')+
+      selectHTML(mode+'-period','Training cycle period',uniq(periodLabel),st.period,'All periods')+
       '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option></select></div>'+
       '<div class="fbtns"><button type="button" class="btn" id="'+mode+'-clear">Clear filters</button>'+
       '<button type="button" class="btn primary" id="'+mode+'-export">Export to Excel</button></div>'+
-      '</div><div class="cbar"><span class="count"><span id="'+mode+'-count"></span>'+(HIST.cohortReportDate?' · HSI cohort report from '+esc(fmtDate(HIST.cohortReportDate)):' · from the Trainer Tracker import')+'</span><div class="legend">'+
+      '</div><div class="cbar"><span class="count"><span id="'+mode+'-count"></span>'+(HIST.cohortReportDate?' · HSI training cycle report from '+esc(fmtDate(HIST.cohortReportDate)):' · from the Trainer Tracker import')+'</span><div class="legend">'+
       '<span><i class="st c">date</i> Complete</span><span><i class="st s">Sub</i> Submitted, waiting for HSI</span><span><i class="st i">Inc</i> Incomplete</span><span><i class="st d">Delinq</i> Delinquent</span><span><i class="st u">?</i> Not in HSI report</span>'+
       '<span><i class="st" style="background:color-mix(in srgb,#e5484d 18%,var(--surface))">&nbsp;&nbsp;&nbsp;</i> Not recommended for promotion</span></div></div>'+
       '<div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="ctable"><thead></thead><tbody></tbody></table></div>';
     $(mode+'-q').addEventListener('input',e=>{ st.q=e.target.value; drawCohortTable(mode); });
     ['cohort','period','show'].forEach(k=>$(mode+'-'+k).addEventListener('change',e=>{ st[k]=e.target.value; drawCohortTable(mode); }));
     const redraw=()=>drawCohortTable(mode);
-    const syncs=[msWire(mode+'-ees',st.ees,'All employees','employees',redraw), msWire(mode+'-offices',st.offices,'All offices','offices',redraw), msWire(mode+'-trainings',st.trainings,'All trainings','trainings',redraw)];
+    const syncs=[msWire(mode+'-ees',st.ees,'All employees','employees',redraw), msWire(mode+'-offices',st.offices,'All offices','offices',redraw), msWire(mode+'-trainings',st.trainings,'All trainings','trainings',redraw), msWire(mode+'-stat',st.stat,'All statuses','statuses',redraw)];
     $(mode+'-export').addEventListener('click',()=>exportCohorts(mode));
-    $(mode+'-clear').addEventListener('click',()=>{ st.q=''; st.cohort=''; st.period=''; st.show='all'; st.ees.clear(); st.offices.clear(); st.trainings.clear();
+    $(mode+'-clear').addEventListener('click',()=>{ st.q=''; st.cohort=''; st.period=''; st.show='all'; st.ees.clear(); st.offices.clear(); st.trainings.clear(); st.stat.clear();
       $(mode+'-q').value=''; ['cohort','period'].forEach(k=>$(mode+'-'+k).value=''); $(mode+'-show').value='all'; syncs.forEach(f=>f()); redraw(); });
     el.querySelector('table').addEventListener('click',e=>{
       const s=e.target.closest('[data-sort]'); if(s){ st.sort = st.sort===s.dataset.sort ? '-'+s.dataset.sort : s.dataset.sort; drawCohortTable(mode); return; }
@@ -822,7 +831,7 @@ function renderCohorts(mode){
   drawCohortTable(mode);
 }
 function drawCohortTable(mode){
-  const el = $(mode==='cur'?'p-cur':'p-past'), st = CV[mode];
+  const el = panelOf(mode), st = CV[mode];
   const q = st.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   // With trainings picked, each person is judged on just those trainings.
   const pickT = st.trainings.size ? st.trainings : null;
@@ -841,6 +850,7 @@ function drawCohortTable(mode){
     if(st.show==='complete' && !(r.total && r.done===r.total)) return false;
     if(st.show==='submitted' && !r.sub) return false;
     if(st.show==='nr' && !p.notRecommended) return false;
+    if(st.stat.size && !r.sts.some(x=>st.stat.has(statGroup(x[1].k)))) return false;
     return true;
   });
   const desc = st.sort.startsWith('-'), key = st.sort.replace('-','');
@@ -848,7 +858,7 @@ function drawCohortTable(mode){
   rows.sort((a,b)=>{ const x=val(a), y=val(b); const c = typeof x==='number'? x-y : String(x).localeCompare(String(y)); return (desc?-c:c) || a.p.name.localeCompare(b.p.name); });
   const cols = HIST.trainings.filter(t=>rows.some(r=>r.req.includes(t)));
   const arr = k => st.sort===k?' ↑':st.sort==='-'+k?' ↓':'';
-  el.querySelector('thead').innerHTML = '<tr><th class="sticky"><button data-sort="name">Employee'+arr('name')+'</button></th><th><button data-sort="cohort">Cohort'+arr('cohort')+'</button></th><th><button data-sort="progress">Complete'+arr('progress')+'</button></th>'+
+  el.querySelector('thead').innerHTML = '<tr><th class="sticky"><button data-sort="name">Employee'+arr('name')+'</button></th><th><button data-sort="cohort">Training Cycle'+arr('cohort')+'</button></th><th><button data-sort="progress">Complete'+arr('progress')+'</button></th>'+
     cols.map(t=>'<th class="tc" title="'+esc(t)+'">'+esc(SHORT[t]||t)+'</th>').join('')+'</tr>';
   const body = rows.map(r=>{
     const p=r.p, k=p.id||p.name, open=st.open.has(k);
@@ -856,7 +866,7 @@ function drawCohortTable(mode){
     let h = '<tr class="'+(p.notRecommended?'nr ':'')+(!p.employed?'gone':'')+'"><td class="sticky"><button type="button" class="who2" data-open="'+esc(k)+'" aria-expanded="'+open+'">'+esc(p.name)+'</button><span class="meta">'+esc([p.office,p.jobTitle].filter(Boolean).join(' · '))+'</span>'+tags+'</td>'+
       '<td>'+esc(p.cohort||'—')+'<span class="meta">'+esc(periodLabel(p))+'</span></td>'+
       '<td><div class="prog"><span class="b"><i style="width:'+Math.round(r.pct*100)+'%"></i></span><b>'+r.done+'/'+r.total+'</b></div>'+(r.sub?'<span class="meta">'+r.sub+' submitted</span>':'')+'</td>'+
-      cols.map(t=>{ if(!r.req.includes(t)) return '<td><span class="st n">·</span></td>'; const s=statusOf(p,t); return '<td><span class="st '+s.k+'" title="'+esc((SHORT[t]||t)+': '+s.text)+'">'+esc(s.k==='c'? s.label.replace(/\/\d{2,4}$/,'') : s.label)+'</span></td>'; }).join('')+'</tr>';
+      cols.map(t=>{ if(!r.req.includes(t)) return '<td><span class="st n">·</span></td>'; const s=statusOf(p,t), dim = st.stat.size && !st.stat.has(statGroup(s.k)); return '<td'+(dim?' style="opacity:.3"':'')+'><span class="st '+s.k+'" title="'+esc((SHORT[t]||t)+': '+s.text)+'">'+esc(s.k==='c'? s.label.replace(/\/\d{2,4}$/,'') : s.label)+'</span></td>'; }).join('')+'</tr>';
     if(open){
       const done=r.sts.filter(x=>x[1].k==='c'), sub=r.sts.filter(x=>x[1].k==='s'), miss=r.sts.filter(x=>!['c','s'].includes(x[1].k));
       const li = a => a.length? '<ul>'+a.map(([t,s])=>'<li>'+esc(t)+' <span class="meta" style="display:inline">'+esc(s.text)+'</span></li>').join('')+'</ul>' : '<div class="meta">None</div>';
@@ -882,7 +892,7 @@ async function exportCohorts(mode){
   try{
     const X = await loadXLSX(), {rows, cols} = st.last;
     const cell = (p,r,t) => { if(!r.req.includes(t)) return 'Not required'; const s=statusOf(p,t); return s.k==='c' ? (s.label==='Done'?'Complete':s.label) : s.text; };
-    const head = ['Employee','Employee ID','Office','Job Title','Cohort','Cohort Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing'].concat(cols);
+    const head = ['Employee','Employee ID','Office','Job Title','Training Cycle','Training Cycle Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing'].concat(cols);
     const data = rows.map(r=>{ const p=r.p;
       const missing = r.sts.filter(x=>!['c','s'].includes(x[1].k)).map(x=>SHORT[x[0]]||x[0]).join('; ');
       return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing].concat(cols.map(t=>cell(p,r,t)));
@@ -894,15 +904,15 @@ async function exportCohorts(mode){
     const list = set => set.size ? [...set].join(', ') : 'All';
     const show = {all:'Everyone',missing:'Missing items',complete:'All complete',submitted:'Has submitted',nr:'Not recommended'}[st.show];
     const info = X.utils.aoa_to_sheet([
-      ['Tab', mode==='cur'?'Current Cohorts':'Past Cohorts'], ['Exported', new Date().toLocaleString('en-US')],
-      ['HSI cohort report from', HIST.cohortReportDate? fmtDate(HIST.cohortReportDate) : 'Trainer Tracker import'],
-      ['Find a person', st.q||'—'], ['Employees', list(st.ees)], ['Office', list(st.offices)], ['Training', list(st.trainings)],
-      ['Cohort', st.cohort||'All'], ['Cohort period', st.period||'All'], ['Show', show], ['People', data.length]]);
+      ['Tab', TAB_NAME[mode]], ['Exported', new Date().toLocaleString('en-US')],
+      ['HSI training cycle report from', HIST.cohortReportDate? fmtDate(HIST.cohortReportDate) : 'Trainer Tracker import'],
+      ['Find a person', st.q||'—'], ['Employees', list(st.ees)], ['Office', list(st.offices)], ['Training', list(st.trainings)], ['Status', list(st.stat)],
+      ['Training Cycle', st.cohort||'All'], ['Training cycle period', st.period||'All'], ['Show', show], ['People', data.length]]);
     info['!cols'] = [{wch:24},{wch:80}];
     const wb = X.utils.book_new();
-    X.utils.book_append_sheet(wb, ws, 'Cohort Status');
+    X.utils.book_append_sheet(wb, ws, 'Training Cycle Status');
     X.utils.book_append_sheet(wb, info, 'Filters');
-    X.writeFile(wb, (mode==='cur'?'Current':'Past')+' Cohorts - '+todayISO()+'.xlsx');
+    X.writeFile(wb, TAB_NAME[mode]+' - '+todayISO()+'.xlsx');
   }catch(e){ showMsg(mode,'Export failed: '+e.message); }
   finally{ btn.disabled = false; btn.textContent = old; }
 }
@@ -915,7 +925,7 @@ async function loadLog(){
     // Excel can hand dates back as serial numbers (46309 = 2026-10-14).
     const toISO = v => { v=String(v||'').trim(); if(/^\d{4,6}(\.\d+)?$/.test(v)){ const d=new Date(Date.UTC(1899,11,30)+Math.floor(+v)*86400000); return d.toISOString().slice(0,10); } return v.slice(0,10); };
     rows.forEach(x=>addSubmission({employee:x['Employee']||x.employee, formId:x['Form ID']||x.formId, date:toISO(x['Evaluation Date']||x.evaluationDate||x['Submitted At'])}));
-    ['cur','past'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
+    ['cur','past','all'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
   }catch(e){}
 }
 

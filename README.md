@@ -8,7 +8,7 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 
 | File | What it does |
 |---|---|
-| `index.html` | the site (Evaluations, Current Cohorts, Past Cohorts tabs) |
+| `index.html` | the site (Evaluations, Current / Past / All Training Cycles tabs) |
 | `history.json` | cohort history imported once from the Trainer Tracker (`tools/import_tracker.py`) |
 | `forms.json` | the 10 evaluations: sections, items, rating scale |
 | `trainers.txt` | trainer names for the picker, one per line |
@@ -24,7 +24,7 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 | Secret | What |
 |---|---|
 | `EVAL_SUBMIT_URL` | HTTP URL of the "Evaluations - Save and Send" flow |
-| `EVAL_LOG_URL` | HTTP URL of the "Evaluations - Read log" flow (shows **Submitted** on the cohort tabs) |
+| `EVAL_LOG_URL` | HTTP URL of the "Evaluations - Read log" flow (shows **Submitted** on the Training Cycle tabs) |
 | `EVAL_COHORT_URL` | HTTP URL of the "Cohort Report - Send file" flow (today's HSI Cohort Daily Report) |
 | `EVAL_DATA_URL` | optional - HTTP URL of a flow that sends `HSI Data.xlsx` (Active employees for the picker) |
 
@@ -55,14 +55,15 @@ After adding or changing a secret: Actions → **Publish Evaluations Site** → 
 3. **Response.** Status `200`. Headers: `Access-Control-Allow-Origin` = `*`. Body: `value` from step 2.
 Copy the trigger URL into the `EVAL_LOG_URL` secret.
 
-## Cohort tabs
+## Training Cycle tabs (called cohorts in HSI and the Trainer Tracker)
 - **Intake Form** column (first column, for everyone): a date = an intake form sent from this site, or the date modified of the person's PDF in SharePoint > Completed Level Up Intake Forms (`intakeDate` in `history.json`); Done = the Trainer Tracker's "Intake Form Entered" says Complete.
 - Each morning the build reads the **Cohort Daily Report** (HSI Envirovac Cohort Status Report, pulled by the
   `hsi_cohort` bot) and updates `history.json`: completions, incomplete/delinquent items, cohort, and anyone new
   to a cohort. People stay in the history after they drop off the report, so past cohorts are kept.
   The workflow commits the updated `history.json` back to the repo ("Daily cohort history update").
-- **Current Cohorts:** people whose cohort period hasn't ended. **Past Cohorts:** ended, or no longer employed.
-- Filters: find a person, Employees, Office and Training (pick several in each), Cohort, Cohort period, Show. Picking trainings shows only those columns and counts complete/missing on just those trainings.
+- **Current Training Cycles:** people whose training cycle hasn't ended. **Past Training Cycles:** ended, or no longer employed. **All Training Cycles:** everyone.
+- Filters: find a person, Employees, Office, Training and Status (pick several in each), Training Cycle, Training cycle period, Show. Picking trainings shows only those columns and counts complete/missing on just those trainings.
+- **Status** (Complete, Submitted, Incomplete): shows people with at least one shown training in a picked status and fades the other cells. Incomplete includes Delinquent and ?. Pair it with Training to see, for example, everyone still incomplete on Operator Training.
 - **Export to Excel** downloads exactly what the table shows (same filters): one row per person with every shown training's status, plus a Filters sheet listing what was applied.
 - Each training shows Complete (date), **Submitted** (an evaluation was sent from this site, waiting for HSI),
   Incomplete, Delinquent, or ? (person isn't in the HSI cohort report). Rows shaded light red: not recommended for promotion.
@@ -97,8 +98,8 @@ Sample payload for step 2:
 
 ## How trainers use it
 1. Pick their name and the employee (start typing to filter), check the date and location.
-2. Pick the cohort tab (Intake (all levels), Tech I to Tech II, Tech II to Tech III, Tech III to Jr. Operator, Jr. Operator to Sr. Operator,
-   Sr. Operator to Crew Leader). Picking an employee jumps to their current cohort. Then pick the evaluation.
+2. Pick the Training Cycle (Intake (all levels), Tech I to Tech II, Tech II to Tech III, Tech III to Jr. Operator, Jr. Operator to Sr. Operator,
+   Sr. Operator to Crew Leader). Picking an employee jumps to their current training cycle. Then pick the evaluation.
 3. Rate **every item** 1–5: 1–2 Needs Work, 3 Meets Standard, 4 Proficient, 5 Mastered. Bullets under an item are
    talking points. Items rated 1–2 are listed as "needing work" in the email, log and PDF. Add comments per section.
 4. Trainer and employee sign with a finger. **Save & Send**.
