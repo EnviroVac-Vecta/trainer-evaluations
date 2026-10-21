@@ -282,11 +282,11 @@ textarea{min-height:70px;resize:vertical}
   <section id="p-all" role="tabpanel" aria-labelledby="t-all" hidden class="cohortpanel"></section>
   <section id="p-cmt" role="tabpanel" aria-labelledby="t-cmt" hidden class="cohortpanel">
     <div class="card">
-      <div class="field" style="max-width:520px"><label for="cmt-pick">Employee</label>
+      <div class="field" style="max-width:520px"><label for="cmt-pick">Employee (Level Up program)</label>
         <input type="search" id="cmt-pick" list="cmt-people" placeholder="Start typing a name" autocomplete="off"><datalist id="cmt-people"></datalist></div>
     </div>
     <div id="cmt-person"></div>
-    <div class="card"><h3 style="margin:0 0 8px;font-size:16px">Recent comments</h3><div id="cmt-recent"></div></div>
+    <div class="card"><h3 style="margin:0 0 8px;font-size:16px">Recent comments <span class="meta" style="display:inline;font-weight:400">all Level Up employees</span></h3><div id="cmt-recent"></div></div>
   </section>
 </div>
 
@@ -1012,7 +1012,6 @@ let CMT_SEL = null;
 function cmtPeople(){
   const m = new Map();
   (HIST? HIST.people : []).forEach(p=>m.set(nameKey(p.name), p));
-  ROSTER.forEach(r=>{ const k=nameKey(r.name); if(k && !m.has(k)) m.set(k, {name:r.name, id:r.id||'', office:r.office||''}); });
   return [...m.values()].sort((a,b)=>a.name.localeCompare(b.name));
 }
 function renderCommentsTab(){
