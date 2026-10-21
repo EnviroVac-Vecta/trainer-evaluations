@@ -286,7 +286,7 @@ textarea{min-height:70px;resize:vertical}
         <input type="search" id="cmt-pick" list="cmt-people" placeholder="Start typing a name" autocomplete="off"><datalist id="cmt-people"></datalist></div>
     </div>
     <div id="cmt-person"></div>
-    <div class="card"><h3 style="margin:0 0 8px;font-size:16px">Recent comments <span class="meta" style="display:inline;font-weight:400">all Level Up employees</span></h3><div id="cmt-recent"></div></div>
+    <div class="card"><h3 style="margin:0 0 8px;font-size:16px" id="cmt-rtitle">Recent comments</h3><div id="cmt-recent"></div></div>
   </section>
 </div>
 
@@ -1019,25 +1019,29 @@ function renderCommentsTab(){
   if(!dl.dataset.n || +dl.dataset.n!==people.length){ dl.innerHTML = people.map(p=>'<option value="'+esc(p.name)+'">'+esc([p.office,p.cohort].filter(Boolean).join(' · '))+'</option>').join(''); dl.dataset.n=people.length; }
   const p = CMT_SEL;
   $('cmt-person').innerHTML = !p ? '' : '<div class="card"><h3 style="margin:0;font-size:18px">'+esc(p.name)+'</h3><div class="meta" style="margin-bottom:6px">'+
-    esc([p.office,p.jobTitle,p.cohort?('Training Cycle: '+p.cohort):'',p.cohort?periodLabel(p):''].filter(Boolean).join(' · '))+'</div><div class="detail">'+needsHTML(p)+commentsHTML(p)+'</div></div>';
+    esc([p.office,p.jobTitle,p.cohort?('Training Cycle: '+p.cohort):'',p.cohort?periodLabel(p):''].filter(Boolean).join(' · '))+'</div><div class="detail">'+needsHTML(p)+commentsHTML(p,true)+'</div></div>';
+  // with an employee picked, only their comments; otherwise everyone's
   const recent = [];
-  COMMENTS.forEach(list=>list.forEach(c=>recent.push(c)));
+  if(p) commentsOf(p).forEach(c=>recent.push(c)); else COMMENTS.forEach(list=>list.forEach(c=>recent.push(c)));
+  $('cmt-rtitle').innerHTML = p ? 'Comments for '+esc(p.name)+' <span class="meta" style="display:inline;font-weight:400">('+recent.length+')</span>'
+    : 'Recent comments <span class="meta" style="display:inline;font-weight:400">all Level Up employees · pick an employee above to see only theirs</span>';
   recent.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
   $('cmt-recent').innerHTML = !CONFIG.commentReadUrl && !recent.length ? '<div class="meta">Comments from everyone show here once the Comments - Read flow is connected.</div>' :
-    !recent.length ? '<div class="meta">No comments yet.</div>' :
+    !recent.length ? '<div class="meta">'+(p?'No comments for '+esc(p.name)+' yet.':'No comments yet.')+'</div>' :
     '<div class="cmts" style="border:0;padding:0"><ol>'+recent.slice(0,30).map(c=>'<li data-cpick="'+esc(c.employee)+'"><span class="meta"><b>'+esc(c.employee)+'</b> · '+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol></div>';
 }
 function cmtPick(name){
+  if(!String(name||'').trim()){ CMT_SEL=null; renderCommentsTab(); return; }
   const k = nameKey(name); CMT_SEL = cmtPeople().find(p=>nameKey(p.name)===k) || null;
   if(CMT_SEL) $('cmt-pick').value = CMT_SEL.name;
   renderCommentsTab();
 }
 const CMT_PEOPLE = new Map();
-function commentsHTML(p){
+function commentsHTML(p, noList){
   CMT_PEOPLE.set(p.id||p.name, p);
   const list = commentsOf(p), k=esc(p.id||p.name);
-  let h = '<div class="cmts"><h5>Comments ('+list.length+')</h5>';
-  h += list.length ? '<ol>'+list.map(c=>'<li><span class="meta">'+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol>' : '<div class="meta" style="margin-bottom:8px">No comments yet.</div>';
+  let h = '<div class="cmts"><h5>'+(noList?'Add a comment':'Comments ('+list.length+')')+'</h5>';
+  h += noList ? '' : list.length ? '<ol>'+list.map(c=>'<li><span class="meta">'+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol>' : '<div class="meta" style="margin-bottom:8px">No comments yet.</div>';
   if(CONFIG.commentSaveUrl){
     const t = lsGet(LS_TRAINER) || $('trainer').value || '';
     h += '<div class="addc"><input type="text" data-ctrainer="'+k+'" placeholder="Your name" value="'+esc(t)+'" aria-label="Your name">'+
@@ -1072,6 +1076,7 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
   try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; if(HIST && !HIST.trainings.includes(INTAKE_COL)) HIST.trainings.unshift(INTAKE_COL); }catch(e){}
   loadLog(); loadComments();
   $('cmt-pick').addEventListener('change', e=>cmtPick(e.target.value));
+  $('cmt-pick').addEventListener('search', e=>{ if(!e.target.value){ CMT_SEL=null; renderCommentsTab(); } });
   $('cmt-pick').addEventListener('input', e=>{ const k=nameKey(e.target.value); if(k && cmtPeople().some(p=>nameKey(p.name)===k && p.name===e.target.value)) cmtPick(e.target.value); });
   $('p-cmt').addEventListener('click', e=>{
     const a=e.target.closest('[data-addc]'); if(a){ saveComment('cmt', a); return; }
