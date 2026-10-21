@@ -114,6 +114,9 @@ Unsent work is saved on the device automatically, so a dropped connection or clo
 The **Intake (all levels)** tab holds the Employee Intake Form for Initial Evaluation: current employee level, then every training from Tech I to Supervisor with Previously Completed, Previously Observed, Observed Date and a note. It sends like the evaluations (PDF to the office folder, Evaluation Log row with Total Score = trainings completed or observed, email).
 
 ## Trainer comments
+**Comments tab:** pick any employee to see the needs identified in their evaluations and their comments, and add a comment; below is a list of recent comments from everyone (click one to open that employee).
+**Needs identified in evaluations** (also under each employee on the Training Cycle tabs and in Export to Excel) come from the Evaluation Log's needs list column (the items rated 1-2 on each evaluation).
+
 Click an employee's name on a Training Cycle tab: under Completed / Submitted / Missing is **Comments** (newest first, with date
 and trainer) and a box to add one. Comments are saved to the `Comments` table and show for everyone. **Show > Has comments**
 filters to people with comments; Export to Excel has a Comments column. The site is public (unlisted), so anyone with the

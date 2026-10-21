@@ -181,7 +181,12 @@ textarea{min-height:70px;resize:vertical}
 .detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:6px 2px}
 .detail h5{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .detail ul{margin:0;padding-left:18px;font-size:13px}
-.cmts{grid-column:1/-1;border-top:1px solid var(--line);padding-top:10px}
+.cmts,.evneeds{grid-column:1/-1;border-top:1px solid var(--line);padding-top:10px}
+.evneeds .ev{margin:0 0 8px;font-size:13px;max-width:900px}
+.evneeds .ev b{font-size:13px}
+.evneeds .ev ul{margin:4px 0 0;padding-left:18px}
+.evneeds .ev .nsec{font-weight:600;margin-top:4px}
+#cmt-recent li{cursor:pointer}
 .cmts ol{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:6px;max-width:900px}
 .cmts li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;white-space:pre-wrap}
 .cmts li .meta{display:block;margin-bottom:2px}
@@ -244,6 +249,7 @@ textarea{min-height:70px;resize:vertical}
     <button type="button" role="tab" id="t-cur" aria-selected="false" aria-controls="p-cur">Current Training Cycles</button>
     <button type="button" role="tab" id="t-past" aria-selected="false" aria-controls="p-past">Past Training Cycles</button>
     <button type="button" role="tab" id="t-all" aria-selected="false" aria-controls="p-all">All Training Cycles</button>
+    <button type="button" role="tab" id="t-cmt" aria-selected="false" aria-controls="p-cmt">Comments</button>
   </nav>
 
   <!-- ============ EVALUATIONS ============ -->
@@ -274,6 +280,14 @@ textarea{min-height:70px;resize:vertical}
   <section id="p-cur" role="tabpanel" aria-labelledby="t-cur" hidden class="cohortpanel"></section>
   <section id="p-past" role="tabpanel" aria-labelledby="t-past" hidden class="cohortpanel"></section>
   <section id="p-all" role="tabpanel" aria-labelledby="t-all" hidden class="cohortpanel"></section>
+  <section id="p-cmt" role="tabpanel" aria-labelledby="t-cmt" hidden class="cohortpanel">
+    <div class="card">
+      <div class="field" style="max-width:520px"><label for="cmt-pick">Employee</label>
+        <input type="search" id="cmt-pick" list="cmt-people" placeholder="Start typing a name" autocomplete="off"><datalist id="cmt-people"></datalist></div>
+    </div>
+    <div id="cmt-person"></div>
+    <div class="card"><h3 style="margin:0 0 8px;font-size:16px">Recent comments</h3><div id="cmt-recent"></div></div>
+  </section>
 </div>
 
 <div class="actionbar" id="actionbar" hidden>
@@ -709,11 +723,11 @@ function showResult(ok, p){
 /* ---------- tabs ---------- */
 function setTab(t){
   document.body.classList.toggle('wide', t!=='eval');
-  ['eval','cur','past','all'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
+  ['eval','cur','past','all','cmt'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
   $('actionbar').hidden = !(t==='eval' && FORM && !$('evaluation').hidden);
-  if(t!=='eval') renderCohorts(t);
+  if(t==='cmt') renderCommentsTab(); else if(t!=='eval') renderCohorts(t);
 }
-['eval','cur','past','all'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
+['eval','cur','past','all','cmt'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
 
 /* ---------- cohorts ---------- */
 const SHORT = {'Intake Form':'Intake Form','24 or 40 Hour Hazwoper with Hands On':'HAZWOPER','Advance Blasting Classroom Training or HASC WJTA Online':'Adv. Blasting Class','Advance Blasting Hands On or WJTA Hands On Training':'Adv. Blasting Hands On','Advance Mechanics Training':'Adv. Mechanics','Basic Mechanical Troubleshooting':'Basic Mech. Troubleshoot','Basic Set Up, Troubleshooting and Equipment':'Basic Set-Up','CDL':'CDL','Defensive Driving - EnviroVac':'Defensive Driving','DiSC Profile':'DiSC','Driver Equipment Training':'Driver Equipment','Envirovac Hands On Training':'Hands On','HASC WJTA Online':'WJTA Online','Lancing Automation Training':'Lancing Automation','Level Up -Part One':'Level Up 1','Level Up-Part Two':'Level Up 2','Management and Leadership Skills for New Managers':'Mgmt & Leadership','OSHA 30hr':'OSHA 30','Operator Training':'Operator Training','Tech I to Tech II Skill Assessment':'Tech I to II','Tech II to Tech III Post Test Assessment':'Tech II to III Post Test','Tech II to Tech III Skill Assessment':'Tech II to III','WJTA Hands On Training':'WJTA Hands On'};
@@ -881,7 +895,7 @@ function drawCohortTable(mode){
     if(open){
       const done=r.sts.filter(x=>x[1].k==='c'), sub=r.sts.filter(x=>x[1].k==='s'), miss=r.sts.filter(x=>!['c','s'].includes(x[1].k));
       const li = a => a.length? '<ul>'+a.map(([t,s])=>'<li>'+esc(t)+' <span class="meta" style="display:inline">'+esc(s.text)+'</span></li>').join('')+'</ul>' : '<div class="meta">None</div>';
-      h += '<tr class="det"><td colspan="'+(3+cols.length)+'"><div class="detail"><div><h5>Completed ('+done.length+')</h5>'+li(done)+'</div><div><h5>Submitted ('+sub.length+')</h5>'+li(sub)+'</div><div><h5>Missing ('+miss.length+')</h5>'+li(miss)+'</div>'+commentsHTML(p)+'</div></td></tr>';
+      h += '<tr class="det"><td colspan="'+(3+cols.length)+'"><div class="detail"><div><h5>Completed ('+done.length+')</h5>'+li(done)+'</div><div><h5>Submitted ('+sub.length+')</h5>'+li(sub)+'</div><div><h5>Missing ('+miss.length+')</h5>'+li(miss)+'</div>'+needsHTML(p)+commentsHTML(p)+'</div></td></tr>';
     }
     return h;
   }).join('');
@@ -903,10 +917,10 @@ async function exportCohorts(mode){
   try{
     const X = await loadXLSX(), {rows, cols} = st.last;
     const cell = (p,r,t) => { if(!r.req.includes(t)) return 'Not required'; const s=statusOf(p,t); return s.k==='c' ? (s.label==='Done'?'Complete':s.label) : s.text; };
-    const head = ['Employee','Employee ID','Office','Job Title','Training Cycle','Training Cycle Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing','Comments'].concat(cols);
+    const head = ['Employee','Employee ID','Office','Job Title','Training Cycle','Training Cycle Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing','Needs (evaluations)','Comments'].concat(cols);
     const data = rows.map(r=>{ const p=r.p;
       const missing = r.sts.filter(x=>!['c','s'].includes(x[1].k)).map(x=>SHORT[x[0]]||x[0]).join('; ');
-      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing, commentsOf(p).map(c=>c.date+(c.trainer?' '+c.trainer:'')+': '+c.comment).join(' | ')].concat(cols.map(t=>cell(p,r,t)));
+      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing, (EVALNEEDS.get(nameKey(p.name))||[]).map(e=>e.date+' '+e.form+': '+e.needs.map(g=>(g[0]?g[0]+' - ':'')+g[1].join(', ')).join('; ')).join(' | '), commentsOf(p).map(c=>c.date+(c.trainer?' '+c.trainer:'')+': '+c.comment).join(' | ')].concat(cols.map(t=>cell(p,r,t)));
     });
     const ws = X.utils.aoa_to_sheet([head].concat(data));
     ws['!cols'] = head.map((h,i)=>({wch: i===0?26 : i===12?40 : Math.min(28, Math.max(10, String(h).length+2))}));
@@ -936,8 +950,41 @@ async function loadLog(){
     // Excel can hand dates back as serial numbers (46309 = 2026-10-14).
     const toISO = v => { v=String(v||'').trim(); if(/^\d{4,6}(\.\d+)?$/.test(v)){ const d=new Date(Date.UTC(1899,11,30)+Math.floor(+v)*86400000); return d.toISOString().slice(0,10); } return v.slice(0,10); };
     rows.forEach(x=>addSubmission({employee:x['Employee']||x.employee, formId:x['Form ID']||x.formId, date:toISO(x['Evaluation Date']||x.evaluationDate||x['Submitted At'])}));
+    rows.forEach(x=>addEvalNeeds(x, toISO));
+    if(!$('p-cmt').hidden) renderCommentsTab();
     ['cur','past','all'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
   }catch(e){}
+}
+
+/* ---------- needs identified in evaluations (from the Evaluation Log) ---------- */
+const EVALNEEDS = new Map(); // nameKey -> [{date, form, trainer, needs:[[section,[items]]]}]
+function logNeedsText(x){
+  // the column holding "Section: item (2); Section: item (1)" - named Needs List / Needs / needsList in the log
+  const keys = Object.keys(x);
+  const k = keys.find(c=>/need/i.test(c) && /list/i.test(c)) || keys.find(c=>/need/i.test(c) && isNaN(+x[c]) && /:/.test(String(x[c])));
+  return k ? String(x[k]||'').trim() : '';
+}
+function addEvalNeeds(x, toISO){
+  const formId = x['Form ID']||x.formId||'';
+  if(formId==='intake') return;   // the intake form lists trainings not done yet, not needs
+  const txt = logNeedsText(x); if(!txt || /^none$/i.test(txt)) return;
+  const k = nameKey(x['Employee']||x.employee); if(!k) return;
+  const groups = [];
+  txt.split(/;\s*/).map(t=>t.trim()).filter(Boolean).forEach(t=>{
+    const i=t.indexOf(': '), sec = i>0? t.slice(0,i) : '', item = i>0? t.slice(i+2) : t;
+    let g = groups.find(g=>g[0]===sec); if(!g){ g=[sec,[]]; groups.push(g); } g[1].push(item);
+  });
+  const f = FORMS.find(f=>f.id===formId);
+  const form = x['Evaluation']||x.formTitle||(f? f.title+(f.subtitle?' – '+f.subtitle:'') : formId);
+  (EVALNEEDS.get(k)||EVALNEEDS.set(k,[]).get(k)).push({date:toISO(x['Evaluation Date']||x.evaluationDate||x['Submitted At']), form, trainer:x['Trainer']||x.trainer||'', needs:groups});
+  EVALNEEDS.get(k).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+function needsHTML(p){
+  const list = EVALNEEDS.get(nameKey(p.name))||[];
+  let h = '<div class="evneeds"><h5>Needs identified in evaluations ('+list.reduce((n,e)=>n+e.needs.reduce((m,g)=>m+g[1].length,0),0)+')</h5>';
+  if(!list.length) return h+'<div class="meta">None recorded.</div></div>';
+  return h + list.map(e=>'<div class="ev"><b>'+esc(e.form)+'</b> <span class="meta" style="display:inline">'+esc(fmtDate(e.date)||e.date)+(e.trainer?' · '+esc(e.trainer):'')+'</span>'+
+    e.needs.map(([sec,items])=>(sec?'<div class="nsec">'+esc(sec)+'</div>':'')+'<ul>'+items.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>').join('')+'</div>').join('')+'</div>';
 }
 
 /* ---------- trainer comments (Comments table in SharePoint, through two flows) ---------- */
@@ -957,9 +1004,38 @@ async function loadComments(){
     COMMENTS.clear();
     rows.forEach(x=>addComment({employee:x['Employee']||x.employee, trainer:x['Trainer']||x.trainer||'', comment:x['Comment']||x.comment||'', date:excelISO(x['Date']||x.date)}));
     ['cur','past','all'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
+    if(!$('p-cmt').hidden) renderCommentsTab();
   }catch(e){}
 }
+/* ---------- Comments tab: pick an employee, see needs and comments, add a comment ---------- */
+let CMT_SEL = null;
+function cmtPeople(){
+  const m = new Map();
+  (HIST? HIST.people : []).forEach(p=>m.set(nameKey(p.name), p));
+  ROSTER.forEach(r=>{ const k=nameKey(r.name); if(k && !m.has(k)) m.set(k, {name:r.name, id:r.id||'', office:r.office||''}); });
+  return [...m.values()].sort((a,b)=>a.name.localeCompare(b.name));
+}
+function renderCommentsTab(){
+  const people = cmtPeople(), dl = $('cmt-people');
+  if(!dl.dataset.n || +dl.dataset.n!==people.length){ dl.innerHTML = people.map(p=>'<option value="'+esc(p.name)+'">'+esc([p.office,p.cohort].filter(Boolean).join(' · '))+'</option>').join(''); dl.dataset.n=people.length; }
+  const p = CMT_SEL;
+  $('cmt-person').innerHTML = !p ? '' : '<div class="card"><h3 style="margin:0;font-size:18px">'+esc(p.name)+'</h3><div class="meta" style="margin-bottom:6px">'+
+    esc([p.office,p.jobTitle,p.cohort?('Training Cycle: '+p.cohort):'',p.cohort?periodLabel(p):''].filter(Boolean).join(' · '))+'</div><div class="detail">'+needsHTML(p)+commentsHTML(p)+'</div></div>';
+  const recent = [];
+  COMMENTS.forEach(list=>list.forEach(c=>recent.push(c)));
+  recent.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  $('cmt-recent').innerHTML = !CONFIG.commentReadUrl && !recent.length ? '<div class="meta">Comments from everyone show here once the Comments - Read flow is connected.</div>' :
+    !recent.length ? '<div class="meta">No comments yet.</div>' :
+    '<div class="cmts" style="border:0;padding:0"><ol>'+recent.slice(0,30).map(c=>'<li data-cpick="'+esc(c.employee)+'"><span class="meta"><b>'+esc(c.employee)+'</b> · '+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol></div>';
+}
+function cmtPick(name){
+  const k = nameKey(name); CMT_SEL = cmtPeople().find(p=>nameKey(p.name)===k) || null;
+  if(CMT_SEL) $('cmt-pick').value = CMT_SEL.name;
+  renderCommentsTab();
+}
+const CMT_PEOPLE = new Map();
 function commentsHTML(p){
+  CMT_PEOPLE.set(p.id||p.name, p);
   const list = commentsOf(p), k=esc(p.id||p.name);
   let h = '<div class="cmts"><h5>Comments ('+list.length+')</h5>';
   h += list.length ? '<ol>'+list.map(c=>'<li><span class="meta">'+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol>' : '<div class="meta" style="margin-bottom:8px">No comments yet.</div>';
@@ -972,7 +1048,7 @@ function commentsHTML(p){
   return h+'</div>';
 }
 async function saveComment(mode, btn){
-  const k = btn.dataset.addc, p = HIST.people.find(x=>(x.id||x.name)===k); if(!p) return;
+  const k = btn.dataset.addc, p = CMT_PEOPLE.get(k); if(!p) return;
   const root = btn.closest('.cmts'), ta = root.querySelector('[data-ctext]'), tr = root.querySelector('[data-ctrainer]');
   const comment = ta.value.trim(), trainer = tr.value.trim();
   if(!trainer){ tr.focus(); tr.style.borderColor='var(--orange)'; return; }
@@ -985,8 +1061,8 @@ async function saveComment(mode, btn){
   try{
     const r = await fetch(CONFIG.commentSaveUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(row)});
     if(!r.ok) throw new Error('the flow answered '+r.status);
-    addComment(row); drawCohortTable(mode);
-  }catch(e){ btn.disabled=false; btn.textContent='Add comment'; showMsg(mode,'Comment not saved ('+e.message+'). Try again.'); }
+    addComment(row); if(mode==='cmt') renderCommentsTab(); else drawCohortTable(mode);
+  }catch(e){ btn.disabled=false; btn.textContent='Add comment'; if(mode==='cmt'){ alert('Comment not saved ('+e.message+'). Try again.'); } else showMsg(mode,'Comment not saved ('+e.message+'). Try again.'); }
 }
 
 /* ---------- boot ---------- */
@@ -996,6 +1072,12 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
   try{ Object.assign(CONFIG, await getJSON('config.json')); }catch(e){}
   try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; if(HIST && !HIST.trainings.includes(INTAKE_COL)) HIST.trainings.unshift(INTAKE_COL); }catch(e){}
   loadLog(); loadComments();
+  $('cmt-pick').addEventListener('change', e=>cmtPick(e.target.value));
+  $('cmt-pick').addEventListener('input', e=>{ const k=nameKey(e.target.value); if(k && cmtPeople().some(p=>nameKey(p.name)===k && p.name===e.target.value)) cmtPick(e.target.value); });
+  $('p-cmt').addEventListener('click', e=>{
+    const a=e.target.closest('[data-addc]'); if(a){ saveComment('cmt', a); return; }
+    const r=e.target.closest('[data-cpick]'); if(r){ cmtPick(r.dataset.cpick); window.scrollTo({top:0,behavior:'smooth'}); }
+  });
   renderFormList();
   $('cohortpick').addEventListener('click', e=>{ const b=e.target.closest('.cpick'); if(b) pickCohort(b.dataset.cohort); });
   typeahead($('trainer'), ()=>(CONFIG.trainers||[]).map(t=>({label:t})), null);
