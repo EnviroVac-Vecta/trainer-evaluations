@@ -181,6 +181,14 @@ textarea{min-height:70px;resize:vertical}
 .detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:6px 2px}
 .detail h5{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .detail ul{margin:0;padding-left:18px;font-size:13px}
+.cmts{grid-column:1/-1;border-top:1px solid var(--line);padding-top:10px}
+.cmts ol{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:6px;max-width:900px}
+.cmts li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;white-space:pre-wrap}
+.cmts li .meta{display:block;margin-bottom:2px}
+.cmts .addc{display:grid;grid-template-columns:220px 1fr auto;gap:8px;align-items:start;max-width:900px}
+.cmts .addc input,.cmts .addc textarea{font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.cmts .addc textarea{min-height:38px;resize:vertical}
+@media (max-width:700px){.cmts .addc{grid-template-columns:1fr}}
 .cpicks{display:flex;flex-wrap:wrap;gap:8px}
 .cpick{font:inherit;font-weight:700;border:1.5px solid var(--line);background:var(--surface);color:var(--brand);border-radius:999px;padding:9px 16px;cursor:pointer;min-height:42px}
 .cpick:hover{border-color:var(--brand)}
@@ -291,7 +299,7 @@ const fmtDate = iso => { if(!iso) return ''; const [y,m,d]=iso.split('-').map(Nu
 const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
 const lsSet = (k,v) => { try{ v==null ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){} };
 
-let FORMS = [], CONFIG = {trainers:[], submitUrl:'', logUrl:'', minRating:1, maxRating:5}, ROSTER = [];
+let FORMS = [], CONFIG = {trainers:[], submitUrl:'', logUrl:'', commentSaveUrl:'', commentReadUrl:'', minRating:1, maxRating:5}, ROSTER = [];
 let FORM = null, MODEL = null;
 let S = null; // current answers
 
@@ -713,7 +721,7 @@ const SHORT = {'Intake Form':'Intake Form','24 or 40 Hour Hazwoper with Hands On
 const INTAKE_COL = 'Intake Form';
 const FORM_TO_TRAINING = {'intake':INTAKE_COL,'operator-training':'Operator Training','driver-part-1-pickup-trailer':'Driver Equipment Training','driver-part-2-vacuum-truck':'Driver Equipment Training','pump-advance-mechanical':'Advance Mechanics Training','basic-mechanical-troubleshooting':'Basic Mechanical Troubleshooting','basic-setup-troubleshooting':'Basic Set Up, Troubleshooting and Equipment','hydroblasting-tube-bundle-automation':'Lancing Automation Training','hazwoper-decontamination':'24 or 40 Hour Hazwoper with Hands On','tech-i-to-tech-ii':'Tech I to Tech II Skill Assessment','tech-ii-to-tech-iii':'Tech II to Tech III Skill Assessment'};
 const nameKey = n => { n=String(n||''); if(n.includes(',')){ const [l,f]=n.split(','); n=f+' '+l; } const t=n.toLowerCase().replace(/[^a-z ]/g,' ').split(/\s+/).filter(x=>x.length>1); return t.length? t[0]+' '+t[t.length-1] : ''; };
-let HIST = null, SUB = new Map(); // SUB: nameKey -> Map(training -> {date, forms:Set})
+let HIST = null, SUB = new Map(), COMMENTS = new Map(); // COMMENTS: nameKey -> [{date, trainer, comment}] // SUB: nameKey -> Map(training -> {date, forms:Set})
 function addSubmission(row){
   const k = nameKey(row.employee), t = FORM_TO_TRAINING[row.formId]; if(!k || !t) return;
   const m = SUB.get(k) || SUB.set(k, new Map()).get(k);
@@ -810,7 +818,7 @@ function renderCohorts(mode){
       msHTML(mode+'-stat','Status',STAT_GROUPS.map(([v])=>({v})),'All statuses')+
       selectHTML(mode+'-cohort','Training Cycle',uniq(p=>p.cohort),st.cohort,'All training cycles')+
       selectHTML(mode+'-period','Training cycle period',uniq(periodLabel),st.period,'All periods')+
-      '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option></select></div>'+
+      '<div class="field"><label for="'+mode+'-show">Show</label><select id="'+mode+'-show"><option value="all">Everyone</option><option value="missing">Missing items</option><option value="complete">All complete</option><option value="submitted">Has submitted</option><option value="nr">Not recommended</option><option value="comments">Has comments</option></select></div>'+
       '<div class="fbtns"><button type="button" class="btn" id="'+mode+'-clear">Clear filters</button>'+
       '<button type="button" class="btn primary" id="'+mode+'-export">Export to Excel</button></div>'+
       '</div><div class="cbar"><span class="count"><span id="'+mode+'-count"></span>'+(HIST.cohortReportDate?' · HSI training cycle report from '+esc(fmtDate(HIST.cohortReportDate)):' · from the Trainer Tracker import')+'</span><div class="legend">'+
@@ -825,6 +833,7 @@ function renderCohorts(mode){
     $(mode+'-clear').addEventListener('click',()=>{ st.q=''; st.cohort=''; st.period=''; st.show='all'; st.ees.clear(); st.offices.clear(); st.trainings.clear(); st.stat.clear();
       $(mode+'-q').value=''; ['cohort','period'].forEach(k=>$(mode+'-'+k).value=''); $(mode+'-show').value='all'; syncs.forEach(f=>f()); redraw(); });
     el.querySelector('table').addEventListener('click',e=>{
+      const a=e.target.closest('[data-addc]'); if(a){ saveComment(mode, a); return; }
       const s=e.target.closest('[data-sort]'); if(s){ st.sort = st.sort===s.dataset.sort ? '-'+s.dataset.sort : s.dataset.sort; drawCohortTable(mode); return; }
       const w=e.target.closest('[data-open]'); if(w){ const k=w.dataset.open; st.open.has(k)?st.open.delete(k):st.open.add(k); drawCohortTable(mode); }
     });
@@ -851,6 +860,7 @@ function drawCohortTable(mode){
     if(st.show==='complete' && !(r.total && r.done===r.total)) return false;
     if(st.show==='submitted' && !r.sub) return false;
     if(st.show==='nr' && !p.notRecommended) return false;
+    if(st.show==='comments' && !commentsOf(p).length) return false;
     if(st.stat.size && !r.sts.some(x=>st.stat.has(statGroup(x[1].k)))) return false;
     return true;
   });
@@ -863,7 +873,7 @@ function drawCohortTable(mode){
     cols.map(t=>'<th class="tc" title="'+esc(t)+'">'+esc(SHORT[t]||t)+'</th>').join('')+'</tr>';
   const body = rows.map(r=>{
     const p=r.p, k=p.id||p.name, open=st.open.has(k);
-    const tags = (p.notRecommended?'<span class="tag2 nr">Not recommended</span>':'')+(!p.employed?'<span class="tag2">No longer employed</span>':'')+(p.employed && !p.inHSIReport?'<span class="tag2">Not in HSI report</span>':'');
+    const tags = (p.notRecommended?'<span class="tag2 nr">Not recommended</span>':'')+(!p.employed?'<span class="tag2">No longer employed</span>':'')+(p.employed && !p.inHSIReport?'<span class="tag2">Not in HSI report</span>':'')+(commentsOf(p).length?'<span class="tag2">'+commentsOf(p).length+' comment'+(commentsOf(p).length===1?'':'s')+'</span>':'');
     let h = '<tr class="'+(p.notRecommended?'nr ':'')+(!p.employed?'gone':'')+'"><td class="sticky"><button type="button" class="who2" data-open="'+esc(k)+'" aria-expanded="'+open+'">'+esc(p.name)+'</button><span class="meta">'+esc([p.office,p.jobTitle].filter(Boolean).join(' · '))+'</span>'+tags+'</td>'+
       '<td>'+esc(p.cohort||'—')+'<span class="meta">'+esc(periodLabel(p))+'</span></td>'+
       '<td><div class="prog"><span class="b"><i style="width:'+Math.round(r.pct*100)+'%"></i></span><b>'+r.done+'/'+r.total+'</b></div>'+(r.sub?'<span class="meta">'+r.sub+' submitted</span>':'')+'</td>'+
@@ -871,7 +881,7 @@ function drawCohortTable(mode){
     if(open){
       const done=r.sts.filter(x=>x[1].k==='c'), sub=r.sts.filter(x=>x[1].k==='s'), miss=r.sts.filter(x=>!['c','s'].includes(x[1].k));
       const li = a => a.length? '<ul>'+a.map(([t,s])=>'<li>'+esc(t)+' <span class="meta" style="display:inline">'+esc(s.text)+'</span></li>').join('')+'</ul>' : '<div class="meta">None</div>';
-      h += '<tr class="det"><td colspan="'+(3+cols.length)+'"><div class="detail"><div><h5>Completed ('+done.length+')</h5>'+li(done)+'</div><div><h5>Submitted ('+sub.length+')</h5>'+li(sub)+'</div><div><h5>Missing ('+miss.length+')</h5>'+li(miss)+'</div></div></td></tr>';
+      h += '<tr class="det"><td colspan="'+(3+cols.length)+'"><div class="detail"><div><h5>Completed ('+done.length+')</h5>'+li(done)+'</div><div><h5>Submitted ('+sub.length+')</h5>'+li(sub)+'</div><div><h5>Missing ('+miss.length+')</h5>'+li(miss)+'</div>'+commentsHTML(p)+'</div></td></tr>';
     }
     return h;
   }).join('');
@@ -893,17 +903,17 @@ async function exportCohorts(mode){
   try{
     const X = await loadXLSX(), {rows, cols} = st.last;
     const cell = (p,r,t) => { if(!r.req.includes(t)) return 'Not required'; const s=statusOf(p,t); return s.k==='c' ? (s.label==='Done'?'Complete':s.label) : s.text; };
-    const head = ['Employee','Employee ID','Office','Job Title','Training Cycle','Training Cycle Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing'].concat(cols);
+    const head = ['Employee','Employee ID','Office','Job Title','Training Cycle','Training Cycle Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing','Comments'].concat(cols);
     const data = rows.map(r=>{ const p=r.p;
       const missing = r.sts.filter(x=>!['c','s'].includes(x[1].k)).map(x=>SHORT[x[0]]||x[0]).join('; ');
-      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing].concat(cols.map(t=>cell(p,r,t)));
+      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing, commentsOf(p).map(c=>c.date+(c.trainer?' '+c.trainer:'')+': '+c.comment).join(' | ')].concat(cols.map(t=>cell(p,r,t)));
     });
     const ws = X.utils.aoa_to_sheet([head].concat(data));
     ws['!cols'] = head.map((h,i)=>({wch: i===0?26 : i===12?40 : Math.min(28, Math.max(10, String(h).length+2))}));
     ws['!autofilter'] = {ref: X.utils.encode_range({s:{r:0,c:0}, e:{r:data.length, c:head.length-1}})};
     for(let i=1;i<=data.length;i++){ const a=X.utils.encode_cell({r:i,c:10}); if(ws[a]) ws[a].z='0%'; }
     const list = set => set.size ? [...set].join(', ') : 'All';
-    const show = {all:'Everyone',missing:'Missing items',complete:'All complete',submitted:'Has submitted',nr:'Not recommended'}[st.show];
+    const show = {all:'Everyone',missing:'Missing items',complete:'All complete',submitted:'Has submitted',nr:'Not recommended',comments:'Has comments'}[st.show];
     const info = X.utils.aoa_to_sheet([
       ['Tab', TAB_NAME[mode]], ['Exported', new Date().toLocaleString('en-US')],
       ['HSI training cycle report from', HIST.cohortReportDate? fmtDate(HIST.cohortReportDate) : 'Trainer Tracker import'],
@@ -930,13 +940,62 @@ async function loadLog(){
   }catch(e){}
 }
 
+/* ---------- trainer comments (Comments table in SharePoint, through two flows) ---------- */
+const excelISO = v => { v=String(v||'').trim(); if(/^\d{4,6}(\.\d+)?$/.test(v)){ const ms=Date.UTC(1899,11,30)+(+v)*86400000; return new Date(ms).toISOString().slice(0,16).replace('T',' '); } return v.replace('T',' ').slice(0,16); };
+function addComment(c){
+  const k=nameKey(c.employee); if(!k || !String(c.comment||'').trim()) return;
+  (COMMENTS.get(k) || COMMENTS.set(k,[]).get(k)).push(c);
+  COMMENTS.get(k).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+const commentsOf = p => COMMENTS.get(nameKey(p.name)) || [];
+async function loadComments(){
+  if(!CONFIG.commentReadUrl) return;
+  try{
+    const r = await fetch(CONFIG.commentReadUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+    if(!r.ok) return;
+    let rows = await r.json(); rows = Array.isArray(rows)? rows : (rows.value||rows.rows||[]);
+    COMMENTS.clear();
+    rows.forEach(x=>addComment({employee:x['Employee']||x.employee, trainer:x['Trainer']||x.trainer||'', comment:x['Comment']||x.comment||'', date:excelISO(x['Date']||x.date)}));
+    ['cur','past','all'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
+  }catch(e){}
+}
+function commentsHTML(p){
+  const list = commentsOf(p), k=esc(p.id||p.name);
+  let h = '<div class="cmts"><h5>Comments ('+list.length+')</h5>';
+  h += list.length ? '<ol>'+list.map(c=>'<li><span class="meta">'+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol>' : '<div class="meta" style="margin-bottom:8px">No comments yet.</div>';
+  if(CONFIG.commentSaveUrl){
+    const t = lsGet(LS_TRAINER) || $('trainer').value || '';
+    h += '<div class="addc"><input type="text" data-ctrainer="'+k+'" placeholder="Your name" value="'+esc(t)+'" aria-label="Your name">'+
+      '<textarea data-ctext="'+k+'" placeholder="Add a comment about '+esc(p.name)+'" aria-label="Comment"></textarea>'+
+      '<button type="button" class="btn primary" data-addc="'+k+'">Add comment</button></div>';
+  }
+  return h+'</div>';
+}
+async function saveComment(mode, btn){
+  const k = btn.dataset.addc, p = HIST.people.find(x=>(x.id||x.name)===k); if(!p) return;
+  const root = btn.closest('.cmts'), ta = root.querySelector('[data-ctext]'), tr = root.querySelector('[data-ctrainer]');
+  const comment = ta.value.trim(), trainer = tr.value.trim();
+  if(!trainer){ tr.focus(); tr.style.borderColor='var(--orange)'; return; }
+  if(!comment){ ta.focus(); return; }
+  lsSet(LS_TRAINER, trainer);
+  const now = new Date(), pad = n=>String(n).padStart(2,'0');
+  const date = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes());
+  const row = {date, employee:p.name, employeeId:p.id||'', office:p.office||'', trainingCycle:p.cohort||'', trainer, comment};
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try{
+    const r = await fetch(CONFIG.commentSaveUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(row)});
+    if(!r.ok) throw new Error('the flow answered '+r.status);
+    addComment(row); drawCohortTable(mode);
+  }catch(e){ btn.disabled=false; btn.textContent='Add comment'; showMsg(mode,'Comment not saved ('+e.message+'). Try again.'); }
+}
+
 /* ---------- boot ---------- */
 async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) throw new Error(u+' '+r.status); return r.json(); }
 (async()=>{
   try{ FORMS = (await getJSON('forms.json')).forms; }catch(e){ $('formlist').innerHTML='<div class="notice err">The evaluation forms could not be loaded. Reload the page.</div>'; return; }
   try{ Object.assign(CONFIG, await getJSON('config.json')); }catch(e){}
   try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; if(HIST && !HIST.trainings.includes(INTAKE_COL)) HIST.trainings.unshift(INTAKE_COL); }catch(e){}
-  loadLog();
+  loadLog(); loadComments();
   renderFormList();
   $('cohortpick').addEventListener('click', e=>{ const b=e.target.closest('.cpick'); if(b) pickCohort(b.dataset.cohort); });
   typeahead($('trainer'), ()=>(CONFIG.trainers||[]).map(t=>({label:t})), null);

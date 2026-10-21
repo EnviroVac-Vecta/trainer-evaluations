@@ -254,7 +254,8 @@ def main():
     if not submit:
         print("::warning title=Save & Send not connected::Add the EVAL_SUBMIT_URL secret; until then trainers can only download the PDF.")
     with open(os.path.join(OUT, "config.json"), "w") as f:
-        json.dump({"trainers": trainers, "submitUrl": submit, "logUrl": secret("EVAL_LOG_URL")}, f)
+        json.dump({"trainers": trainers, "submitUrl": submit, "logUrl": secret("EVAL_LOG_URL"),
+                   "commentSaveUrl": secret("COMMENT_SAVE_URL"), "commentReadUrl": secret("COMMENT_READ_URL")}, f)
 
     with open(os.path.join(HERE, "history.json")) as f:
         history = json.load(f)

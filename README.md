@@ -26,6 +26,8 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 | `EVAL_SUBMIT_URL` | HTTP URL of the "Evaluations - Save and Send" flow |
 | `EVAL_LOG_URL` | HTTP URL of the "Evaluations - Read log" flow (shows **Submitted** on the Training Cycle tabs) |
 | `EVAL_COHORT_URL` | HTTP URL of the "Cohort Report - Send file" flow (today's HSI Cohort Daily Report) |
+| `COMMENT_SAVE_URL` | HTTP URL of the "Comments - Save" flow (trainer comments on the Training Cycle tabs) |
+| `COMMENT_READ_URL` | HTTP URL of the "Comments - Read" flow (shows the comments) |
 | `TRAINER_REPORT_URL` | optional - HTTP URL of the "Trainer Report - Save file" flow: the build sends a colored **Training Cycle Report.xlsx** (one row per person, a column per training) there every day, for the trainers in Project Polarity. Built by `tools/trainer_report.py`. |
 | `EVAL_DATA_URL` | optional - HTTP URL of a flow that sends `HSI Data.xlsx` (Active employees for the picker) |
 
@@ -110,3 +112,24 @@ Unsent work is saved on the device automatically, so a dropped connection or clo
 
 ## Intake form
 The **Intake (all levels)** tab holds the Employee Intake Form for Initial Evaluation: current employee level, then every training from Tech I to Supervisor with Previously Completed, Previously Observed, Observed Date and a note. It sends like the evaluations (PDF to the office folder, Evaluation Log row with Total Score = trainings completed or observed, email).
+
+## Trainer comments
+Click an employee's name on a Training Cycle tab: under Completed / Submitted / Missing is **Comments** (newest first, with date
+and trainer) and a box to add one. Comments are saved to the `Comments` table and show for everyone. **Show > Has comments**
+filters to people with comments; Export to Excel has a Comments column. The site is public (unlisted), so anyone with the
+link can read the comments.
+
+Table `Comments` (Excel, e.g. a new sheet in Evaluation_Log.xlsx), columns: Date, Employee, Employee ID, Office, Training Cycle, Trainer, Comment.
+
+**Comments - Save:** When an HTTP request is received (Anyone; schema from the sample below) > Add a row into a table
+(map each column: Date -> date, Employee -> employee, Employee ID -> employeeId, Office -> office, Training Cycle -> trainingCycle,
+Trainer -> trainer, Comment -> comment) > Response 200 with header `Access-Control-Allow-Origin: *`.
+
+**Comments - Read:** When an HTTP request is received (Anyone) > List rows present in a table (Comments) > Response 200,
+header `Access-Control-Allow-Origin: *`, Body: `value` from List rows.
+
+Sample payload:
+```json
+{"date": "2026-10-21 11:38", "employee": "Gregory Partlow", "employeeId": "EOAUH5AVJ", "office": "009-Columbus",
+ "trainingCycle": "Jr. Operator to Sr. Operator", "trainer": "Noah", "comment": "Completed Part 1 today."}
+```
