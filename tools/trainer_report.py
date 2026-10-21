@@ -81,14 +81,13 @@ def build(history, today=None):
                 cells.append(""); fills.append(None)
             else:
                 cells.append("Needed"); fills.append(YELLOW); need += 1
-        intake = p.get("intakeDate") and datetime.strptime(p["intakeDate"], "%Y-%m-%d").strftime("%m/%d/%y")
-        intake = intake or ("Done" if p.get("intake") else "Needed")
+        intake = "Complete" if (p.get("intakeDate") or p.get("intake")) else "Incomplete"
         ws.append([p.get("name", ""), p.get("id", ""), p.get("office", ""), p.get("jobTitle", ""), p.get("cohort", ""),
                    period(p), "Current" if cur else "Past", intake, done, need, late] + cells)
         r = ws.max_row
         ws.cell(r, 1).fill = _fill(BLUE if cur else GRAY)
         ws.cell(r, 1).font = Font(bold=True)
-        ws.cell(r, 8).fill = _fill(YELLOW if intake == "Needed" else GREEN)
+        ws.cell(r, 8).fill = _fill(GREEN if intake == "Complete" else YELLOW)
         for i, f in enumerate(fills):
             if f:
                 ws.cell(r, first_t + i).fill = _fill(f)
@@ -114,6 +113,7 @@ def build(history, today=None):
         ("Needed", YELLOW, "Required, not completed yet (not delinquent)"),
         ("Delinquent", RED, "Required and past due"),
         ("(blank)", None, "Not required for this person's training cycle"),
+        ("Intake Form", None, "Complete or Incomplete"),
     ):
         key.append([label, text])
         if color:
