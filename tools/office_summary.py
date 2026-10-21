@@ -124,6 +124,22 @@ def rec_color(rec, not_rec):
     return None
 
 
+def _bullets(names, width=4.0 * inch):
+    """Names as a bulleted list, in two columns when there are more than four."""
+    items = [Paragraph("•&nbsp;&nbsp;" + esc(n), S["cell"]) for n in names]
+    if len(items) <= 4:
+        rows, widths = [[i] for i in items], [width]
+    else:
+        half = (len(items) + 1) // 2
+        left, right = items[:half], items[half:] + [""] * (2 * half - len(items))
+        rows, widths = [[a, b] for a, b in zip(left, right)], [width / 2] * 2
+    t = Table(rows, colWidths=widths)
+    t.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                           ("TOPPADDING", (0, 0), (-1, -1), 0.5), ("BOTTOMPADDING", (0, 0), (-1, -1), 0.5),
+                           ("VALIGN", (0, 0), (-1, -1), "TOP")]))
+    return t
+
+
 def _tbl(data, widths, header=True, extra=None):
     t = Table(data, colWidths=widths, repeatRows=1 if header else 0)
     st = [("FONTNAME", (0, 0), (-1, -1), "Helvetica"), ("FONTSIZE", (0, 0), (-1, -1), 8),
@@ -212,7 +228,7 @@ def build(history, office, today=None, tracker=None, needs=None, comments=None):
             by_training.setdefault(t, []).append(p["name"])
     if by_training:
         story.append(Paragraph("To schedule with a trainer — grouped by training", S["h3"]))
-        rows = [[Paragraph(esc(t), S["cellb"]), str(len(ns)), Paragraph(esc(", ".join(sorted(ns))), S["cell"])]
+        rows = [[Paragraph(esc(t), S["cellb"]), str(len(ns)), _bullets(sorted(ns))]
                 for t, ns in sorted(by_training.items(), key=lambda x: (-len(x[1]), x[0]))]
         story.append(_tbl([["Training", "People", "Who"]] + rows, [2.4 * inch, 0.6 * inch, 4.0 * inch]))
     online = {}
@@ -221,7 +237,7 @@ def build(history, office, today=None, tracker=None, needs=None, comments=None):
             online.setdefault(t, []).append(p["name"])
     if online:
         story.append(Paragraph("Self work — online (assign or remind)", S["h3"]))
-        rows = [[Paragraph(esc(t), S["cellb"]), str(len(ns)), Paragraph(esc(", ".join(sorted(ns))), S["cell"])]
+        rows = [[Paragraph(esc(t), S["cellb"]), str(len(ns)), _bullets(sorted(ns))]
                 for t, ns in sorted(online.items(), key=lambda x: (-len(x[1]), x[0]))]
         story.append(_tbl([["Training", "People", "Who"]] + rows, [2.4 * inch, 0.6 * inch, 4.0 * inch]))
     if not (late_rows or soon or by_training or online):
