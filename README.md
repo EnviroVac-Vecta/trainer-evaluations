@@ -26,6 +26,7 @@ Site: **https://envirovac-vecta.github.io/trainer-evaluations/**
 | `EVAL_SUBMIT_URL` | HTTP URL of the "Evaluations - Save and Send" flow |
 | `EVAL_LOG_URL` | HTTP URL of the "Evaluations - Read log" flow (shows **Submitted** on the Training Cycle tabs) |
 | `EVAL_COHORT_URL` | HTTP URL of the "Cohort Report - Send file" flow (today's HSI Cohort Daily Report) |
+| `TRAINER_REPORT_URL` | optional - HTTP URL of the "Trainer Report - Save file" flow: the build sends a colored **Training Cycle Report.xlsx** (one row per person, a column per training) there every day, for the trainers in Project Polarity. Built by `tools/trainer_report.py`. |
 | `EVAL_DATA_URL` | optional - HTTP URL of a flow that sends `HSI Data.xlsx` (Active employees for the picker) |
 
 After adding or changing a secret: Actions → **Publish Evaluations Site** → **Run workflow**.

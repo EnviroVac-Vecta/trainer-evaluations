@@ -217,6 +217,27 @@ def merge_cohort_report(history, report):
     return history
 
 
+def send_trainer_report(history):
+    """Trainer copy (colored Excel) to the "Trainer Report - Save file" flow -> Project Polarity, same name every day.
+    Never published on the public site."""
+    url = secret("TRAINER_REPORT_URL")
+    if not url:
+        print("No TRAINER_REPORT_URL secret yet: trainer copy of the Training Cycle report not sent.")
+        return
+    import base64
+    from tools.trainer_report import build
+    name = "Training Cycle Report.xlsx"
+    body = {"fileName": name, "fileContent": base64.b64encode(build(history)).decode("ascii")}
+    try:
+        r = requests.post(url, json=body, timeout=120)
+        if r.status_code in (200, 202):
+            print(f"::notice title=Trainer report::Sent '{name}' to Project Polarity.")
+        else:
+            print(f"::warning title=Trainer report::The flow answered {r.status_code}: {r.text[:300]}")
+    except Exception as e:
+        print(f"::warning title=Trainer report::Couldn't send it ({e}).")
+
+
 def main():
     shutil.rmtree(OUT, ignore_errors=True)
     os.makedirs(OUT)
@@ -243,6 +264,7 @@ def main():
         # Save the updated history so people are remembered after they leave the report.
         with open(os.path.join(HERE, "history.json"), "w") as f:
             json.dump(history, f, indent=1)
+    send_trainer_report(history)
     data = get_data_file()
     roster = read_roster(data) if data else history.pop("roster", [])
     history.pop("roster", None)
