@@ -193,6 +193,11 @@ textarea{min-height:70px;resize:vertical}
 .cmts .addc{display:grid;grid-template-columns:220px 1fr auto;gap:8px;align-items:start;max-width:900px}
 .cmts .addc input,.cmts .addc textarea{font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
 .cmts .addc textarea{min-height:38px;resize:vertical}
+.cmts li.init{border-color:var(--orange);background:color-mix(in srgb,var(--orange) 6%,var(--surface))}
+.itag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);margin-right:6px}
+#ini-table td{vertical-align:top}
+#ini-table textarea{width:100%;min-height:54px;font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);resize:vertical}
+#ini-table .inirow{display:flex;gap:8px;align-items:flex-start}
 @media (max-width:700px){.cmts .addc{grid-template-columns:1fr}}
 .cpicks{display:flex;flex-wrap:wrap;gap:8px}
 .cpick{font:inherit;font-weight:700;border:1.5px solid var(--line);background:var(--surface);color:var(--brand);border-radius:999px;padding:9px 16px;cursor:pointer;min-height:42px}
@@ -250,6 +255,7 @@ textarea{min-height:70px;resize:vertical}
     <button type="button" role="tab" id="t-past" aria-selected="false" aria-controls="p-past">Past Training Cycles</button>
     <button type="button" role="tab" id="t-all" aria-selected="false" aria-controls="p-all">All Training Cycles</button>
     <button type="button" role="tab" id="t-cmt" aria-selected="false" aria-controls="p-cmt">Comments</button>
+    <button type="button" role="tab" id="t-ini" aria-selected="false" aria-controls="p-ini">Initial Comments</button>
   </nav>
 
   <!-- ============ EVALUATIONS ============ -->
@@ -280,6 +286,19 @@ textarea{min-height:70px;resize:vertical}
   <section id="p-cur" role="tabpanel" aria-labelledby="t-cur" hidden class="cohortpanel"></section>
   <section id="p-past" role="tabpanel" aria-labelledby="t-past" hidden class="cohortpanel"></section>
   <section id="p-all" role="tabpanel" aria-labelledby="t-all" hidden class="cohortpanel"></section>
+  <section id="p-ini" role="tabpanel" aria-labelledby="t-ini" hidden class="cohortpanel">
+    <div class="card">
+      <p style="margin:0 0 10px;font-size:14px">Catch up the <b>Initial Comment</b> for employees in the training cycle that started in <b>September</b>. From now on it comes in automatically with each intake form.</p>
+      <div class="cfilters" style="margin:0">
+        <div class="field"><label for="ini-trainer">Your name</label><input type="text" id="ini-trainer" autocomplete="off" placeholder="Trainer name"></div>
+        <div class="field q"><label for="ini-q">Find a person</label><input type="search" id="ini-q" placeholder="Name"></div>
+        <div class="field"><label for="ini-office">Office</label><select id="ini-office"><option value="">All offices</option></select></div>
+        <div class="field"><label for="ini-show">Show</label><select id="ini-show"><option value="missing">Missing an initial comment</option><option value="has">Has an initial comment</option><option value="all">Everyone</option></select></div>
+      </div>
+      <div class="cbar"><span class="count" id="ini-count"></span></div>
+    </div>
+    <div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="ctable" id="ini-table"><thead><tr><th class="sticky">Employee</th><th>Training Cycle</th><th>Intake Form</th><th style="min-width:420px">Initial Comment</th></tr></thead><tbody></tbody></table></div>
+  </section>
   <section id="p-cmt" role="tabpanel" aria-labelledby="t-cmt" hidden class="cohortpanel">
     <div class="card">
       <div class="field" style="max-width:520px"><label for="cmt-pick">Employee (Level Up program)</label>
@@ -466,7 +485,9 @@ function openForm(id, draft){
       '<div class="unit"><div class="field"><label>Comments</label><textarea data-comment="'+esc(sec._commentKey)+'">'+esc(S.comments[sec._commentKey]||'')+'</textarea></div></div></div>';
   });
   const hasNotes = isIntake(FORM) || FORM.signoff_fields.some(f=>/notes/i.test(f));
-  if(hasNotes) h += '<div class="card field"><label for="notes">Notes</label><textarea id="notes">'+esc(S.notes||'')+'</textarea></div>';
+  if(hasNotes) h += isIntake(FORM)
+    ? '<div class="card field"><label for="notes">Initial Comments <span class="req">*</span></label><textarea id="notes" placeholder="Your initial comments on this employee (required)">'+esc(S.notes||'')+'</textarea></div>'
+    : '<div class="card field"><label for="notes">Notes</label><textarea id="notes">'+esc(S.notes||'')+'</textarea></div>';
   h += '<div class="card scorebar" id="score"></div>';
   const empLabel = FORM.signoff_fields.find(f=>/trainee/i.test(f)) ? 'Trainee' : 'Employee';
   h += '<div class="card"><div class="sigs">'+
@@ -519,7 +540,7 @@ $('evaluation').addEventListener('input', e=>{
   }
   else if(t.dataset.comment!==undefined){ S.comments[t.dataset.comment]=t.value; }
   else if(t.dataset.extra!==undefined){ S.extra[t.dataset.extra]=t.value; t.classList.remove('invalid'); }
-  else if(t.id==='notes'){ S.notes=t.value; }
+  else if(t.id==='notes'){ S.notes=t.value; t.classList.remove('invalid'); }
   queueSave();
 });
 ['trainer','employee','office','date','location'].forEach(k=>$(k).addEventListener('input', ()=>{ $(k).classList.remove('invalid'); queueSave(); }));
@@ -564,7 +585,8 @@ function validate(){
   if(!$('trainer').value.trim()) mark($('trainer'),'trainer');
   if(!$('employee').value.trim()) mark($('employee'),'employee');
   if(!$('date').value) mark($('date'),'date');
-  if(isIntake(FORM)){ const lv=document.querySelector('[data-extra][data-extra*="Level"]'); if(lv && !lv.value) mark(lv,'current employee level'); }
+  if(isIntake(FORM)){ const lv=document.querySelector('[data-extra][data-extra*="Level"]'); if(lv && !lv.value) mark(lv,'current employee level');
+    if(!String(S.notes||'').trim() && $('notes')) mark($('notes'),'initial comments'); }
   const missing = allRatingKeys().filter(k=>!S.ratings[k]);
   missing.forEach(k=>{ const g=document.querySelector('[data-rate="'+CSS.escape(k)+'"]'); if(g){ g.classList.add('invalid'); if(!first) first=g; } });
   if(missing.length) problems.push(missing.length+' rating'+(missing.length>1?'s':''));
@@ -607,7 +629,7 @@ function buildPDF(){
       didParseCell:d=>{ d.cell.text = d.cell.text.map(pdfText); }});
     y = doc.lastAutoTable.finalY;
     const c=intakeCounts(), sum=[['Completed or observed', c.got+' of '+c.count]];
-    if(S.notes) sum.push(['Notes', S.notes]);
+    if(S.notes) sum.push(['Initial Comments', S.notes]);
     doc.autoTable({startY:y+14, body:sum.map(r=>r.map(pdfText)), theme:'grid', styles:{fontSize:10,cellPadding:5}, columnStyles:{0:{fontStyle:'bold',cellWidth:150}}, margin:{left:M,right:M}});
   }
   else FORM.sections.forEach(sec=>{
@@ -705,6 +727,13 @@ $('b-send').addEventListener('click', async ()=>{
     if(!res.ok) throw new Error('the server answered '+res.status);
     lsSet(LS_DRAFT, null); lsSet(LS_TRAINER, payload.trainer);
     addSubmission({employee:payload.employee, formId:payload.formId, date:payload.evaluationDate});
+    // intake form: its Initial Comments become the employee's initial comment
+    if(isIntake(FORM) && CONFIG.commentSaveUrl && String(S.notes||'').trim()){
+      const k = nameKey(payload.employee), hp = HIST && HIST.people.find(x=>nameKey(x.name)===k);
+      const who = hp || {name:payload.employee, id:payload.employeeId, office:payload.office};
+      try{ await postComment(who, payload.trainer, String(S.notes).trim(), true); }
+      catch(e){ payload.commentNote = ' The Initial Comments could not be added to the comments ('+e.message+'); add them on the Initial Comments tab.'; }
+    }
     showResult(true, payload);
   }catch(e){
     setMsg('Not sent: '+e.message+'. Your answers are saved on this device; try again, or use Download PDF.', true);
@@ -712,7 +741,7 @@ $('b-send').addEventListener('click', async ()=>{
 });
 function showResult(ok, p){
   const r=$('result'); r.hidden=false; r.className='notice ok';
-  r.innerHTML = '<b>Sent.</b> '+esc(p.formTitle)+' for '+esc(p.employee)+' was saved to SharePoint and the training team was notified.'+
+  r.innerHTML = '<b>Sent.</b> '+esc(p.formTitle)+' for '+esc(p.employee)+' was saved to SharePoint and the training team was notified.'+esc(p.commentNote||'')+
     ' <button type="button" class="linkbtn" id="b-another">Start another evaluation</button>';
   $('evaluation').hidden=true; $('evaluation').innerHTML=''; $('actionbar').hidden=true; $('choose').hidden=false;
   ['employee','office','location'].forEach(k=>$(k).value=''); $('date').value=todayISO();
@@ -723,11 +752,11 @@ function showResult(ok, p){
 /* ---------- tabs ---------- */
 function setTab(t){
   document.body.classList.toggle('wide', t!=='eval');
-  ['eval','cur','past','all','cmt'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
+  ['eval','cur','past','all','cmt','ini'].forEach(x=>{ $('p-'+x).hidden = x!==t; $('t-'+x).setAttribute('aria-selected', x===t); });
   $('actionbar').hidden = !(t==='eval' && FORM && !$('evaluation').hidden);
-  if(t==='cmt') renderCommentsTab(); else if(t!=='eval') renderCohorts(t);
+  if(t==='cmt') renderCommentsTab(); else if(t==='ini') renderInitialTab(); else if(t!=='eval') renderCohorts(t);
 }
-['eval','cur','past','all','cmt'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
+['eval','cur','past','all','cmt','ini'].forEach(x=>$('t-'+x).addEventListener('click', ()=>setTab(x)));
 
 /* ---------- cohorts ---------- */
 const SHORT = {'Intake Form':'Intake Form','24 or 40 Hour Hazwoper with Hands On':'HAZWOPER','Advance Blasting Classroom Training or HASC WJTA Online':'Adv. Blasting Class','Advance Blasting Hands On or WJTA Hands On Training':'Adv. Blasting Hands On','Advance Mechanics Training':'Adv. Mechanics','Basic Mechanical Troubleshooting':'Basic Mech. Troubleshoot','Basic Set Up, Troubleshooting and Equipment':'Basic Set-Up','CDL':'CDL','Defensive Driving - EnviroVac':'Defensive Driving','DiSC Profile':'DiSC','Driver Equipment Training':'Driver Equipment','Envirovac Hands On Training':'Hands On','HASC WJTA Online':'WJTA Online','Lancing Automation Training':'Lancing Automation','Level Up -Part One':'Level Up 1','Level Up-Part Two':'Level Up 2','Management and Leadership Skills for New Managers':'Mgmt & Leadership','OSHA 30hr':'OSHA 30','Operator Training':'Operator Training','Tech I to Tech II Skill Assessment':'Tech I to II','Tech II to Tech III Post Test Assessment':'Tech II to III Post Test','Tech II to Tech III Skill Assessment':'Tech II to III','WJTA Hands On Training':'WJTA Hands On'};
@@ -920,7 +949,7 @@ async function exportCohorts(mode){
     const head = ['Employee','Employee ID','Office','Job Title','Training Cycle','Training Cycle Period','Employed','Not Recommended','Complete','Required','% Complete','Submitted (waiting for HSI)','Missing','Needs (evaluations)','Comments'].concat(cols);
     const data = rows.map(r=>{ const p=r.p;
       const missing = r.sts.filter(x=>!['c','s'].includes(x[1].k)).map(x=>SHORT[x[0]]||x[0]).join('; ');
-      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing, (EVALNEEDS.get(nameKey(p.name))||[]).map(e=>e.date+' '+e.form+': '+e.needs.map(g=>(g[0]?g[0]+' - ':'')+g[1].join(', ')).join('; ')).join(' | '), commentsOf(p).map(c=>c.date+(c.trainer?' '+c.trainer:'')+': '+c.comment).join(' | ')].concat(cols.map(t=>cell(p,r,t)));
+      return [p.name, p.id||'', p.office||'', p.jobTitle||'', p.cohort||'', periodLabel(p), p.employed?'Yes':'No', p.notRecommended?'Yes':'', r.done, r.total, r.total? Math.round(r.done/r.total*100)/100 : 0, r.sub, missing, (EVALNEEDS.get(nameKey(p.name))||[]).map(e=>e.date+' '+e.form+': '+e.needs.map(g=>(g[0]?g[0]+' - ':'')+g[1].join(', ')).join('; ')).join(' | '), commentsOf(p).map(c=>(c.initial?'[Initial] ':'')+c.date+(c.trainer?' '+c.trainer:'')+': '+(c.text||c.comment)).join(' | ')].concat(cols.map(t=>cell(p,r,t)));
     });
     const ws = X.utils.aoa_to_sheet([head].concat(data));
     ws['!cols'] = head.map((h,i)=>({wch: i===0?26 : i===12?40 : Math.min(28, Math.max(10, String(h).length+2))}));
@@ -989,10 +1018,25 @@ function needsHTML(p){
 
 /* ---------- trainer comments (Comments table in SharePoint, through two flows) ---------- */
 const excelISO = v => { v=String(v||'').trim(); if(/^\d{4,6}(\.\d+)?$/.test(v)){ const ms=Date.UTC(1899,11,30)+(+v)*86400000; return new Date(ms).toISOString().slice(0,16).replace('T',' '); } return v.replace('T',' ').slice(0,16); };
+// An initial comment (from the intake form, or caught up on the Initial Comments tab) is saved with this prefix.
+const INIT_TAG = 'Initial Comment: ';
 function addComment(c){
   const k=nameKey(c.employee); if(!k || !String(c.comment||'').trim()) return;
+  c.initial = String(c.comment).toLowerCase().startsWith(INIT_TAG.toLowerCase());
+  c.text = c.initial ? String(c.comment).slice(INIT_TAG.length).trim() : String(c.comment);
   (COMMENTS.get(k) || COMMENTS.set(k,[]).get(k)).push(c);
-  COMMENTS.get(k).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  // initial comment first, then newest first
+  COMMENTS.get(k).sort((a,b)=>(b.initial-a.initial) || String(b.date).localeCompare(String(a.date)));
+}
+const initialOf = p => commentsOf(p).find(c=>c.initial);
+const commentLI = (c, withName, attr) => '<li'+(c.initial?' class="init"':'')+(attr||'')+'><span class="meta">'+(c.initial?'<span class="itag">Initial comment</span>':'')+
+  (withName?'<b>'+esc(c.employee)+'</b> · ':'')+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.text||c.comment)+'</li>';
+const nowStamp = () => { const now=new Date(), pad=n=>String(n).padStart(2,'0'); return now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes()); };
+async function postComment(p, trainer, text, initial){
+  const row = {date: nowStamp(), employee:p.name, employeeId:p.id||'', office:p.office||'', trainingCycle:p.cohort||'', trainer, comment:(initial?INIT_TAG:'')+text};
+  const r = await fetch(CONFIG.commentSaveUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(row)});
+  if(!r.ok) throw new Error('the flow answered '+r.status);
+  addComment(row); return row;
 }
 const commentsOf = p => COMMENTS.get(nameKey(p.name)) || [];
 async function loadComments(){
@@ -1005,6 +1049,7 @@ async function loadComments(){
     rows.forEach(x=>addComment({employee:x['Employee']||x.employee, trainer:x['Trainer']||x.trainer||'', comment:x['Comment']||x.comment||'', date:excelISO(x['Date']||x.date)}));
     ['cur','past','all'].forEach(m=>{ if(!$('p-'+m).hidden) drawCohortTable(m); });
     if(!$('p-cmt').hidden) renderCommentsTab();
+    if(!$('p-ini').hidden) renderInitialTab();
   }catch(e){}
 }
 /* ---------- Comments tab: pick an employee, see needs and comments, add a comment ---------- */
@@ -1025,10 +1070,10 @@ function renderCommentsTab(){
   if(p) commentsOf(p).forEach(c=>recent.push(c)); else COMMENTS.forEach(list=>list.forEach(c=>recent.push(c)));
   $('cmt-rtitle').innerHTML = p ? 'Comments for '+esc(p.name)+' <span class="meta" style="display:inline;font-weight:400">('+recent.length+')</span>'
     : 'Recent comments <span class="meta" style="display:inline;font-weight:400">all Level Up employees · pick an employee above to see only theirs</span>';
-  recent.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  recent.sort((a,b)=> p ? ((b.initial-a.initial) || String(b.date).localeCompare(String(a.date))) : String(b.date).localeCompare(String(a.date)));
   $('cmt-recent').innerHTML = !CONFIG.commentReadUrl && !recent.length ? '<div class="meta">Comments from everyone show here once the Comments - Read flow is connected.</div>' :
     !recent.length ? '<div class="meta">'+(p?'No comments for '+esc(p.name)+' yet.':'No comments yet.')+'</div>' :
-    '<div class="cmts" style="border:0;padding:0"><ol>'+recent.slice(0,30).map(c=>'<li data-cpick="'+esc(c.employee)+'"><span class="meta"><b>'+esc(c.employee)+'</b> · '+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol></div>';
+    '<div class="cmts" style="border:0;padding:0"><ol>'+recent.slice(0,30).map(c=>commentLI(c, true, ' data-cpick="'+esc(c.employee)+'"')).join('')+'</ol></div>';
 }
 function cmtPick(name){
   if(!String(name||'').trim()){ CMT_SEL=null; renderCommentsTab(); return; }
@@ -1036,12 +1081,44 @@ function cmtPick(name){
   if(CMT_SEL) $('cmt-pick').value = CMT_SEL.name;
   renderCommentsTab();
 }
+/* ---------- Initial Comments tab: catch up the initial comment for people who started before it was on the intake form ---------- */
+// only the training cycle that started this September (the most recent September)
+const iniMonth = () => { const t=todayISO(), y=+t.slice(0,4), m=+t.slice(5,7); return (m>=9? y : y-1)+'-09'; };
+function renderInitialTab(){
+  const tr = $('ini-trainer'); if(!tr.value) tr.value = lsGet(LS_TRAINER) || $('trainer').value || '';
+  const sep = iniMonth(), people = cmtPeople().filter(p=>String(p.start||'').startsWith(sep)), offSel = $('ini-office');
+  if(offSel.options.length<=1) [...new Set(people.map(p=>p.office).filter(Boolean))].sort().forEach(o=>offSel.add(new Option(o,o)));
+  const q = $('ini-q').value.trim().toLowerCase().split(/\s+/).filter(Boolean), off = offSel.value, show = $('ini-show').value;
+  const rows = people.filter(p=> (!off || p.office===off) && q.every(t=>p.name.toLowerCase().includes(t)) &&
+    (show==='all' || (show==='has' ? !!initialOf(p) : !initialOf(p))));
+  const total = people.length, done = people.filter(p=>initialOf(p)).length;
+  $('ini-count').textContent = done+' of '+total+' in the training cycle that started September '+sep.slice(0,4)+' have an initial comment · showing '+rows.length;
+  $('ini-table').querySelector('tbody').innerHTML = rows.map(p=>{
+    const c = initialOf(p), s = statusOf(p, INTAKE_COL), k = esc(p.id||p.name); CMT_PEOPLE.set(p.id||p.name, p);
+    const cell = c ? '<div class="cmts" style="border:0;padding:0"><ol style="margin:0">'+commentLI(c)+'</ol></div>'
+      : !CONFIG.commentSaveUrl ? '<span class="meta">Saving comments is not connected yet.</span>'
+      : '<div class="inirow"><textarea data-ini="'+k+'" placeholder="Initial Comment for '+esc(p.name)+'" aria-label="Initial Comment for '+esc(p.name)+'"></textarea><button type="button" class="btn primary" data-inisave="'+k+'">Save</button></div>';
+    return '<tr'+(!p.employed?' class="gone"':'')+'><td class="sticky"><b>'+esc(p.name)+'</b><span class="meta">'+esc([p.office,p.jobTitle].filter(Boolean).join(' · '))+'</span></td>'+
+      '<td>'+esc(p.cohort||'—')+'<span class="meta">'+esc(periodLabel(p))+'</span></td>'+
+      '<td><span class="st '+s.k+'" title="'+esc(s.text)+'">'+esc(s.label)+'</span></td><td>'+cell+'</td></tr>';
+  }).join('') || '<tr><td colspan="4"><div class="empty">'+(show==='missing'?'Everyone shown has an initial comment.':'No one matches.')+'</div></td></tr>';
+}
+async function saveInitial(btn){
+  const k = btn.dataset.inisave, p = CMT_PEOPLE.get(k); if(!p) return;
+  const ta = btn.closest('.inirow').querySelector('textarea'), text = ta.value.trim(), tr = $('ini-trainer'), trainer = tr.value.trim();
+  if(!trainer){ tr.classList.add('invalid'); tr.focus(); return; }
+  if(!text){ ta.classList.add('invalid'); ta.focus(); return; }
+  lsSet(LS_TRAINER, trainer);
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try{ await postComment(p, trainer, text, true); renderInitialTab(); }
+  catch(e){ btn.disabled=false; btn.textContent='Save'; alert('Initial Comment not saved ('+e.message+'). Try again.'); }
+}
 const CMT_PEOPLE = new Map();
 function commentsHTML(p, noList){
   CMT_PEOPLE.set(p.id||p.name, p);
   const list = commentsOf(p), k=esc(p.id||p.name);
   let h = '<div class="cmts"><h5>'+(noList?'Add a comment':'Comments ('+list.length+')')+'</h5>';
-  h += noList ? '' : list.length ? '<ol>'+list.map(c=>'<li><span class="meta">'+esc(c.date)+(c.trainer?' · '+esc(c.trainer):'')+'</span>'+esc(c.comment)+'</li>').join('')+'</ol>' : '<div class="meta" style="margin-bottom:8px">No comments yet.</div>';
+  h += noList ? '' : list.length ? '<ol>'+list.map(c=>commentLI(c)).join('')+'</ol>' : '<div class="meta" style="margin-bottom:8px">No comments yet.</div>';
   if(CONFIG.commentSaveUrl){
     const t = lsGet(LS_TRAINER) || $('trainer').value || '';
     h += '<div class="addc"><input type="text" data-ctrainer="'+k+'" placeholder="Your name" value="'+esc(t)+'" aria-label="Your name">'+
@@ -1057,14 +1134,10 @@ async function saveComment(mode, btn){
   if(!trainer){ tr.focus(); tr.style.borderColor='var(--orange)'; return; }
   if(!comment){ ta.focus(); return; }
   lsSet(LS_TRAINER, trainer);
-  const now = new Date(), pad = n=>String(n).padStart(2,'0');
-  const date = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes());
-  const row = {date, employee:p.name, employeeId:p.id||'', office:p.office||'', trainingCycle:p.cohort||'', trainer, comment};
   btn.disabled = true; btn.textContent = 'Saving…';
   try{
-    const r = await fetch(CONFIG.commentSaveUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(row)});
-    if(!r.ok) throw new Error('the flow answered '+r.status);
-    addComment(row); if(mode==='cmt') renderCommentsTab(); else drawCohortTable(mode);
+    await postComment(p, trainer, comment, false);
+    if(mode==='cmt') renderCommentsTab(); else drawCohortTable(mode);
   }catch(e){ btn.disabled=false; btn.textContent='Add comment'; if(mode==='cmt'){ alert('Comment not saved ('+e.message+'). Try again.'); } else showMsg(mode,'Comment not saved ('+e.message+'). Try again.'); }
 }
 
@@ -1076,6 +1149,10 @@ async function getJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) 
   try{ const d = await getJSON('data.json'); ROSTER = d.roster||[]; HIST = d.history||null; if(HIST && !HIST.trainings.includes(INTAKE_COL)) HIST.trainings.unshift(INTAKE_COL); }catch(e){}
   loadLog(); loadComments();
   $('cmt-pick').addEventListener('change', e=>cmtPick(e.target.value));
+  ['ini-q','ini-office','ini-show'].forEach(id=>$(id).addEventListener(id==='ini-q'?'input':'change', renderInitialTab));
+  $('ini-trainer').addEventListener('input', e=>e.target.classList.remove('invalid'));
+  $('p-ini').addEventListener('click', e=>{ const b=e.target.closest('[data-inisave]'); if(b) saveInitial(b); });
+  $('p-ini').addEventListener('input', e=>{ if(e.target.matches('textarea')) e.target.classList.remove('invalid'); });
   $('cmt-pick').addEventListener('search', e=>{ if(!e.target.value){ CMT_SEL=null; renderCommentsTab(); } });
   $('cmt-pick').addEventListener('input', e=>{ const k=nameKey(e.target.value); if(k && cmtPeople().some(p=>nameKey(p.name)===k && p.name===e.target.value)) cmtPick(e.target.value); });
   $('p-cmt').addEventListener('click', e=>{

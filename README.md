@@ -114,6 +114,8 @@ Unsent work is saved on the device automatically, so a dropped connection or clo
 The **Intake (all levels)** tab holds the Employee Intake Form for Initial Evaluation: current employee level, then every training from Tech I to Supervisor with Previously Completed, Previously Observed, Observed Date and a note. It sends like the evaluations (PDF to the office folder, Evaluation Log row with Total Score = trainings completed or observed, email).
 
 ## Trainer comments
+**Initial Comments:** the intake form's comment box is **Initial Comments** and is required. When an intake form is sent, that text is also saved to the Comments table as the employee's initial comment (Comment column starts with `Initial Comment: `), shown first and marked in orange. The **Initial Comments** tab lists everyone in the training cycle that started in September, to catch up their initial comment (Show: missing / has one / everyone).
+
 **Comments tab:** pick any employee to see the needs identified in their evaluations and their comments, and add a comment; below is a list of recent comments from everyone (click one to open that employee).
 **Needs identified in evaluations** (also under each employee on the Training Cycle tabs and in Export to Excel) come from the Evaluation Log's needs list column (the items rated 1-2 on each evaluation).
 
