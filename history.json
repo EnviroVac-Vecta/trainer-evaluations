@@ -3424,7 +3424,9 @@
    "inHSIReport": true,
    "period": "Jan 2026 - Dec 2026",
    "lastSeen": "2026-10-23",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-28",
+   "intakeFile": "Mullinix Sean-Complete.pdf"
   },
   {
    "name": "Sherman L Smith",
@@ -3930,7 +3932,9 @@
    "inHSIReport": true,
    "period": "May 2026 - Apr 2027",
    "lastSeen": "2026-10-23",
-   "intake": true
+   "intake": true,
+   "intakeDate": "2026-08-28",
+   "intakeFile": "Griffing, Clayton-Complete.pdf"
   },
   {
    "name": "Cole Alexander Michelin",
@@ -5360,7 +5364,9 @@
    "inHSIReport": true,
    "period": "Sep 2026 - Aug 2027",
    "lastSeen": "2026-10-23",
-   "intake": false
+   "intake": false,
+   "intakeDate": "2026-10-20",
+   "intakeFile": "Slater, Erick-Complete.pdf"
   },
   {
    "name": "Eugene Jamar Archie",
