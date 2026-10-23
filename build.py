@@ -228,14 +228,21 @@ def send_trainer_report(history):
     from tools.trainer_report import build
     name = "Training Cycle Report.xlsx"
     body = {"fileName": name, "fileContent": base64.b64encode(build(history)).decode("ascii")}
-    try:
-        r = requests.post(url, json=body, timeout=120)
-        if r.status_code in (200, 202):
-            print(f"::notice title=Trainer report::Sent '{name}' to Project Polarity.")
-        else:
-            print(f"::warning title=Trainer report::The flow answered {r.status_code}: {r.text[:300]}")
-    except Exception as e:
-        print(f"::warning title=Trainer report::Couldn't send it ({e}).")
+    # The save fails while someone has the file open in Excel, so try a few times, 2 minutes apart.
+    import time
+    last = ""
+    for attempt in range(1, 4):
+        try:
+            r = requests.post(url, json=body, timeout=120)
+            if r.status_code in (200, 202):
+                print(f"::notice title=Trainer report::Sent '{name}' to Project Polarity" + (f" (try {attempt})." if attempt > 1 else "."))
+                return
+            last = f"the flow answered {r.status_code}: {r.text[:200]}"
+        except Exception as e:
+            last = str(e)
+        if attempt < 3:
+            time.sleep(120)
+    print(f"::warning title=Trainer report::Not saved after 3 tries ({last}). Usually the file is open in Excel; it updates on the next run.")
 
 
 def main():
