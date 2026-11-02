@@ -245,6 +245,34 @@ def send_trainer_report(history):
     print(f"::warning title=Trainer report::Not saved after 3 tries ({last}). Usually the file is open in Excel; it updates on the next run.")
 
 
+def check_read_flows():
+    """Call the read flows the site uses and say on the run summary whether they answered."""
+    import urllib.request
+    for name, key in (("Evaluations - Read log", "EVAL_LOG_URL"), ("Comments - Read", "COMMENT_READ_URL")):
+        url = secret(key)
+        if not url:
+            continue
+        try:
+            req = urllib.request.Request(url, data=b"{}", headers={"Content-Type": "application/json"}, method="POST")
+            with urllib.request.urlopen(req, timeout=120) as r:
+                body = r.read()
+                try:
+                    data = json.loads(body)
+                    n = len(data.get("value", data) if isinstance(data, dict) else data)
+                except Exception:
+                    n = "?"
+                print(f"::notice title={name} flow::OK (HTTP {r.status}, {n} rows)")
+        except Exception as e:
+            detail = ""
+            if hasattr(e, "read"):
+                try:
+                    detail = e.read().decode("utf-8", "replace")[:600]
+                except Exception:
+                    pass
+            detail = detail.replace(url, "[flow url]").replace("\n", " ")
+            print(f"::warning title={name} flow failed::{e} {detail}")
+
+
 def main():
     shutil.rmtree(OUT, ignore_errors=True)
     os.makedirs(OUT)
@@ -263,6 +291,7 @@ def main():
     with open(os.path.join(OUT, "config.json"), "w") as f:
         json.dump({"trainers": trainers, "submitUrl": submit, "logUrl": secret("EVAL_LOG_URL"),
                    "commentSaveUrl": secret("COMMENT_SAVE_URL"), "commentReadUrl": secret("COMMENT_READ_URL")}, f)
+    check_read_flows()
 
     with open(os.path.join(HERE, "history.json")) as f:
         history = json.load(f)
