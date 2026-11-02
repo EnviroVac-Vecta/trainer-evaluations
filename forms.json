@@ -1448,6 +1448,145 @@
       "notes": "Header fields are Name/Office/Trainer Name/Date. Each section is one row whose single cell holds one or more unlettered sub-headings (e.g. 'Purpose of Decontamination', 'Work Zones'), each with lettered sub-items restarting at a.; represented as {text, subitems}. One Needs/Comments cell per section. Sign-off has only Trainer, Employee, Date (no location, score or notes)."
     },
     {
+      "id": "advance-blasting",
+      "title": "Advance Blasting Skills Assessment",
+      "subtitle": "(WJTA Field Verification Training)",
+      "version": "v1.2026",
+      "source_file": "Advance_Blasting_Skills_Assessment_1.docx",
+      "footer_title": "Advance Blasting Skills Assessment — WJTA Field Verification Training",
+      "instructions": "Please rate overall skill using 1-5 (1 = Low, 5 = High). Under the Needs column, indicate the item(s) requiring additional development using the corresponding letter. Provide comments as needed.",
+      "header_fields": [
+        "Trainee",
+        "Office"
+      ],
+      "scale": {
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "low": "Low",
+        "high": "High"
+      },
+      "sections": [
+        {
+          "title": "Pre-Job Inspection",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Functional check, guards, gauges",
+            "Rupture disc tagged/rated to operating pressure",
+            "Confirm pressure rating of components",
+            "Hose visual inspection",
+            "Whip checks and shrouds inspection"
+          ]
+        },
+        {
+          "title": "Basic Personal Protective Equipment (PPE)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Job/application specific PPE has been selected"
+          ]
+        },
+        {
+          "title": "Shotgun/Surface Cleaning (Manual)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Maintains stable stance",
+            "Demonstrates hand signals",
+            "Maintains trigger pressure during pressure-up",
+            "Tests dump valve before work",
+            "Uses body mechanics to control gun",
+            "Maintains stand-off distance",
+            "Cleans in small sections",
+            "Demonstrates shut down procedures"
+          ]
+        },
+        {
+          "title": "Line Moleing/Pipe Cleaning (Manual)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Demonstrates hand signals",
+            "Matches proper AWD collet",
+            "Installs AWD correctly",
+            "Verifies AWD operation",
+            "Proper dump valve operation",
+            "Inserts lance before activating dump",
+            "Feeds lance correctly",
+            "Performs shutdown procedures"
+          ]
+        },
+        {
+          "title": "Flex Lancing/Exchanger Cleaning (Manual)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Demonstrates hand signals",
+            "Matches proper AWD collet",
+            "Installs device correctly",
+            "Proper pressure-up procedure",
+            "Cleans tubes effectively",
+            "Proper hose feed technique",
+            "System shutdown procedures"
+          ]
+        },
+        {
+          "title": "Shotgun/Surface Cleaning (Automated)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Stages equipment correctly",
+            "Positions controls safely",
+            "Demonstrates hand signals",
+            "Controls dump until pressure attained",
+            "Tests dump valve",
+            "Maintains standoff distance",
+            "Maintains safe operating envelope",
+            "System shutdown procedures"
+          ]
+        },
+        {
+          "title": "Line Moleing/Pipe Cleaning (Automated)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Demonstrates hand signals",
+            "AWD installation",
+            "Guide tube installation",
+            "Matches collet size",
+            "Lance drive installation",
+            "Loads lance properly",
+            "Operates equipment including speed adjustment",
+            "System shutdown procedures"
+          ]
+        },
+        {
+          "title": "Flex Lancing (Automated)",
+          "kind": "rated-per-item",
+          "layout": "single-cell",
+          "items": [
+            "Indexer/positioner setup",
+            "Guide tube installation",
+            "Matches AWD collet",
+            "Lance drive installation",
+            "Control panel operation",
+            "Pressure-up procedures",
+            "Cycles lances through tubes",
+            "System shutdown procedures"
+          ]
+        }
+      ],
+      "signoff_fields": [
+        "Trainer (Print and Sign)",
+        "Trainee (Print and Sign)",
+        "Date",
+        "Average Score",
+        "NOTES"
+      ],
+      "notes": "Same layout as the Advance Mechanical form: Trainee/Office header, a rating per lettered item, Needs by letter, Average Score, NOTES."
+    },
+    {
       "id": "tech-i-to-tech-ii",
       "title": "Technician I → Technician II Skill Assessment",
       "subtitle": null,
