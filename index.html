@@ -132,6 +132,10 @@ textarea{min-height:70px;resize:vertical}
 .evalpanel:not([hidden]){display:flex;flex-direction:column;gap:16px;width:100%;max-width:980px;margin:0 auto}
 .cohortpanel{flex-direction:column;gap:12px}
 .cohortpanel:not([hidden]){display:flex}
+.subtabs{display:flex;gap:4px;margin:0 0 12px;border-bottom:1px solid var(--line)}
+.subtabs button{font:inherit;font-weight:600;background:none;border:0;border-bottom:3px solid transparent;padding:8px 14px;color:var(--muted);cursor:pointer}
+.subtabs button[aria-selected=true]{color:var(--fg);border-bottom-color:var(--accent)}
+.subtabs .n{font-weight:400;color:var(--muted);font-size:.85em}
 .cfilters{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;align-items:end}
 @media (max-width:900px){.cfilters{grid-template-columns:1fr 1fr}}
 .msbtn{width:100%;min-height:46px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 34px 10px 12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;color:var(--fg)}
@@ -853,7 +857,9 @@ function renderCohorts(mode){
   const all = cohortPeople(mode);
   const uniq = f => [...new Set(all.map(f).filter(Boolean))].sort();
   if(!el.querySelector('.cfilters')){
-    el.innerHTML = '<div class="cfilters">'+
+    el.innerHTML = (mode==='past' ? '<div class="subtabs" role="tablist" aria-label="Active or inactive">'+
+        [['','All'],['active','Active'],['inactive','Inactive']].map(([v,l])=>'<button type="button" role="tab" data-act="'+v+'" aria-selected="'+((st.act||'')===v)+'">'+l+' <span class="n" data-actn="'+v+'"></span></button>').join('')+'</div>' : '')+
+      '<div class="cfilters">'+
       '<div class="field q"><label for="'+mode+'-q">Find a person</label><input type="search" id="'+mode+'-q" placeholder="Name or ID"></div>'+
       msHTML(mode+'-ees','Employees',[...all].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>({v:p.name,sub:p.office})).filter((o,i,a)=>!i||a[i-1].v!==o.v),'All employees')+
       msHTML(mode+'-offices','Office',uniq(p=>p.office).map(v=>({v})),'All offices')+
@@ -873,6 +879,8 @@ function renderCohorts(mode){
     const redraw=()=>drawCohortTable(mode);
     const syncs=[msWire(mode+'-ees',st.ees,'All employees','employees',redraw), msWire(mode+'-offices',st.offices,'All offices','offices',redraw), msWire(mode+'-trainings',st.trainings,'All trainings','trainings',redraw), msWire(mode+'-stat',st.stat,'All statuses','statuses',redraw)];
     $(mode+'-export').addEventListener('click',()=>exportCohorts(mode));
+    el.querySelectorAll('.subtabs [data-act]').forEach(b=>b.addEventListener('click',()=>{ st.act=b.dataset.act;
+      el.querySelectorAll('.subtabs [data-act]').forEach(x=>x.setAttribute('aria-selected', String(x===b))); drawCohortTable(mode); }));
     $(mode+'-clear').addEventListener('click',()=>{ st.q=''; st.cohort=''; st.period=''; st.show='all'; st.ees.clear(); st.offices.clear(); st.trainings.clear(); st.stat.clear();
       $(mode+'-q').value=''; ['cohort','period'].forEach(k=>$(mode+'-'+k).value=''); $(mode+'-show').value='all'; syncs.forEach(f=>f()); redraw(); });
     el.querySelector('table').addEventListener('click',e=>{
@@ -883,6 +891,8 @@ function renderCohorts(mode){
   }
   drawCohortTable(mode);
 }
+// Active / Inactive: HSI member status when the report has it, otherwise still employed (in the HSI report).
+const isInactive = p => p.memberStatus ? p.memberStatus==='Inactive' : !p.employed;
 function drawCohortTable(mode){
   const el = panelOf(mode), st = CV[mode];
   const q = st.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -897,6 +907,7 @@ function drawCohortTable(mode){
     if(q.length && !q.every(t=>(p.name+' '+p.id).toLowerCase().includes(t))) return false;
     if(st.ees.size && !st.ees.has(p.name)) return false;
     if(st.offices.size && !st.offices.has(p.office)) return false;
+    if(st.act && (st.act==='inactive') !== isInactive(p)) return false;
     if(st.cohort && p.cohort!==st.cohort) return false;
     if(st.period && periodLabel(p)!==st.period) return false;
     if(st.show==='missing' && !(r.done<r.total)) return false;
@@ -930,6 +941,8 @@ function drawCohortTable(mode){
   }).join('');
   st.last = {rows, cols};
   el.querySelector('tbody').innerHTML = body || '<tr><td colspan="'+(3+cols.length)+'"><div class="empty">No one matches these filters.</div></td></tr>';
+  if(mode==='past'){ const ps=cohortPeople('past'); const n={'':ps.length, active:ps.filter(p=>!isInactive(p)).length, inactive:ps.filter(isInactive).length};
+    el.querySelectorAll('[data-actn]').forEach(x=>x.textContent='('+n[x.dataset.actn]+')'); }
   $(mode+'-count').textContent = rows.length+' '+(rows.length===1?'person':'people')+' · '+rows.filter(r=>r.total&&r.done===r.total).length+' all complete · '+rows.filter(r=>r.done<r.total).length+' missing items';
 }
 /* ---------- export what the table shows ---------- */

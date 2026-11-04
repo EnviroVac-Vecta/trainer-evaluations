@@ -140,6 +140,8 @@ def read_cohort_report(xlsx_bytes):
         raise SystemExit("Cohort report: couldn't find the header row (First Name, Last Name, ...).")
     h = [str(v).strip() if v else "" for v in rows[hi]]
     col = {c: h.index(c) for c in ("First Name", "Last Name", "Teams", "Groups", "Requirement", "Compliance Status", "Last Completion Date")}
+    # Optional: HSI member status (Active / Inactive), once the column is added to the saved report.
+    sc = next((i for i, c in enumerate(h) if re.fullmatch(r"(member\s*)?(status|active\s*/\s*inactive)", c, re.I)), None)
     people = {}
     for r in rows[hi + 1:]:
         if not r or not r[col["First Name"]]:
@@ -153,6 +155,8 @@ def read_cohort_report(xlsx_bytes):
         groups = [re.sub(r"^Envirovac Cohort\s*", "", x.strip()) for x in str(g("Groups") or "").split(",") if x.strip()]
         p = people.setdefault(key, {"name": name, "id": emp_id, "office": str(g("Teams") or ""), "groups": set(), "trainings": {}})
         p["groups"].update(groups)
+        if sc is not None and sc < len(r) and r[sc]:
+            p["memberStatus"] = "Inactive" if re.match(r"\s*in", str(r[sc]), re.I) else "Active"
         req = REQ_SUFFIX.sub("", str(g("Requirement") or "")).strip()
         status = str(g("Compliance Status") or "").strip().lower()
         done = g("Last Completion Date")
@@ -196,6 +200,12 @@ def merge_cohort_report(history, report):
         p["trainings"] = {t: r["trainings"].get(t, "N/A") for t in cols}
         p["inHSIReport"] = True
         p["employed"] = True
+        if r.get("memberStatus"):
+            p["memberStatus"] = r["memberStatus"]
+            if r["memberStatus"] == "Inactive":
+                p["employed"] = False
+        else:
+            p.pop("memberStatus", None)
         p["lastSeen"] = dt.date.today().isoformat()
         if r["cohort"] and p.get("cohort") not in r["cohorts"]:
             p["cohort"] = r["cohort"]
