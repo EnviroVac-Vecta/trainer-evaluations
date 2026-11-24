@@ -324,4 +324,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc().replace("\n", " | ")
+        print(f"::error title=Trainer site build stopped::{type(e).__name__}: {e} || {tb[-3000:]}")
+        raise
