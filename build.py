@@ -139,7 +139,14 @@ def read_cohort_report(xlsx_bytes):
     if hi is None:
         raise SystemExit("Cohort report: couldn't find the header row (First Name, Last Name, ...).")
     h = [str(v).strip() if v else "" for v in rows[hi]]
-    col = {c: h.index(c) for c in ("First Name", "Last Name", "Teams", "Groups", "Requirement", "Compliance Status", "Last Completion Date")}
+    # HSI has renamed some columns over time ("Groups" became "Assigning Group"), so accept either name.
+    aliases = {"Groups": ("Groups", "Assigning Group", "Assigning Groups", "Group")}
+    def find(c):
+        for name in aliases.get(c, (c,)):
+            if name in h:
+                return h.index(name)
+        raise ValueError(f"The Cohort report has no '{c}' column (columns: {', '.join(str(x) for x in h if x)})")
+    col = {c: find(c) for c in ("First Name", "Last Name", "Teams", "Groups", "Requirement", "Compliance Status", "Last Completion Date")}
     # Optional: HSI member status (Active / Inactive), once the column is added to the saved report.
     sc = next((i for i, c in enumerate(h) if re.fullmatch(r"(member\s*)?(status|active\s*/\s*inactive)", c, re.I)), None)
     people = {}
